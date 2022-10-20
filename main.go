@@ -4,18 +4,23 @@ import (
 	"dns-testbed-go/testbed"
 	"dns-testbed-go/testbed/component"
 	"dns-testbed-go/testbed/experiment/attack"
+	"fmt"
 	"log"
 )
 
 func main() {
 	testbed := testbed.NewTestbed()
-	zone, _ := attack.NewTemplateAttack().WriteZoneFilesAndReturnEntryZone(0, testbed.Nameservers["sld"])
-	err := testbed.Start(component.Bind9)
+	_, err := attack.NewTemplateAttack().WriteZoneFilesAndReturnEntryZone(0, testbed.Nameservers["sld"])
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = testbed.Query(zone)
+	err = testbed.Start(component.Bind9)
 	if err != nil {
 		log.Fatal(err)
 	}
+	queryResult, err := testbed.Query("target.com")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(queryResult)
 }

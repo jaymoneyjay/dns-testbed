@@ -31,7 +31,7 @@ func (e *Experiment) Run(client *component.Client, targetComponent component.Log
 		if err != nil {
 			return nil, nil, err
 		}
-		err = client.Query(entryZone)
+		_, err = client.Query(entryZone)
 		if err != nil {
 			return nil, nil, err
 		}

@@ -20,10 +20,11 @@ func (c *Container) Start(implementation Implementation) error {
 	return c.startBind9()
 }
 
-func (c *Container) exec(cmd []string) error {
+func (c *Container) exec(cmd []string) (docker.ExecResult, error) {
 	return c.dockerCli.Exec(c.containerID, cmd)
 }
 
 func (c *Container) startBind9() error {
-	return c.exec([]string{"service", "bind9", "start"})
+	_, err := c.exec([]string{"service", "bind9", "start"})
+	return err
 }

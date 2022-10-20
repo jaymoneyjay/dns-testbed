@@ -1,7 +1,7 @@
 package testbed
 
 import (
-	component2 "dns-testbed-go/testbed/component"
+	"dns-testbed-go/testbed/component"
 	"dns-testbed-go/testbed/docker"
 	"dns-testbed-go/testbed/experiment"
 	"dns-testbed-go/utils"
@@ -10,33 +10,33 @@ import (
 )
 
 type Testbed struct {
-	Nameservers     map[string][]*component2.Nameserver
-	Client          *component2.Client
-	Resolver        *component2.Resolver
+	Nameservers     map[string][]*component.Nameserver
+	Client          *component.Client
+	Resolver        *component.Resolver
 	dockerClient    *docker.Client
-	implementations []component2.Implementation
+	implementations []component.Implementation
 }
 
 func NewTestbed() *Testbed {
-	return &Testbed{Nameservers: map[string][]*component2.Nameserver{
-		"root": {component2.NewNameserver("root", ".", "docker/buildContext/root")},
+	return &Testbed{Nameservers: map[string][]*component.Nameserver{
+		"root": {component.NewNameserver("root", ".", "testbed/docker/buildContext/root")},
 		"tld": {
-			component2.NewNameserver("com", "com.", "docker/buildContext/com"),
-			component2.NewNameserver("net", "net.", "docker/buildContext/net"),
+			component.NewNameserver("com", "com.", "testbed/docker/buildContext/com"),
+			component.NewNameserver("net", "net.", "testbed/docker/buildContext/net"),
 		},
 		"sld": {
-			component2.NewNameserver("target-com", "target.com.", "docker/buildContext/target-com"),
-			component2.NewNameserver("inter-net", "inter.net.", "docker/buildContext/target-net"),
+			component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/target-com"),
+			component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/inter-net"),
 		},
 	},
-		Client:          component2.NewClient("client"),
-		Resolver:        component2.NewResolver("resolver", "docker/buildContext/resolver"),
+		Client:          component.NewClient("client"),
+		Resolver:        component.NewResolver("resolver", "testbed/docker/buildContext/resolver"),
 		dockerClient:    docker.NewClient(),
-		implementations: []component2.Implementation{component2.Bind9},
+		implementations: []component.Implementation{component.Bind9},
 	}
 }
 
-func (t *Testbed) Start(implementation component2.Implementation) error {
+func (t *Testbed) Start(implementation component.Implementation) error {
 	for _, ns := range t.Nameservers {
 		for _, c := range ns {
 			err := c.Start(implementation)
@@ -48,11 +48,11 @@ func (t *Testbed) Start(implementation component2.Implementation) error {
 	return t.Resolver.Start(implementation)
 }
 
-func (t *Testbed) Query(zone string) error {
+func (t *Testbed) Query(zone string) (docker.ExecResult, error) {
 	return t.Client.Query(zone)
 }
 
-func (t *Testbed) Run(experiment *experiment.Experiment, targetComponent component2.Logging) (dataframe.DataFrame, error) {
+func (t *Testbed) Run(experiment *experiment.Experiment, targetComponent component.Logging) (dataframe.DataFrame, error) {
 	var implementationList []string
 	var dataList []int
 	var valueList []int

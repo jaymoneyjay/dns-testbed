@@ -1,0 +1,4 @@
+20-Oct-2022 09:21:06.170 query-errors: info: client @0x7eff2c0a9fc0 172.20.0.10#35208 (target.com): query failed (REFUSED) for target.com/IN/A at ../../../bin/named/query.c:6980
+20-Oct-2022 09:21:25.024 query-errors: info: client @0x7eff2c0a9fc0 172.20.0.10#45290 (target.com): query failed (REFUSED) for target.com/IN/A at ../../../bin/named/query.c:6980
+20-Oct-2022 09:22:15.171 query-errors: info: client @0x7eff2c0a9fc0 172.20.0.10#34591 (www.target.com): query failed (REFUSED) for www.target.com/IN/A at ../../../bin/named/query.c:6980
+20-Oct-2022 09:23:16.542 query-errors: info: client @0x7eff2c0a9fc0 172.20.0.10#55132 (www.target.com): query failed (REFUSED) for www.target.com/IN/A at ../../../bin/named/query.c:6980
