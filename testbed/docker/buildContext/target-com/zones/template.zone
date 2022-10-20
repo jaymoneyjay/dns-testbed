@@ -4,7 +4,7 @@ $TTL    0
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
-                         604800 )       ; Negative Cache TTL
+                         0 )       ; Negative Cache TTL
 
 ; Name servers
 target.com.     IN      NS      ns.target.com.

@@ -4,7 +4,7 @@ $TTL    0
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
-                         604800 )       ; Negative Cache TTL
+                         0 )       ; Negative Cache TTL
 
 @		IN	NS	ns.
 ns.	IN	A	172.20.0.2

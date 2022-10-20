@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	queryResult, err := testbed.Query("target.com	")
+	queryResult, err := testbed.Query("target.com")
 	if err != nil {
 		log.Fatal(err)
 	}
