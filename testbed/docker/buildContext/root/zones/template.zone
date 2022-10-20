@@ -1,0 +1,18 @@
+$TTL    0
+@       IN      SOA     . rname.invalid. (
+                        2022092001      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+@		IN	NS	ns.
+ns.	IN	A	172.20.0.2
+
+com.		IN	NS	ns.com.
+ns.com.	IN	A	172.20.0.3
+
+net.		  IN	NS	  ns.net.
+ns.net.	IN	A	    172.20.0.4
+
+.	IN	TXT	"FAKE ROOT"

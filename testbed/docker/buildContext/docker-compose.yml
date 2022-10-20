@@ -1,0 +1,129 @@
+version: "3.9"
+services:
+  root:
+    container_name: root
+    build: root
+    volumes:
+      - type: bind
+        source: root/bind9
+        target: /etc/bind
+      - type: bind
+        source: root/zones
+        target: /etc/zones
+      - type: bind
+        source: root/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.2
+  com:
+    container_name: com
+    build: com
+    volumes:
+      - type: bind
+        source: com/bind9
+        target: /etc/bind
+      - type: bind
+        source: com/zones
+        target: /etc/zones
+      - type: bind
+        source: com/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.3
+  net:
+    container_name: net
+    build: net
+    volumes:
+      - type: bind
+        source: net/bind9
+        target: /etc/bind
+      - type: bind
+        source: net/zones
+        target: /etc/zones
+      - type: bind
+        source: net/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.4
+  target-com:
+    container_name: target-com
+    build: target-com
+    volumes:
+      - type: bind
+        source: target-com/bind9
+        target: /etc/bind
+      - type: bind
+        source: target-com/zones
+        target: /etc/zones
+      - type: bind
+        source: target-com/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.5
+  inter-net:
+    container_name: inter-net
+    build: inter-net
+    volumes:
+      - type: bind
+        source: inter-net/bind9
+        target: /etc/bind
+      - type: bind
+        source: inter-net/zones
+        target: /etc/zones
+      - type: bind
+        source: inter-net/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.6
+  resolver:
+    container_name: resolver
+    build: resolver
+    volumes:
+      - type: bind
+        source: resolver/bind9
+        target: /etc/bind
+      - type: bind
+        source: resolver/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.9
+  client:
+    container_name: client
+    build: client
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.10
+    dns: 172.20.0.9
+
+networks:
+  dns-testbed:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
+
+volumes:
+  root-bind:
+  root-zones:
+  root-logs:
+  com-bind:
+  com-zones:
+  com-logs:
+  net-bind:
+  net-zones:
+  net-logs:
+  target-bind:
+  target-zones:
+  target-logs:
+  inter-bind:
+  inter-zones:
+  inter-logs:
+  resolver-bind:
+  resolver-logs:

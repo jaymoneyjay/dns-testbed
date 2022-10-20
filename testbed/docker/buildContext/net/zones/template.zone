@@ -1,0 +1,18 @@
+$TTL    0
+@       IN      SOA     @ tld.net. (
+                        2022092001      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+
+.	IN	A	172.20.0.2
+
+@		IN	NS	ns
+ns		IN	A	172.20.0.4
+
+inter		IN	NS	ns.inter
+ns.inter	IN	A	172.20.0.6
+
+@		IN	TXT	"FAKE NET SERVER"
