@@ -18,7 +18,7 @@ func TestShouldCreateDataFromSubqueriesUnchainedExperiment(t *testing.T) {
 	}
 	actual, _, err := NewExperiment(
 		attack.NewSubquery(10),
-		utils.MakeRange(1, 10, 1),
+		utils.MakeRange(1, 2, 1),
 	).Run(client, *sldServers[0], sldServers)
 	if err != nil {
 		panic(err)
@@ -36,8 +36,9 @@ func TestShouldCreateValuesFromSubqueriesUnchainedExperiment(t *testing.T) {
 		component.NewNameserver("target-com", "target.com.", "../docker/buildContext/target-com"),
 		component.NewNameserver("inter-net", "inter.net.", "../docker/buildContext/inter-net"),
 	}
+	subqueryAttack := attack.NewSubquery(3)
 	_, actual, err := NewExperiment(
-		attack.NewSubquery(10),
+		subqueryAttack,
 		utils.MakeRange(1, 10, 1),
 	).Run(client, *sldServers[0], sldServers)
 	if err != nil {

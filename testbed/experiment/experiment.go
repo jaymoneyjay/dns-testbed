@@ -3,19 +3,26 @@ package experiment
 import (
 	"dns-testbed-go/testbed/component"
 	"dns-testbed-go/testbed/experiment/attack"
+	"log"
+	"os"
 )
 
 type Experiment struct {
-	target          component.Logging
-	attack          attack.Attack
-	dataRange       []int
-	implementations []component.Implementation
+	attack      attack.Attack
+	dataRange   []int
+	queryLogger *log.Logger
 }
 
 func NewExperiment(attack attack.Attack, dataRange []int) *Experiment {
+	logWriter, err := os.Open("logs/query.log")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	return &Experiment{
-		attack:    attack,
-		dataRange: dataRange,
+		attack:      attack,
+		dataRange:   dataRange,
+		queryLogger: log.New(logWriter, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile),
 	}
 }
 
@@ -31,10 +38,11 @@ func (e *Experiment) Run(client *component.Client, targetComponent component.Log
 		if err != nil {
 			return nil, nil, err
 		}
-		_, err = client.Query(entryZone)
+		queryResponse, err := client.Query(entryZone)
 		if err != nil {
 			return nil, nil, err
 		}
+		e.queryLogger.Print(queryResponse)
 		numberOfQueries, err := targetComponent.CountQueries()
 		if err != nil {
 			return nil, nil, err
