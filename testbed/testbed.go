@@ -17,8 +17,8 @@ type Testbed struct {
 	implementations []component.Implementation
 }
 
-func NewTestbed() *Testbed {
-	return &Testbed{Nameservers: map[string][]*component.Nameserver{
+func NewTestbed() (*Testbed, error) {
+	nameservers := map[string][]*component.Nameserver{
 		"root": {component.NewNameserver("root", ".", "testbed/docker/buildContext/root")},
 		"tld": {
 			component.NewNameserver("com", "com.", "testbed/docker/buildContext/com"),
@@ -28,12 +28,22 @@ func NewTestbed() *Testbed {
 			component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/target-com"),
 			component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/inter-net"),
 		},
-	},
+	}
+	for _, nsList := range nameservers {
+		for _, ns := range nsList {
+			err := ns.SetZoneFile("template.zone")
+			if err != nil {
+				return &Testbed{}, err
+			}
+		}
+	}
+	return &Testbed{
+		Nameservers:     nameservers,
 		Client:          component.NewClient("client"),
 		Resolver:        component.NewResolver("resolver", "testbed/docker/buildContext/resolver"),
 		dockerClient:    docker.NewClient(),
 		implementations: []component.Implementation{component.Bind9},
-	}
+	}, nil
 }
 
 func (t *Testbed) Start(implementation component.Implementation) error {
@@ -70,4 +80,24 @@ func (t *Testbed) Run(experiment *experiment.Experiment, targetComponent compone
 		series.New(dataList, series.Int, "data"),
 		series.New(valueList, series.Int, "value"),
 	), nil
+}
+
+func (t *Testbed) CleanLogs() error {
+	err := t.Resolver.CleanLog()
+	if err != nil {
+		return err
+	}
+	for _, tld := range t.Nameservers["tld"] {
+		err := tld.CleanLog()
+		if err != nil {
+			return err
+		}
+	}
+	for _, sld := range t.Nameservers["sld"] {
+		err := sld.CleanLog()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

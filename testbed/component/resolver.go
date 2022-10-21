@@ -10,7 +10,7 @@ type Resolver struct {
 func NewResolver(containerID, buildPath string) *Resolver {
 	return &Resolver{
 		Container: newContainer(containerID),
-		log:       newLog(filepath.Join(buildPath, "logs/query.log")),
+		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
 	}
 }
 

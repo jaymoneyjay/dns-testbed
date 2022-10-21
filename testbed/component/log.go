@@ -6,21 +6,27 @@ import (
 )
 
 type log struct {
-	path string
+	queryLog   string
+	generalLog string
 }
 
-func newLog(path string) *log {
+func newLog(queryLogPath, generalLogPath string) *log {
 	return &log{
-		path: path,
+		queryLog:   queryLogPath,
+		generalLog: generalLogPath,
 	}
 }
 
 func (l *log) Clean() error {
-	return os.WriteFile(l.path, []byte(""), 0666)
+	err := os.WriteFile(l.generalLog, []byte(""), 0666)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(l.queryLog, []byte(""), 0666)
 }
 
 func (l *log) CountQueries() (int, error) {
-	logs, err := os.Open(l.path)
+	logs, err := os.Open(l.queryLog)
 	if err != nil {
 		return 0, err
 	}

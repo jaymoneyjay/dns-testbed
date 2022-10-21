@@ -11,7 +11,7 @@ func NewTemplateAttack() *template {
 
 func (t *template) WriteZoneFilesAndReturnEntryZone(param int, nameservers []*component.Nameserver) (string, error) {
 	for _, ns := range nameservers {
-		err := ns.UpdateLocal("template.zone")
+		err := ns.SetZoneFile("template.zone")
 		if err != nil {
 			return "", err
 		}
