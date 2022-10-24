@@ -1,0 +1,69 @@
+DOCKER: 2022/10/24 15:34:55 docker.go:50: client: {
+; <<>> DiG 9.11.3-1ubuntu1.18-Ubuntu <<>> entry.target.com.
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 44033
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: e6dafba93bcfa7d1d05665686356947f7ce98415daacc5aa (good)
+;; QUESTION SECTION:
+;entry.target.com.		IN	A
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	ns.target.com. admin.target.com. 2022092001 604800 86400 2419200 0
+
+;; Query time: 35 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Mon Oct 24 13:34:55 UTC 2022
+;; MSG SIZE  rcvd: 148
+
+  %!s(int=0)}
+DOCKER: 2022/10/24 15:34:55 docker.go:50: client: {
+; <<>> DiG 9.11.3-1ubuntu1.18-Ubuntu <<>> inter.net.
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 35558
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: ab50b2cb76f602f18e75b98c6356947f0ec88d76638db17b (good)
+;; QUESTION SECTION:
+;inter.net.			IN	A
+
+;; ANSWER SECTION:
+inter.net.		0	IN	A	172.20.0.8
+
+;; AUTHORITY SECTION:
+inter.net.		0	IN	NS	ns.inter.net.
+
+;; Query time: 32 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Mon Oct 24 13:34:55 UTC 2022
+;; MSG SIZE  rcvd: 99
+
+  %!s(int=0)}
+DOCKER: 2022/10/24 15:34:55 docker.go:50: client: {
+; <<>> DiG 9.11.3-1ubuntu1.18-Ubuntu <<>> del.inter.net.
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 6461
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: feab09c1f2ea0dd323d5c8b36356947f0dbb2f5733d64474 (good)
+;; QUESTION SECTION:
+;del.inter.net.			IN	A
+
+;; AUTHORITY SECTION:
+inter.net.		0	IN	SOA	ns.inter.net. admin.inter.net. 2022092001 604800 86400 2419200 0
+
+;; Query time: 12 msec
+;; SERVER: 127.0.0.11#53(127.0.0.11)
+;; WHEN: Mon Oct 24 13:34:55 UTC 2022
+;; MSG SIZE  rcvd: 142
+
+  %!s(int=0)}

@@ -1,17 +1,51 @@
 package component
 
-import "path/filepath"
+import (
+	"errors"
+	"fmt"
+	"path/filepath"
+)
 
 type Resolver struct {
 	*Container
-	log *log
+	log *containerLog
 }
 
-func NewResolver(containerID, buildPath string) *Resolver {
-	return &Resolver{
-		Container: newContainer(containerID),
-		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
+func NewResolver(containerID, buildPath string) (*Resolver, error) {
+	container, err := newContainer(containerID)
+	if err != nil {
+		return nil, err
 	}
+	return &Resolver{
+		Container: container,
+		log:       newLog(filepath.Join(buildPath, "logs/query.containerLog"), filepath.Join(buildPath, "logs/general.containerLog")),
+	}, nil
+}
+
+func (r *Resolver) Start(implementation Implementation) error {
+	switch implementation {
+	case Bind9:
+		err := r.startBind9()
+		if err != nil {
+			return err
+		}
+	default:
+		return errors.New(fmt.Sprintf("start not implemented for %s", implementation))
+	}
+	return nil
+}
+
+func (r *Resolver) Stop(implementation Implementation) error {
+	switch implementation {
+	case Bind9:
+		err := r.stopBind9()
+		if err != nil {
+			return err
+		}
+	default:
+		return errors.New(fmt.Sprintf("stop not implemented for %s", implementation))
+	}
+	return nil
 }
 
 func (r *Resolver) CleanLog() error {

@@ -13,49 +13,71 @@ type Testbed struct {
 	Nameservers     map[string][]*component.Nameserver
 	Client          *component.Client
 	Resolver        *component.Resolver
-	dockerClient    *docker.Client
 	implementations []component.Implementation
 }
 
 func NewTestbed() (*Testbed, error) {
+	root, err := component.NewNameserver("root", ".", "testbed/docker/buildContext/root")
+	if err != nil {
+		return nil, err
+	}
+	com, err := component.NewNameserver("com", "com.", "testbed/docker/buildContext/com")
+	if err != nil {
+		return nil, err
+	}
+	net, err := component.NewNameserver("net", "net.", "testbed/docker/buildContext/net")
+	if err != nil {
+		return nil, err
+	}
+	target, err := component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/target-com")
+	if err != nil {
+		return nil, err
+	}
+	inter, err := component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/inter-net")
+	if err != nil {
+		return nil, err
+	}
 	nameservers := map[string][]*component.Nameserver{
-		"root": {component.NewNameserver("root", ".", "testbed/docker/buildContext/root")},
+		"root": {root},
 		"tld": {
-			component.NewNameserver("com", "com.", "testbed/docker/buildContext/com"),
-			component.NewNameserver("net", "net.", "testbed/docker/buildContext/net"),
+			com,
+			net,
 		},
 		"sld": {
-			component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/target-com"),
-			component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/inter-net"),
+			target,
+			inter,
 		},
 	}
 	for _, nsList := range nameservers {
 		for _, ns := range nsList {
-			err := ns.SetZoneFile("template.zone")
+			err := ns.Start()
 			if err != nil {
 				return &Testbed{}, err
 			}
 		}
 	}
+	client, err := component.NewClient("client")
+	if err != nil {
+		return nil, err
+	}
+	resolver, err := component.NewResolver("resolver", "testbed/docker/buildContext/resolver")
+	if err != nil {
+		return nil, err
+	}
 	return &Testbed{
 		Nameservers:     nameservers,
-		Client:          component.NewClient("client"),
-		Resolver:        component.NewResolver("resolver", "testbed/docker/buildContext/resolver"),
-		dockerClient:    docker.NewClient(),
+		Client:          client,
+		Resolver:        resolver,
 		implementations: []component.Implementation{component.Bind9},
 	}, nil
 }
 
 func (t *Testbed) Start(implementation component.Implementation) error {
-	for _, ns := range t.Nameservers {
-		for _, c := range ns {
-			err := c.Start(implementation)
-			if err != nil {
-				return err
-			}
-		}
-	}
 	return t.Resolver.Start(implementation)
+}
+
+func (t *Testbed) Stop(implementation component.Implementation) error {
+	return t.Resolver.Stop(implementation)
 }
 
 func (t *Testbed) Query(zone string) (docker.ExecResult, error) {
@@ -87,16 +109,12 @@ func (t *Testbed) CleanLogs() error {
 	if err != nil {
 		return err
 	}
-	for _, tld := range t.Nameservers["tld"] {
-		err := tld.CleanLog()
-		if err != nil {
-			return err
-		}
-	}
-	for _, sld := range t.Nameservers["sld"] {
-		err := sld.CleanLog()
-		if err != nil {
-			return err
+	for _, nsList := range t.Nameservers {
+		for _, nameserver := range nsList {
+			err := nameserver.CleanLog()
+			if err != nil {
+				return err
+			}
 		}
 	}
 	return nil

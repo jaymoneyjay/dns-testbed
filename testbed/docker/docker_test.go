@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldExecuteCommandOnContainer(t *testing.T) {
-	client := NewClient()
+	client, _ := NewClient()
 	execResult, err := client.Exec("client", []string{"echo", "5"})
 	if err != nil {
 		return

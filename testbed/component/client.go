@@ -6,12 +6,16 @@ type Client struct {
 	*Container
 }
 
-func NewClient(containerID string) *Client {
-	return &Client{
-		Container: newContainer(containerID),
+func NewClient(containerID string) (*Client, error) {
+	container, err := newContainer(containerID)
+	if err != nil {
+		return nil, err
 	}
+	return &Client{
+		Container: container,
+	}, nil
 }
 
 func (c *Client) Query(zone string) (docker.ExecResult, error) {
-	return c.dockerCli.Exec(c.containerID, []string{"dig", zone})
+	return c.exec([]string{"dig", zone})
 }

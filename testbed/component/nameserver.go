@@ -11,17 +11,21 @@ type Nameserver struct {
 	zone      string
 	buildPath string
 	zonePath  string
-	log       *log
+	log       *containerLog
 }
 
-func NewNameserver(containerID, zone, buildPath string) *Nameserver {
+func NewNameserver(containerID, zone, buildPath string) (*Nameserver, error) {
+	container, err := newContainer(containerID)
+	if err != nil {
+		return nil, err
+	}
 	return &Nameserver{
-		Container: newContainer(containerID),
+		Container: container,
 		zone:      zone,
 		buildPath: buildPath,
 		zonePath:  filepath.Join(buildPath, "zones"),
 		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
-	}
+	}, nil
 }
 
 func (ns *Nameserver) WriteZone(zoneFragment, zoneFileID string) error {
@@ -59,5 +63,13 @@ func (ns *Nameserver) SetZoneFile(zoneFileID string) error {
 	if err != nil {
 		return err
 	}
+	return ns.restartBind9()
+}
+
+func (ns *Nameserver) Start() error {
 	return ns.startBind9()
+}
+
+func (ns *Nameserver) Stop() error {
+	return ns.stopBind9()
 }

@@ -1,17 +1,15 @@
 $TTL    0
-@       IN      SOA     @ rname.invalid. (
+@       IN      SOA     ns.com. username.com. (
                         2022092001      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          0 )       ; Negative Cache TTL
 
-
-.		IN	A	172.20.0.2
-@ IN  NS  ns
+		IN	NS	ns
 ns		IN	A	172.20.0.3
 
-target	IN	NS	ns.target
-ns.target		IN	A	172.20.0.5
+target		IN	NS	ns.target
+ns.target	IN	A	172.20.0.5
 
 @		IN	TXT	"FAKE COM SERVER"

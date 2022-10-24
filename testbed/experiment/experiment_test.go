@@ -11,7 +11,7 @@ import (
 )
 
 func TestShouldCreateDataFromSubqueriesUnchainedExperiment(t *testing.T) {
-	client := component.NewClient("client")
+	client, _ := component.NewClient("client")
 	sldServers := []*component.Nameserver{
 		component.NewNameserver("target-com", "target.com.", "../docker/buildContext/target-com"),
 		component.NewNameserver("inter-net", "inter.net.", "../docker/buildContext/inter-net"),
@@ -31,7 +31,7 @@ func TestShouldCreateDataFromSubqueriesUnchainedExperiment(t *testing.T) {
 }
 
 func TestShouldCreateValuesFromSubqueriesUnchainedExperiment(t *testing.T) {
-	client := component.NewClient("client")
+	client, _ := component.NewClient("client")
 	sldServers := []*component.Nameserver{
 		component.NewNameserver("target-com", "target.com.", "../docker/buildContext/target-com"),
 		component.NewNameserver("inter-net", "inter.net.", "../docker/buildContext/inter-net"),
@@ -52,7 +52,7 @@ func TestShouldCreateValuesFromSubqueriesUnchainedExperiment(t *testing.T) {
 }
 
 func TestShouldCreateValuesFromChainExperiment(t *testing.T) {
-	client := component.NewClient("client")
+	client, _ := component.NewClient("client")
 	sldServers := []*component.Nameserver{
 		component.NewNameserver("target-com", "target.com.", "../docker/buildContext/target-com"),
 		component.NewNameserver("inter-net", "inter.net.", "../docker/buildContext/inter-net"),

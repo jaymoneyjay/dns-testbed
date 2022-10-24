@@ -5,19 +5,19 @@ import (
 	"os"
 )
 
-type log struct {
+type containerLog struct {
 	queryLog   string
 	generalLog string
 }
 
-func newLog(queryLogPath, generalLogPath string) *log {
-	return &log{
+func newLog(queryLogPath, generalLogPath string) *containerLog {
+	return &containerLog{
 		queryLog:   queryLogPath,
 		generalLog: generalLogPath,
 	}
 }
 
-func (l *log) Clean() error {
+func (l *containerLog) Clean() error {
 	err := os.WriteFile(l.generalLog, []byte(""), 0666)
 	if err != nil {
 		return err
@@ -25,7 +25,7 @@ func (l *log) Clean() error {
 	return os.WriteFile(l.queryLog, []byte(""), 0666)
 }
 
-func (l *log) CountQueries() (int, error) {
+func (l *containerLog) CountQueries() (int, error) {
 	logs, err := os.Open(l.queryLog)
 	if err != nil {
 		return 0, err

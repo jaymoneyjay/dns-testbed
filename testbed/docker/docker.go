@@ -14,12 +14,12 @@ type Client struct {
 	ctx    context.Context
 }
 
-func NewClient() *Client {
+func NewClient() (*Client, error) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return &Client{client: cli, ctx: context.Background()}
+	return &Client{client: cli, ctx: context.Background()}, nil
 }
 
 type ExecResult struct {
@@ -47,13 +47,10 @@ func (cli *Client) inspectExecResp(execID string) (ExecResult, error) {
 		return ExecResult{}, err
 	}
 	defer attachResp.Close()
-
-	// read the output
 	var outBuf, errBuf bytes.Buffer
 	outputDone := make(chan error)
 
 	go func() {
-		// StdCopy demultiplexes the stream into two buffers
 		_, err = stdcopy.StdCopy(&outBuf, &errBuf, attachResp.Reader)
 		outputDone <- err
 	}()

@@ -22,21 +22,22 @@ func main() {
 			log.Fatal(err)
 		}
 	}
+	// TODO: Find mistake why template.zone is still loaded
 	err = testbed.Start(component.Bind9)
 	if err != nil {
 		log.Fatal(err)
 	}
-	queryResult, err := testbed.Query("target.com")
+	queryResult, err := testbed.Query("entry.target.com.")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Print(queryResult)
-	queryResult, err = testbed.Query("inter.net")
+	queryResult, err = testbed.Query("inter.net.")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Print(queryResult)
-	queryResult, err = testbed.Query("del.inter.net")
+	queryResult, err = testbed.Query("del.inter.net.")
 	if err != nil {
 		log.Fatal(err)
 	}

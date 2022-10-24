@@ -1,12 +1,12 @@
 $TTL    0
-@       IN      SOA     . rname.invalid. (
+@       IN      SOA     . username.root. (
                         2022092001      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          0 )       ; Negative Cache TTL
 
-@		IN	NS	ns.
+		IN	NS	ns.
 ns.	IN	A	172.20.0.2
 
 com.		IN	NS	ns.com.

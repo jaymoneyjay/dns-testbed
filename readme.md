@@ -22,15 +22,15 @@ The component **Client** is an empty docker containers used for completeness and
 
 The IP addresses are assigned as follows:
 
-|Component	|IP			 |	
-|------------	|----------|
-|root NS		|172.20.0.2|
-|com			|172.20.0.3|
-|net			|172.20.0.4|
-|target		|172.20.0.7|
-|inter			|172.20.0.8|
-|resolver		|172.20.0.9|
-|client		|172.20.0.10|
+|Component	| IP			       |	
+|------------	|-------------|
+|root NS		| 172.20.0.2  |
+|com			| 172.20.0.3  |
+|net			| 172.20.0.4  |
+|target		| 172.20.0.5  |
+|inter			| 172.20.0.6  |
+|resolver		| 172.20.0.9  |
+|client		| 172.20.0.10 |
 
 
 ## Installation
