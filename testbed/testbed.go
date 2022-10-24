@@ -80,8 +80,8 @@ func (t *Testbed) Stop(implementation component.Implementation) error {
 	return t.Resolver.Stop(implementation)
 }
 
-func (t *Testbed) Query(zone string) (docker.ExecResult, error) {
-	return t.Client.Query(zone)
+func (t *Testbed) Query(zone, record string) (docker.ExecResult, error) {
+	return t.Client.Query(zone, record)
 }
 
 func (t *Testbed) Run(experiment *experiment.Experiment, targetComponent component.Logging) (dataframe.DataFrame, error) {

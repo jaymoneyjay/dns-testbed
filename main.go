@@ -27,17 +27,17 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	queryResult, err := testbed.Query("entry.target.com.")
+	queryResult, err := testbed.Query("target.com.", "A")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Print(queryResult)
-	queryResult, err = testbed.Query("inter.net.")
+	queryResult, err = testbed.Query("inter.net.", "A")
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Print(queryResult)
-	queryResult, err = testbed.Query("del.inter.net.")
+	queryResult, err = testbed.Query("del.inter.net.", "A")
 	if err != nil {
 		log.Fatal(err)
 	}

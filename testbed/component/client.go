@@ -16,6 +16,6 @@ func NewClient(containerID string) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) Query(zone string) (docker.ExecResult, error) {
-	return c.exec([]string{"dig", zone})
+func (c *Client) Query(zone, record string) (docker.ExecResult, error) {
+	return c.exec([]string{"dig", zone, record})
 }

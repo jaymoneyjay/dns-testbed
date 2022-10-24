@@ -18,7 +18,7 @@ func NewResolver(containerID, buildPath string) (*Resolver, error) {
 	}
 	return &Resolver{
 		Container: container,
-		log:       newLog(filepath.Join(buildPath, "logs/query.containerLog"), filepath.Join(buildPath, "logs/general.containerLog")),
+		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
 	}, nil
 }
 
