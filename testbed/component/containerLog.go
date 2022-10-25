@@ -18,11 +18,12 @@ func newLog(queryLogPath, generalLogPath string) *containerLog {
 }
 
 func (l *containerLog) Clean() error {
-	err := os.WriteFile(l.generalLog, []byte(""), 0666)
+	_, err := os.Create(l.generalLog)
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(l.queryLog, []byte(""), 0666)
+	_, err = os.Create(l.queryLog)
+	return err
 }
 
 func (l *containerLog) CountQueries() (int, error) {

@@ -2,105 +2,221 @@ version: "3.9"
 services:
   root:
     container_name: root
-    build: root
+    build: nameserver
     volumes:
       - type: bind
-        source: root/bind9
-        target: /etc/bind
+        source: nameserver/db.root
+        target: /etc/bind/db.root
       - type: bind
-        source: root/zones
+        source: nameserver/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: nameserver/root/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: nameserver/root/zones
         target: /etc/zones
       - type: bind
-        source: root/logs
+        source: nameserver/root/logs
         target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.2
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
   com:
     container_name: com
-    build: com
+    build: nameserver
     volumes:
       - type: bind
-        source: com/bind9
-        target: /etc/bind
+        source: nameserver/db.root
+        target: /etc/bind/db.root
       - type: bind
-        source: com/zones
+        source: nameserver/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: nameserver/com/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: nameserver/com/zones
         target: /etc/zones
       - type: bind
-        source: com/logs
+        source: nameserver/com/logs
         target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.3
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
   net:
     container_name: net
-    build: net
+    build: nameserver
     volumes:
       - type: bind
-        source: net/bind9
-        target: /etc/bind
+        source: nameserver/db.root
+        target: /etc/bind/db.root
       - type: bind
-        source: net/zones
+        source: nameserver/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: nameserver/net/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: nameserver/net/zones
         target: /etc/zones
       - type: bind
-        source: net/logs
+        source: nameserver/net/logs
         target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.4
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
   target-com:
     container_name: target-com
-    build: target-com
+    build: nameserver
     volumes:
       - type: bind
-        source: target-com/bind9
-        target: /etc/bind
+        source: nameserver/db.root
+        target: /etc/bind/db.root
       - type: bind
-        source: target-com/zones
+        source: nameserver/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: nameserver/target-com/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: nameserver/target-com/zones
         target: /etc/zones
       - type: bind
-        source: target-com/logs
+        source: nameserver/target-com/logs
         target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.5
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
   inter-net:
     container_name: inter-net
-    build: inter-net
+    build: nameserver
     volumes:
       - type: bind
-        source: inter-net/bind9
-        target: /etc/bind
+        source: nameserver/db.root
+        target: /etc/bind/db.root
       - type: bind
-        source: inter-net/zones
+        source: nameserver/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: nameserver/inter-net/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: nameserver/inter-net/zones
         target: /etc/zones
       - type: bind
-        source: inter-net/logs
+        source: nameserver/inter-net/logs
         target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.6
-  resolver:
-    container_name: resolver
-    build: resolver
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
+  resolver-bind9:
+    container_name: resolver-bind9
+    build: resolver/bind9
     volumes:
       - type: bind
-        source: resolver/bind9
-        target: /etc/bind
+        source: resolver/bind9/named.conf.options
+        target: /etc/bind/named.conf.options
       - type: bind
-        source: resolver/logs
+        source: resolver/db.root
+        target: /etc/bind/db.root
+      - type: bind
+        source: resolver/bind9/logs
         target: /etc/logs
     networks:
       dns-testbed:
-        ipv4_address: 172.20.0.9
+        ipv4_address: 172.20.0.10
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service bind9 start
+        tail -F anything
+  resolver-unbound-1.17.0:
+    container_name: resolver-unbound-1.17.0
+    build: resolver/unbound-1.17.0
+    volumes:
+      - type: bind
+        source: resolver/unbound-1.17.0/installation
+        target: /etc/unbound-1.17.0
+      - type: bind
+        source: resolver/unbound-1.17.0/unbound.conf
+        target: /etc/unbound/unbound.conf
+      - type: bind
+        source: resolver/db.root
+        target: /etc/unbound/db.root
+      - type: bind
+        source: resolver/unbound-1.17.0/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.11
+    command:
+      - /bin/sh
+      - -c
+      - |
+        unbound
+        tail -F anything
+  resolver-powerdns:
+    container_name: resolver-powerDNS
+    build: resolver/powerDNS
+    volumes:
+      - type: bind
+        source: resolver/powerDNS/recursor.conf
+        target: /etc/powerdns/recursor.conf
+      - type: bind
+        source: resolver/db.root
+        target: /etc/powerdns/root.hints
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.12
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /etc/init.d/pdns-recursor start
+        tail -F anything
   client:
     container_name: client
     build: client
     networks:
       dns-testbed:
-        ipv4_address: 172.20.0.10
-    dns: 172.20.0.9
-
+        ipv4_address: 172.20.0.9
+    command:
+      - /bin/sh
+      - -c
+      - |
+        tail -F anything
 networks:
   dns-testbed:
     driver: bridge
@@ -108,22 +224,3 @@ networks:
       config:
         - subnet: 172.20.0.0/16
           gateway: 172.20.0.1
-
-volumes:
-  root-bind:
-  root-zones:
-  root-logs:
-  com-bind:
-  com-zones:
-  com-logs:
-  net-bind:
-  net-zones:
-  net-logs:
-  target-bind:
-  target-zones:
-  target-logs:
-  inter-bind:
-  inter-zones:
-  inter-logs:
-  resolver-bind:
-  resolver-logs:

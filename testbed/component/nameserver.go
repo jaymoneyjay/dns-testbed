@@ -59,17 +59,13 @@ func (ns *Nameserver) SetZoneFile(zoneFileID string) error {
 		file "/etc/zones/%s";
 	};
 	`, ns.zone, zoneFileID)
-	err := os.WriteFile(filepath.Join(ns.buildPath, "bind9", "named.conf.local"), []byte(localTemplate), 0644)
+	err := os.WriteFile(filepath.Join(ns.buildPath, "named.conf.local"), []byte(localTemplate), 0644)
 	if err != nil {
 		return err
 	}
 	return ns.restartBind9()
 }
 
-func (ns *Nameserver) Start() error {
-	return ns.startBind9()
-}
-
-func (ns *Nameserver) Stop() error {
-	return ns.stopBind9()
+func (ns *Nameserver) Restart() error {
+	return ns.restartBind9()
 }

@@ -4,5 +4,3 @@ go.sum
 **.log
 **.zone
 !**/template.zone
-**/inter-net/bind9/named.conf.local
-**/target-com/bind9/named.conf.local

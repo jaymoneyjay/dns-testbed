@@ -1,0 +1,5 @@
+; Custom root hints file.
+;
+.   300	NS  ns.
+ns.	300	A   172.20.0.2
+; End of file

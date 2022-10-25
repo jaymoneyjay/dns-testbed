@@ -3,37 +3,33 @@ package testbed
 import (
 	"dns-testbed-go/testbed/component"
 	"dns-testbed-go/testbed/docker"
-	"dns-testbed-go/testbed/experiment"
-	"dns-testbed-go/utils"
-	"github.com/go-gota/gota/dataframe"
-	"github.com/go-gota/gota/series"
 )
 
 type Testbed struct {
 	Nameservers     map[string][]*component.Nameserver
 	Client          *component.Client
-	Resolver        *component.Resolver
+	Resolver        map[component.Implementation]*component.Resolver
 	implementations []component.Implementation
 }
 
 func NewTestbed() (*Testbed, error) {
-	root, err := component.NewNameserver("root", ".", "testbed/docker/buildContext/root")
+	root, err := component.NewNameserver("root", ".", "testbed/docker/buildContext/nameserver/root")
 	if err != nil {
 		return nil, err
 	}
-	com, err := component.NewNameserver("com", "com.", "testbed/docker/buildContext/com")
+	com, err := component.NewNameserver("com", "com.", "testbed/docker/buildContext/nameserver/com")
 	if err != nil {
 		return nil, err
 	}
-	net, err := component.NewNameserver("net", "net.", "testbed/docker/buildContext/net")
+	net, err := component.NewNameserver("net", "net.", "testbed/docker/buildContext/nameserver/net")
 	if err != nil {
 		return nil, err
 	}
-	target, err := component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/target-com")
+	target, err := component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/nameserver/target-com")
 	if err != nil {
 		return nil, err
 	}
-	inter, err := component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/inter-net")
+	inter, err := component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/nameserver/inter-net")
 	if err != nil {
 		return nil, err
 	}
@@ -48,66 +44,37 @@ func NewTestbed() (*Testbed, error) {
 			inter,
 		},
 	}
-	for _, nsList := range nameservers {
-		for _, ns := range nsList {
-			err := ns.Start()
-			if err != nil {
-				return &Testbed{}, err
-			}
-		}
-	}
 	client, err := component.NewClient("client")
 	if err != nil {
 		return nil, err
 	}
-	resolver, err := component.NewResolver("resolver", "testbed/docker/buildContext/resolver")
+	bind9, err := component.NewResolver("resolver-bind9", "testbed/docker/buildContext/resolver/bind9")
+	unbound17, err := component.NewResolver("resolver-unbound-1.17.0", "testbed/docker/buildContext/resolver/unbound-1.17.0")
+	resolvers := map[component.Implementation]*component.Resolver{
+		component.Bind9:     bind9,
+		component.Unbound17: unbound17,
+	}
 	if err != nil {
 		return nil, err
 	}
 	return &Testbed{
 		Nameservers:     nameservers,
 		Client:          client,
-		Resolver:        resolver,
+		Resolver:        resolvers,
 		implementations: []component.Implementation{component.Bind9},
 	}, nil
-}
-
-func (t *Testbed) Start(implementation component.Implementation) error {
-	return t.Resolver.Start(implementation)
-}
-
-func (t *Testbed) Stop(implementation component.Implementation) error {
-	return t.Resolver.Stop(implementation)
 }
 
 func (t *Testbed) Query(zone, record string) (docker.ExecResult, error) {
 	return t.Client.Query(zone, record)
 }
 
-func (t *Testbed) Run(experiment *experiment.Experiment, targetComponent component.Logging) (dataframe.DataFrame, error) {
-	var implementationList []string
-	var dataList []int
-	var valueList []int
-	for _, implementation := range t.implementations {
-		data, values, err := experiment.Run(t.Client, targetComponent, t.Nameservers["sld"])
-		if err != nil {
-			return dataframe.DataFrame{}, nil
-		}
-		implementationList = append(implementationList, utils.Repeat(implementation.String(), len(data))...)
-		dataList = append(dataList, data...)
-		valueList = append(valueList, values...)
-	}
-	return dataframe.New(
-		series.New(implementationList, series.String, "implementation"),
-		series.New(dataList, series.Int, "data"),
-		series.New(valueList, series.Int, "value"),
-	), nil
-}
-
 func (t *Testbed) CleanLogs() error {
-	err := t.Resolver.CleanLog()
-	if err != nil {
-		return err
+	for _, resolver := range t.Resolver {
+		err := resolver.CleanLog()
+		if err != nil {
+			return err
+		}
 	}
 	for _, nsList := range t.Nameservers {
 		for _, nameserver := range nsList {

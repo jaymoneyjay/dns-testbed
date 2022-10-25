@@ -1,9 +1,13 @@
 package component
 
-import "dns-testbed-go/testbed/docker"
+import (
+	"dns-testbed-go/testbed/docker"
+	"fmt"
+)
 
 type Client struct {
 	*Container
+	resolver Implementation
 }
 
 func NewClient(containerID string) (*Client, error) {
@@ -13,9 +17,14 @@ func NewClient(containerID string) (*Client, error) {
 	}
 	return &Client{
 		Container: container,
+		resolver:  Bind9,
 	}, nil
 }
 
+func (c *Client) SetResolver(resolver Implementation) {
+	c.resolver = resolver
+}
+
 func (c *Client) Query(zone, record string) (docker.ExecResult, error) {
-	return c.exec([]string{"dig", zone, record})
+	return c.exec([]string{"dig", fmt.Sprintf("@%s", c.resolver.IP()), zone, record})
 }

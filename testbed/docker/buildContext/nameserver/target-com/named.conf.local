@@ -1,0 +1,5 @@
+zone "target.com." {
+		type master;
+		file "/etc/zones/subquery-unchained.zone";
+	};
+	

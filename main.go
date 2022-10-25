@@ -22,11 +22,7 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-	// TODO: Find mistake why template.zone is still loaded
-	err = testbed.Start(component.Bind9)
-	if err != nil {
-		log.Fatal(err)
-	}
+	testbed.Client.SetResolver(component.Unbound17)
 	queryResult, err := testbed.Query("target.com.", "A")
 	if err != nil {
 		log.Fatal(err)

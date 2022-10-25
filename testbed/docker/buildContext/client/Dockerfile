@@ -7,6 +7,3 @@ RUN apt-get update \
   vim \
   dnstracer \
   tcpdump
-
-# Run eternal loop
-CMD ["/bin/bash", "-c", "while :; do sleep 10; done"]
