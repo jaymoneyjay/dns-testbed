@@ -175,9 +175,6 @@ services:
       - type: bind
         source: resolver/db.root
         target: /etc/unbound/db.root
-      - type: bind
-        source: resolver/unbound-1.17.0/logs
-        target: /etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.11
@@ -205,6 +202,20 @@ services:
       - -c
       - |
         /etc/init.d/pdns-recursor start
+        tail -F anything
+  resolver-knot:
+    container_name: resolver-knot
+    image: cznic/knot-resolver
+    volumes:
+      - type: bind
+        source: resolver/knot/kresd.conf
+        target: /etc/knot-resolver/kresd.conf
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.13
+    entrypoint: /bin/bash -c
+    command:
+      - |
         tail -F anything
   client:
     container_name: client
