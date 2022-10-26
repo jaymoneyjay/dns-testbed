@@ -7,11 +7,13 @@ type Implementation int
 const (
 	Bind9 Implementation = iota
 	Unbound17
+	Unbound16
+	Unbound10
 	PowerDNS
 )
 
 func (i Implementation) String() string {
-	return [...]string{"bind9", "unbound-1.17.0", "powerDNS"}[i]
+	return [...]string{"bind9", "unbound-1.17.0", "unbound-1.16.0", "unbound-1.10.0", "powerDNS"}[i]
 }
 
 func (i Implementation) IP() string {

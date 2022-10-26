@@ -11,9 +11,9 @@ RUN apt-get update \
     libssl-dev \
     build-essential
 
-RUN wget https://www.nlnetlabs.nl/downloads/unbound/unbound-1.17.0.tar.gz
-RUN tar xzf unbound-1.17.0.tar.gz
-RUN ./unbound-1.17.0/configure
+RUN wget https://www.nlnetlabs.nl/downloads/unbound/unbound-1.10.0.tar.gz
+RUN tar xzf unbound-1.10.0.tar.gz
+RUN ./unbound-1.10.0/configure
 RUN make
 RUN make install
 

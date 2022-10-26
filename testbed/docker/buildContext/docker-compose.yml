@@ -167,14 +167,11 @@ services:
     build: resolver/unbound-1.17.0
     volumes:
       - type: bind
-        source: resolver/unbound-1.17.0/installation
-        target: /etc/unbound-1.17.0
-      - type: bind
         source: resolver/unbound-1.17.0/unbound.conf
-        target: /etc/unbound/unbound.conf
+        target: /usr/local/etc/unbound/unbound.conf
       - type: bind
         source: resolver/db.root
-        target: /etc/unbound/db.root
+        target: /usr/local/etc/unbound/db.root
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.11
@@ -182,7 +179,48 @@ services:
       - /bin/sh
       - -c
       - |
-        unbound
+        unbound-control-setup
+        unbound-control start
+        tail -F anything
+  resolver-unbound-1.16.0:
+    container_name: resolver-unbound-1.16.0
+    build: resolver/unbound-1.16.0
+    volumes:
+      - type: bind
+        source: resolver/unbound-1.16.0/unbound.conf
+        target: /usr/local/etc/unbound/unbound.conf
+      - type: bind
+        source: resolver/db.root
+        target: /usr/local/etc/unbound/db.root
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.12
+    command:
+      - /bin/sh
+      - -c
+      - |
+        unbound-control-setup
+        unbound-control start
+        tail -F anything
+  resolver-unbound-1.10.0:
+    container_name: resolver-unbound-1.10.0
+    build: resolver/unbound-1.10.0
+    volumes:
+      - type: bind
+        source: resolver/unbound-1.10.0/unbound.conf
+        target: /usr/local/etc/unbound/unbound.conf
+      - type: bind
+        source: resolver/db.root
+        target: /usr/local/etc/unbound/db.root
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.13
+    command:
+      - /bin/sh
+      - -c
+      - |
+        unbound-control-setup
+        unbound-control start
         tail -F anything
   resolver-powerdns:
     container_name: resolver-powerDNS
@@ -196,7 +234,7 @@ services:
         target: /etc/powerdns/root.hints
     networks:
       dns-testbed:
-        ipv4_address: 172.20.0.12
+        ipv4_address: 172.20.0.14
     command:
       - /bin/sh
       - -c
@@ -212,7 +250,7 @@ services:
         target: /etc/knot-resolver/kresd.conf
     networks:
       dns-testbed:
-        ipv4_address: 172.20.0.13
+        ipv4_address: 172.20.0.15
     entrypoint: /bin/bash -c
     command:
       - |
