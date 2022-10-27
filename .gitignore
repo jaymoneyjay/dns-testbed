@@ -5,3 +5,5 @@ go.sum
 **.zone
 !**/template.zone
 .ipynb_checkpoints/**
+**/target-com/named.conf.local
+**/inter-net/named.conf.local

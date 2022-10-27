@@ -1,8 +1,8 @@
 package component
 
 import (
-	"bufio"
 	"os"
+	"strings"
 )
 
 type containerLog struct {
@@ -18,23 +18,28 @@ func newLog(queryLogPath, generalLogPath string) *containerLog {
 }
 
 func (l *containerLog) Clean() error {
-	_, err := os.Create(l.generalLog)
+	file, err := os.Create(l.generalLog)
+	file.Close()
 	if err != nil {
 		return err
 	}
-	_, err = os.Create(l.queryLog)
+	file, err = os.Create(l.queryLog)
+	file.Close()
 	return err
 }
 
 func (l *containerLog) CountQueries() (int, error) {
-	logs, err := os.Open(l.queryLog)
+	file, err := os.ReadFile(l.queryLog)
 	if err != nil {
 		return 0, err
 	}
-	logsScanner := bufio.NewScanner(logs)
-	queryCount := 0
-	for logsScanner.Scan() {
-		queryCount++
+	var cleanedByteSlice []uint8
+	for _, byte := range file {
+		if byte != 0 {
+			cleanedByteSlice = append(cleanedByteSlice, byte)
+		}
 	}
-	return queryCount, nil
+	fileString := string(cleanedByteSlice)
+	lines := strings.Split(fileString, "\n")
+	return len(lines) - 1, nil
 }

@@ -1,5 +1,5 @@
 zone "target.com." {
 		type master;
-		file "/etc/zones/subquery-unchained.zone";
+		file "/etc/zones/subquery-unchained-20.zone";
 	};
 	
