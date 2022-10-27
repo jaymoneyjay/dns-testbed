@@ -1,5 +1,5 @@
 zone "inter.net." {
 		type master;
-		file "/etc/zones/subquery-unchained-12.zone";
+		file "/etc/zones/subquery-unchained-10.zone";
 	};
 	

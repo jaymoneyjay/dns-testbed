@@ -4,7 +4,11 @@ import (
 	"dns-testbed-go/testbed"
 	"dns-testbed-go/testbed/component"
 	"fmt"
+	"github.com/go-gota/gota/dataframe"
+	"github.com/go-gota/gota/series"
 	"log"
+	"os"
+	"time"
 )
 
 func main() {
@@ -16,15 +20,43 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	target := t.Nameservers["sld"][0]
-	inter := t.Nameservers["sld"][1]
-	err = target.SetZoneFile("subquery-unchained-20.zone")
+
+	var dataNSDel []int
+	var dataNumQueries []int
+	var dataImpl []string
+	for implementation := range t.Resolver {
+		impl, nsDel, numQueries := validate(t, implementation)
+		dataNSDel = append(dataNSDel, nsDel...)
+		dataNumQueries = append(dataNumQueries, numQueries...)
+		dataImpl = append(dataImpl, impl...)
+	}
+	dfResults := dataframe.New(
+		series.New(dataImpl, series.String, "Implementation"),
+		series.New(dataNumQueries, series.Int, "Amplification"),
+		series.New(dataNSDel, series.Int, "NS Delegations"),
+	)
+	resultsFile, err := os.Create("results.csv")
 	if err != nil {
 		log.Fatal(err)
 	}
-	t.Client.SetResolver(component.Unbound10)
-	var results []int
-	for i := 11; i < 21; i++ {
+	err = dfResults.WriteCSV(resultsFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func validate(t *testbed.Testbed, implementation component.Implementation) ([]string, []int, []int) {
+	target := t.Nameservers["sld"][0]
+	inter := t.Nameservers["sld"][1]
+	err := target.SetZoneFile("subquery-unchained-20.zone")
+	if err != nil {
+		log.Fatal(err)
+	}
+	t.Client.SetResolver(implementation)
+	var dataNSDel []int
+	var dataNumQueries []int
+	var dataImpl []string
+	for i := 1; i < 11; i++ {
 		err = inter.SetZoneFile(fmt.Sprintf("subquery-unchained-%d.zone", i))
 		if err != nil {
 			log.Fatal(err)
@@ -41,7 +73,6 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		//time.Sleep(5 * time.Second)
 		queryResult, err := t.Client.Query("del.inter.net", "A")
 		if err != nil {
 			log.Fatal(err)
@@ -51,8 +82,10 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, numberOfQueries)
-		fmt.Println(numberOfQueries)
+		dataNSDel = append(dataNSDel, i)
+		dataNumQueries = append(dataNumQueries, numberOfQueries)
+		dataImpl = append(dataImpl, implementation.String())
+		time.Sleep(5 * time.Second)
 	}
-	fmt.Print(results)
+	return dataImpl, dataNSDel, dataNumQueries
 }

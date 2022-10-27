@@ -172,6 +172,9 @@ services:
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
+      - type: bind
+        source: resolver/unbound-1.17.0/logs
+        target: /usr/local/etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.11
@@ -192,6 +195,9 @@ services:
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
+      - type: bind
+        source: resolver/unbound-1.16.0/logs
+        target: /usr/local/etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.12
@@ -212,6 +218,9 @@ services:
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
+      - type: bind
+        source: resolver/unbound-1.10.0/logs
+        target: /usr/local/etc/logs
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.13

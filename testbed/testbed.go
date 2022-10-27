@@ -6,10 +6,9 @@ import (
 )
 
 type Testbed struct {
-	Nameservers     map[string][]*component.Nameserver
-	Client          *component.Client
-	Resolver        map[component.Implementation]*component.Resolver
-	implementations []component.Implementation
+	Nameservers map[string][]*component.Nameserver
+	Client      *component.Client
+	Resolver    map[component.Implementation]*component.Resolver
 }
 
 func NewTestbed() (*Testbed, error) {
@@ -50,18 +49,21 @@ func NewTestbed() (*Testbed, error) {
 	}
 	bind9, err := component.NewResolver("resolver-bind9", "testbed/docker/buildContext/resolver/bind9")
 	unbound17, err := component.NewResolver("resolver-unbound-1.17.0", "testbed/docker/buildContext/resolver/unbound-1.17.0")
+	unbound16, err := component.NewResolver("resolver-unbound-1.16.0", "testbed/docker/buildContext/resolver/unbound-1.16.0")
+	unbound10, err := component.NewResolver("resolver-unbound-1.10.0", "testbed/docker/buildContext/resolver/unbound-1.10.0")
 	resolvers := map[component.Implementation]*component.Resolver{
 		component.Bind9:     bind9,
 		component.Unbound17: unbound17,
+		component.Unbound16: unbound16,
+		component.Unbound10: unbound10,
 	}
 	if err != nil {
 		return nil, err
 	}
 	return &Testbed{
-		Nameservers:     nameservers,
-		Client:          client,
-		Resolver:        resolvers,
-		implementations: []component.Implementation{component.Bind9},
+		Nameservers: nameservers,
+		Client:      client,
+		Resolver:    resolvers,
 	}, nil
 }
 
