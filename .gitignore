@@ -4,3 +4,4 @@ go.sum
 **.log
 **.zone
 !**/template.zone
+.ipynb_checkpoints/**
