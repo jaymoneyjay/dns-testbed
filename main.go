@@ -53,19 +53,19 @@ func validate(t *testbed.Testbed, implementation component.Implementation) ([]st
 		log.Fatal(err)
 	}
 	t.Client.SetResolver(implementation)
+	_, err = t.Client.Query("target.com", "A")
+	if err != nil {
+		log.Fatal(err)
+	}
+	_, err = t.Client.Query("inter.net", "A")
+	if err != nil {
+		log.Fatal(err)
+	}
 	var dataNSDel []int
 	var dataNumQueries []int
 	var dataImpl []string
-	for i := 1; i < 11; i++ {
+	for i := 4; i < 11; i++ {
 		err = inter.SetZoneFile(fmt.Sprintf("subquery-unchained-%d.zone", i))
-		if err != nil {
-			log.Fatal(err)
-		}
-		_, err := t.Client.Query("target.com", "A")
-		if err != nil {
-			log.Fatal(err)
-		}
-		_, err = t.Client.Query("inter.net", "A")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -79,13 +79,14 @@ func validate(t *testbed.Testbed, implementation component.Implementation) ([]st
 		}
 		fmt.Print(queryResult)
 		numberOfQueries, err := target.CountQueries()
+		fmt.Println(numberOfQueries)
 		if err != nil {
 			log.Fatal(err)
 		}
 		dataNSDel = append(dataNSDel, i)
 		dataNumQueries = append(dataNumQueries, numberOfQueries)
 		dataImpl = append(dataImpl, implementation.String())
-		time.Sleep(5 * time.Second)
+		time.Sleep(1 * time.Second)
 	}
 	return dataImpl, dataNSDel, dataNumQueries
 }

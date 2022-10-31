@@ -47,15 +47,19 @@ func NewTestbed() (*Testbed, error) {
 	if err != nil {
 		return nil, err
 	}
-	bind9, err := component.NewResolver("resolver-bind9", "testbed/docker/buildContext/resolver/bind9")
+	/*bind9, err := component.NewResolver("resolver-bind9", "testbed/docker/buildContext/resolver/bind9")
 	unbound17, err := component.NewResolver("resolver-unbound-1.17.0", "testbed/docker/buildContext/resolver/unbound-1.17.0")
 	unbound16, err := component.NewResolver("resolver-unbound-1.16.0", "testbed/docker/buildContext/resolver/unbound-1.16.0")
-	unbound10, err := component.NewResolver("resolver-unbound-1.10.0", "testbed/docker/buildContext/resolver/unbound-1.10.0")
+	unbound10, err := component.NewResolver("resolver-unbound-1.10.0", "testbed/docker/buildContext/resolver/unbound-1.10.0")*/
+	powerDNS47, err := component.NewResolver("resolver-powerdns-4.7", "testbed/docker/buildContext/resolver/powerdns-4.7")
+	//knot, err := component.NewResolver("resolver-knot", "testbed/docker/buildContext/resolver/knot")
 	resolvers := map[component.Implementation]*component.Resolver{
-		component.Bind9:     bind9,
-		component.Unbound17: unbound17,
-		component.Unbound16: unbound16,
-		component.Unbound10: unbound10,
+		/*component.Bind9: bind9,
+		component.Unbound17:  unbound17,
+		component.Unbound16:  unbound16,
+		component.Unbound10:  unbound10,*/
+		component.PowerDNS47: powerDNS47,
+		//component.Knot:       knot,
 	}
 	if err != nil {
 		return nil, err

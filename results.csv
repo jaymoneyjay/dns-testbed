@@ -15,7 +15,7 @@ unbound-1.17.0,36,3
 unbound-1.17.0,36,4
 unbound-1.17.0,36,5
 unbound-1.17.0,36,6
-unbound-1.17.0,37,7
+unbound-1.17.0,36,7
 unbound-1.17.0,36,8
 unbound-1.17.0,36,9
 unbound-1.17.0,36,10
@@ -28,7 +28,7 @@ unbound-1.16.0,36,6
 unbound-1.16.0,36,7
 unbound-1.16.0,36,8
 unbound-1.16.0,36,9
-unbound-1.16.0,37,10
+unbound-1.16.0,36,10
 unbound-1.10.0,10,1
 unbound-1.10.0,20,2
 unbound-1.10.0,30,3
@@ -36,6 +36,16 @@ unbound-1.10.0,40,4
 unbound-1.10.0,50,5
 unbound-1.10.0,60,6
 unbound-1.10.0,70,7
-unbound-1.10.0,0,8
+unbound-1.10.0,80,8
 unbound-1.10.0,90,9
-unbound-1.10.0,100,10
+unbound-1.10.0,102,10
+powerDNS-4.7,6,1
+powerDNS-4.7,12,2
+powerDNS-4.7,17,3
+powerDNS-4.7,17,4
+powerDNS-4.7,17,5
+powerDNS-4.7,17,6
+powerDNS-4.7,17,7
+powerDNS-4.7,17,8
+powerDNS-4.7,17,9
+powerDNS-4.7,17,10

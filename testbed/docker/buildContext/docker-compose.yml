@@ -231,16 +231,16 @@ services:
         unbound-control-setup
         unbound-control start
         tail -F anything
-  resolver-powerdns:
-    container_name: resolver-powerDNS
-    build: resolver/powerDNS
+  resolver-powerdns-4.7:
+    container_name: resolver-powerdns-4.7
+    build: resolver/powerdns-4.7
     volumes:
       - type: bind
-        source: resolver/powerDNS/recursor.conf
+        source: resolver/powerdns-4.7/recursor.conf
         target: /etc/powerdns/recursor.conf
       - type: bind
         source: resolver/db.root
-        target: /etc/powerdns/root.hints
+        target: /usr/share/dns/myroot.hints
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.14
@@ -250,20 +250,20 @@ services:
       - |
         /etc/init.d/pdns-recursor start
         tail -F anything
-  resolver-knot:
-    container_name: resolver-knot
-    image: cznic/knot-resolver
-    volumes:
-      - type: bind
-        source: resolver/knot/kresd.conf
-        target: /etc/knot-resolver/kresd.conf
-    networks:
-      dns-testbed:
-        ipv4_address: 172.20.0.15
-    entrypoint: /bin/bash -c
-    command:
-      - |
-        tail -F anything
+#  resolver-knot:
+#    container_name: resolver-knot
+#    image: cznic/knot-resolver
+#    volumes:
+#      - type: bind
+#        source: resolver/knot/kresd.conf
+#        target: /etc/knot-resolver/kresd.conf
+#    networks:
+#      dns-testbed:
+#        ipv4_address: 172.20.0.15
+#    entrypoint: /bin/bash -c
+#    command:
+#      - |
+#        tail -F anything
   client:
     container_name: client
     build: client
