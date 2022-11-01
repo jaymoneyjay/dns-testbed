@@ -10,11 +10,10 @@ const (
 	Unbound16
 	Unbound10
 	PowerDNS47
-	Knot
 )
 
 func (i Implementation) String() string {
-	return [...]string{"bind9", "unbound-1.17.0", "unbound-1.16.0", "unbound-1.10.0", "powerDNS-4.7", "knot"}[i]
+	return [...]string{"bind-9.11.3", "unbound-1.17.0", "unbound-1.16.0", "unbound-1.10.0", "powerDNS-4.7.3"}[i]
 }
 
 func (i Implementation) IP() string {

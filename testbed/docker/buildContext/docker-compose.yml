@@ -141,7 +141,7 @@ services:
         service bind9 start
         tail -F anything
   resolver-bind9:
-    container_name: resolver-bind9
+    container_name: resolver-bind-9.11.3
     build: resolver/bind9
     volumes:
       - type: bind
@@ -231,12 +231,12 @@ services:
         unbound-control-setup
         unbound-control start
         tail -F anything
-  resolver-powerdns-4.7:
-    container_name: resolver-powerdns-4.7
-    build: resolver/powerdns-4.7
+  resolver-powerdns-4.7.3:
+    container_name: resolver-powerDNS-4.7.3
+    build: resolver/powerdns-4.7.3
     volumes:
       - type: bind
-        source: resolver/powerdns-4.7/recursor.conf
+        source: resolver/powerdns-4.7.3/recursor.conf
         target: /etc/powerdns/recursor.conf
       - type: bind
         source: resolver/db.root

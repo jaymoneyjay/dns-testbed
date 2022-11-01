@@ -10,6 +10,6 @@ $TTL    3600
 ns		IN	A	172.20.0.4
 
 inter		IN	NS	ns.inter
-ns.inter	IN	A	172.20.0.6
+ns.inter IN	A	172.20.0.6
 
 @		IN	TXT	"FAKE NET SERVER"

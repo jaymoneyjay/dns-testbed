@@ -8,27 +8,27 @@ import (
 type Testbed struct {
 	Nameservers map[string][]*component.Nameserver
 	Client      *component.Client
-	Resolver    map[component.Implementation]*component.Resolver
+	Resolver    map[component.Implementation]component.Resolver
 }
 
 func NewTestbed() (*Testbed, error) {
-	root, err := component.NewNameserver("root", ".", "testbed/docker/buildContext/nameserver/root")
+	root, err := component.AttachRoot()
 	if err != nil {
 		return nil, err
 	}
-	com, err := component.NewNameserver("com", "com.", "testbed/docker/buildContext/nameserver/com")
+	com, err := component.AttachCOM()
 	if err != nil {
 		return nil, err
 	}
-	net, err := component.NewNameserver("net", "net.", "testbed/docker/buildContext/nameserver/net")
+	net, err := component.AttachNET()
 	if err != nil {
 		return nil, err
 	}
-	target, err := component.NewNameserver("target-com", "target.com.", "testbed/docker/buildContext/nameserver/target-com")
+	target, err := component.AttachTarget()
 	if err != nil {
 		return nil, err
 	}
-	inter, err := component.NewNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/nameserver/inter-net")
+	inter, err := component.AttachInter()
 	if err != nil {
 		return nil, err
 	}
@@ -43,23 +43,19 @@ func NewTestbed() (*Testbed, error) {
 			inter,
 		},
 	}
-	client, err := component.NewClient("client")
+	client, err := component.AttachClient("client")
 	if err != nil {
 		return nil, err
 	}
-	/*bind9, err := component.NewResolver("resolver-bind9", "testbed/docker/buildContext/resolver/bind9")
-	unbound17, err := component.NewResolver("resolver-unbound-1.17.0", "testbed/docker/buildContext/resolver/unbound-1.17.0")
-	unbound16, err := component.NewResolver("resolver-unbound-1.16.0", "testbed/docker/buildContext/resolver/unbound-1.16.0")
-	unbound10, err := component.NewResolver("resolver-unbound-1.10.0", "testbed/docker/buildContext/resolver/unbound-1.10.0")*/
-	powerDNS47, err := component.NewResolver("resolver-powerdns-4.7", "testbed/docker/buildContext/resolver/powerdns-4.7")
-	//knot, err := component.NewResolver("resolver-knot", "testbed/docker/buildContext/resolver/knot")
-	resolvers := map[component.Implementation]*component.Resolver{
-		/*component.Bind9: bind9,
-		component.Unbound17:  unbound17,
+	bind9, err := component.AttachResolver(component.Bind9)
+	unbound16, err := component.AttachResolver(component.Unbound16)
+	unbound10, err := component.AttachResolver(component.Unbound10)
+	powerDNS47, err := component.AttachResolver(component.PowerDNS47)
+	resolvers := map[component.Implementation]component.Resolver{
+		component.Bind9:      bind9,
 		component.Unbound16:  unbound16,
-		component.Unbound10:  unbound10,*/
+		component.Unbound10:  unbound10,
 		component.PowerDNS47: powerDNS47,
-		//component.Knot:       knot,
 	}
 	if err != nil {
 		return nil, err
@@ -76,18 +72,22 @@ func (t *Testbed) Query(zone, record string) (docker.ExecResult, error) {
 }
 
 func (t *Testbed) CleanLogs() error {
-	for _, resolver := range t.Resolver {
-		err := resolver.CleanLog()
-		if err != nil {
-			return err
-		}
-	}
 	for _, nsList := range t.Nameservers {
 		for _, nameserver := range nsList {
-			err := nameserver.CleanLog()
+			err := nameserver.Clean()
 			if err != nil {
 				return err
 			}
+		}
+	}
+	return nil
+}
+
+func (t *Testbed) FlushResolverCache() error {
+	for _, resolver := range t.Resolver {
+		_, err := resolver.FlushCache()
+		if err != nil {
+			return err
 		}
 	}
 	return nil

@@ -7,6 +7,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/stdcopy"
 	"io"
+	"time"
 )
 
 type Client struct {
@@ -80,4 +81,9 @@ func (cli *Client) inspectExecResp(execID string) (ExecResult, error) {
 		StdOut:   string(stdout),
 		StdErr:   string(stderr),
 	}, nil
+}
+
+func (cli *Client) RestartContainer(containerID string) error {
+	duration := 5 * time.Second
+	return cli.client.ContainerRestart(cli.ctx, containerID, &duration)
 }

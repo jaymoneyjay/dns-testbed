@@ -7,15 +7,15 @@ import (
 )
 
 type Nameserver struct {
+	*QueryLog
 	*Container
 	zone      string
 	buildPath string
 	zonePath  string
-	log       *containerLog
 }
 
-func NewNameserver(containerID, zone, buildPath string) (*Nameserver, error) {
-	container, err := newContainer(containerID)
+func attachNameserver(containerID, zone, buildPath string) (*Nameserver, error) {
+	container, err := NewContainer(containerID)
 	if err != nil {
 		return nil, err
 	}
@@ -24,7 +24,7 @@ func NewNameserver(containerID, zone, buildPath string) (*Nameserver, error) {
 		zone:      zone,
 		buildPath: buildPath,
 		zonePath:  filepath.Join(buildPath, "zones"),
-		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
+		QueryLog:  NewLog(filepath.Join(buildPath, "logs/query.log")),
 	}, nil
 }
 
@@ -45,14 +45,6 @@ func (ns *Nameserver) GetZone() string {
 	return ns.zone
 }
 
-func (ns Nameserver) CleanLog() error {
-	return ns.log.Clean()
-}
-
-func (ns Nameserver) CountQueries() (int, error) {
-	return ns.log.CountQueries()
-}
-
 func (ns *Nameserver) SetZoneFile(zoneFileID string) error {
 	localTemplate := fmt.Sprintf(`zone "%s" {
 		type master;
@@ -68,4 +60,24 @@ func (ns *Nameserver) SetZoneFile(zoneFileID string) error {
 
 func (ns *Nameserver) Restart() error {
 	return ns.restartBind9()
+}
+
+func AttachRoot() (*Nameserver, error) {
+	return attachNameserver("root", ".", "testbed/docker/buildContext/nameserver/root")
+}
+
+func AttachCOM() (*Nameserver, error) {
+	return attachNameserver("com", "com.", "testbed/docker/buildContext/nameserver/com")
+}
+
+func AttachNET() (*Nameserver, error) {
+	return attachNameserver("net", "net.", "testbed/docker/buildContext/nameserver/net")
+}
+
+func AttachTarget() (*Nameserver, error) {
+	return attachNameserver("target-com", "target.com.", "testbed/docker/buildContext/nameserver/target-com")
+}
+
+func AttachInter() (*Nameserver, error) {
+	return attachNameserver("inter-net", "inter.net.", "testbed/docker/buildContext/nameserver/inter-net")
 }

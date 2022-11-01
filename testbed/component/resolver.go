@@ -1,29 +1,27 @@
 package component
 
 import (
-	"path/filepath"
+	"dns-testbed-go/testbed/docker"
+	"errors"
+	"fmt"
 )
 
-type Resolver struct {
-	*Container
-	log *containerLog
+type Resolver interface {
+	FlushCache() (docker.ExecResult, error)
 }
 
-func NewResolver(containerID, buildPath string) (*Resolver, error) {
-	container, err := newContainer(containerID)
-	if err != nil {
-		return nil, err
+type Version int
+
+func AttachResolver(implementation Implementation) (Resolver, error) {
+	containerID := fmt.Sprintf("resolver-%s", implementation.String())
+	switch implementation {
+	case Bind9:
+		return newBind(containerID)
+	case Unbound10, Unbound16, Unbound17:
+		return newUnbound(containerID)
+	case PowerDNS47:
+		return newPowerDNS(containerID)
+	default:
+		return nil, errors.New(fmt.Sprintf("no instantiation method for implementation %s", implementation.String()))
 	}
-	return &Resolver{
-		Container: container,
-		log:       newLog(filepath.Join(buildPath, "logs/query.log"), filepath.Join(buildPath, "logs/general.log")),
-	}, nil
-}
-
-func (r *Resolver) CleanLog() error {
-	return r.log.Clean()
-}
-
-func (r *Resolver) CountQueries() (int, error) {
-	return r.log.CountQueries()
 }

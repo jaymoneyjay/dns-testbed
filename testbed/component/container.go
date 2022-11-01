@@ -8,12 +8,12 @@ import (
 )
 
 type Container struct {
-	containerID string
-	dockerCli   *docker.Client
+	ContainerID string
+	DockerCli   *docker.Client
 	logger      *log.Logger
 }
 
-func newContainer(containerID string) (*Container, error) {
+func NewContainer(containerID string) (*Container, error) {
 	client, err := docker.NewClient()
 	if err != nil {
 		return nil, err
@@ -24,29 +24,33 @@ func newContainer(containerID string) (*Container, error) {
 	}
 	logger := log.New(logFile, "DOCKER: ", log.Ldate|log.Ltime|log.Lshortfile)
 	return &Container{
-		containerID: containerID,
-		dockerCli:   client,
+		ContainerID: containerID,
+		DockerCli:   client,
 		logger:      logger,
 	}, nil
 }
 
-func (c *Container) exec(cmd []string) (docker.ExecResult, error) {
-	execResult, err := c.dockerCli.Exec(c.containerID, cmd)
+func (c *Container) Exec(cmd []string) (docker.ExecResult, error) {
+	execResult, err := c.DockerCli.Exec(c.ContainerID, cmd)
 	c.logger.Println(execResult)
 	return execResult, err
 }
 
 func (c *Container) startBind9() error {
-	_, err := c.exec([]string{"service", "bind9", "start"})
+	_, err := c.Exec([]string{"service", "bind9", "start"})
 	return err
 }
 
 func (c *Container) stopBind9() error {
-	_, err := c.exec([]string{"service", "bind9", "stop"})
+	_, err := c.Exec([]string{"service", "bind9", "stop"})
 	return err
 }
 
 func (c *Container) restartBind9() error {
-	_, err := c.exec([]string{"service", "bind9", "restart"})
+	_, err := c.Exec([]string{"service", "bind9", "restart"})
 	return err
+}
+
+func (c *Container) Restart() error {
+	return c.DockerCli.RestartContainer(c.ContainerID)
 }

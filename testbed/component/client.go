@@ -7,24 +7,24 @@ import (
 
 type Client struct {
 	*Container
-	resolver Implementation
+	ResolverImplementation Implementation
 }
 
-func NewClient(containerID string) (*Client, error) {
-	container, err := newContainer(containerID)
+func AttachClient(containerID string) (*Client, error) {
+	container, err := NewContainer(containerID)
 	if err != nil {
 		return nil, err
 	}
 	return &Client{
-		Container: container,
-		resolver:  Bind9,
+		Container:              container,
+		ResolverImplementation: Bind9,
 	}, nil
 }
 
 func (c *Client) SetResolver(resolver Implementation) {
-	c.resolver = resolver
+	c.ResolverImplementation = resolver
 }
 
 func (c *Client) Query(zone, record string) (docker.ExecResult, error) {
-	return c.exec([]string{"dig", fmt.Sprintf("@%s", c.resolver.IP()), zone, record})
+	return c.Exec([]string{"dig", fmt.Sprintf("@%s", c.ResolverImplementation.IP()), zone, record})
 }

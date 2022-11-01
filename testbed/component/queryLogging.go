@@ -1,6 +1,6 @@
 package component
 
-type Logging interface {
+type QueryLogging interface {
 	CleanLog() error
 	CountQueries() (int, error)
 }
