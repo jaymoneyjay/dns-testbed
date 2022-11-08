@@ -16,7 +16,11 @@ The goal is that a **client** can query the **resolver** about target.com and th
 The individual components are simulated by running a separate docker container for each component.
 The testbed currently supports the following dns-intallations:
 
-* [bind9](https://www.isc.org/bind/). 
+* [bind-9.11.3](https://www.isc.org/bind/).
+* unbound-1.17.0
+* unbound-1.16.0
+* unbound-1.10.0
+* powerDNS-4.7.3
 
 The component **Client** is an empty docker containers used for completeness and submitting the DNS queries respectively.
 
@@ -35,9 +39,6 @@ The IP addresses are assigned as follows:
 
 ## Installation
 1. Install [Docker](https://docs.docker.com/get-docker/)
-2. Start the docker containers with the command
-
-
 
 ## Run
 The docker containers are build and run with docker compose.
@@ -47,36 +48,19 @@ The docker containers are build and run with docker compose.
 ```bash
 compose -f testbed/docker/buildContext/docker-compose.yml up -d
 ```
-* Create a new testbed.
+* Create a new experiment
 
 ```go
-testbed := testbed.NewTestbed()
+subqueryCNAMEExperiment := experiment.NewSubqueryExperiment(experiment.SubqueryCNAME_QMIN)
 ```
 
-* Start a dns implementation
+* Run the experiment
 
 ```go
-err = testbed.Start(component.Bind9)
+err := subqueryCNAMEExperiment.Run(utils.MakeRange(1, 10, 1))
 if err != nil {
 	log.Fatal(err)
 }
 ```
 
-* Create zone files by running an attack
-
-```go
-_, err := attack.NewTemplateAttack().WriteZoneFilesAndReturnEntryZone(0, testbed.Nameservers["sld"])
-if err != nil {
-	log.Fatal(err)
-}
-```
-
-* Query zone
-
-```go
-queryResult, err := testbed.Query("target.com	")
-if err != nil {
-	log.Fatal(err)
-}
-fmt.Print(queryResult)
-```
+* The results will be stored as a .csv in the results directory.
