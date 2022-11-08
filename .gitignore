@@ -2,7 +2,6 @@ playground/**
 go.sum
 .idea/**
 **.log
-**.zone
 !**/template.zone
 .ipynb_checkpoints/**
 **/target-com/named.conf.local

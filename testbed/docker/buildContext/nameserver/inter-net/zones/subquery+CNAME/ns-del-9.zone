@@ -1,0 +1,19 @@
+$TTL 0
+@                       IN      SOA     server.inter.net. username.inter.net. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.inter.net.
+                        IN      A       172.20.0.8
+ns.inter.net.         IN      A       172.20.0.6
+www.inter.net.        IN      CNAME   inter.net.
+
+; attacker-controlled nameserver providing fake delegation
+
+; fake delegation
+del.inter.net.        IN      NS      a1.target.com.
+del.inter.net.        IN      NS      a2.target.com.
+del.inter.net.        IN      NS      a3.target.com.
+del.inter.net.        IN      NS      a4.target.com.
+del.inter.net.        IN      NS      a5.target.com.
+del.inter.net.        IN      NS      a6.target.com.
+del.inter.net.        IN      NS      a7.target.com.
+del.inter.net.        IN      NS      a8.target.com.
+del.inter.net.        IN      NS      a9.target.com.

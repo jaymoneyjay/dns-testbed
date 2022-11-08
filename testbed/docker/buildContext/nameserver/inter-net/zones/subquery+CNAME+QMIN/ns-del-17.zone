@@ -1,0 +1,27 @@
+$TTL 0
+@                       IN      SOA     server.inter.net. username.inter.net. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.inter.net.
+                        IN      A       172.20.0.8
+ns.inter.net.         IN      A       172.20.0.6
+www.inter.net.        IN      CNAME   inter.net.
+
+; attacker-controlled nameserver providing fake delegation
+
+; fake delegation
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a1.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a2.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a3.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a4.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a5.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a6.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a7.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a8.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a9.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a10.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a11.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a12.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a13.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a14.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a15.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a16.target.com.
+del.inter.net.        IN      NS      lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a17.target.com.
