@@ -1,6 +1,7 @@
 package component
 
 import (
+	"dns-testbed-go/testbed/docker"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -60,6 +61,10 @@ func (ns *Nameserver) SetZoneFile(zoneFileID string) error {
 
 func (ns *Nameserver) Restart() error {
 	return ns.restartBind9()
+}
+
+func (ns *Nameserver) SetDelay(delay int) (docker.ExecResult, error) {
+	return ns.Exec([]string{"tc", "qdisc", "change", "dev", "eth0", "root", "netem", "delay", fmt.Sprintf("%dms", delay)})
 }
 
 func AttachRoot() (*Nameserver, error) {

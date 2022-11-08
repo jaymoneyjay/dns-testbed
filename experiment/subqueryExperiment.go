@@ -10,25 +10,25 @@ import (
 	"path/filepath"
 )
 
-type Experiment struct {
-	attack     Attack
+type SubqueryExperiment struct {
+	attack     SubqueryUnchained
 	dnsTestbed *testbed.Testbed
 	resultCSV  string
 }
 
-func NewExperiment(attack Attack) *Experiment {
+func NewSubqueryExperiment(attack SubqueryUnchained) *SubqueryExperiment {
 	t, err := testbed.NewTestbed()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &Experiment{
+	return &SubqueryExperiment{
 		dnsTestbed: t,
 		attack:     attack,
 		resultCSV:  fmt.Sprintf("results/%s.csv", attack.String()),
 	}
 }
 
-func (e *Experiment) Run(nsDelegations []int) error {
+func (e *SubqueryExperiment) Run(nsDelegations []int) error {
 	err := e.dnsTestbed.CleanLogs()
 	if err != nil {
 		return err

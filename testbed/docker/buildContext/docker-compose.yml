@@ -22,11 +22,14 @@ services:
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.2
+    cap_add:
+      - NET_ADMIN
     command:
       - /bin/sh
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   com:
     container_name: com
@@ -50,11 +53,14 @@ services:
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.3
+    cap_add:
+      - NET_ADMIN
     command:
       - /bin/sh
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   net:
     container_name: net
@@ -75,6 +81,8 @@ services:
       - type: bind
         source: nameserver/net/logs
         target: /etc/logs
+    cap_add:
+      - NET_ADMIN
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.4
@@ -83,6 +91,7 @@ services:
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   target-com:
     container_name: target-com
@@ -106,11 +115,14 @@ services:
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.5
+    cap_add:
+      - NET_ADMIN
     command:
       - /bin/sh
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   inter-net:
     container_name: inter-net
@@ -134,11 +146,14 @@ services:
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.6
+    cap_add:
+      - NET_ADMIN
     command:
       - /bin/sh
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   resolver-bind9:
     container_name: resolver-bind-9.11.3
@@ -161,6 +176,7 @@ services:
       - -c
       - |
         service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   resolver-unbound-1.17.0:
     container_name: resolver-unbound-1.17.0

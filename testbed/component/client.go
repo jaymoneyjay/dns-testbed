@@ -26,5 +26,9 @@ func (c *Client) SetResolver(resolver Implementation) {
 }
 
 func (c *Client) Query(zone, record string) (docker.ExecResult, error) {
-	return c.Exec([]string{"dig", fmt.Sprintf("@%s", c.ResolverImplementation.IP()), zone, record})
+	exec, err := c.Exec([]string{"dig", fmt.Sprintf("@%s", c.ResolverImplementation.IP()), zone, record})
+	if err != nil {
+		return docker.ExecResult{}, err
+	}
+	return exec, nil
 }

@@ -5,7 +5,8 @@ RUN apt-get update \
   bind9 \
   bind9utils \
   bind9-doc \
-  vim
+  vim \
+  iproute2
 
 # Enable IPv4
 RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9

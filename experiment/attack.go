@@ -1,14 +1,25 @@
 package experiment
 
-type Attack int
+type SubqueryUnchained int
 
 const (
-	Subquery Attack = iota
+	SubqueryBasic SubqueryUnchained = iota
 	SubqueryCNAME
-	SubqueryCNAMEQMIN
-	SlowDoS
+	SubqueryCNAME_QMIN
 )
 
-func (i Attack) String() string {
-	return [...]string{"subquery", "subquery+CNAME", "subquery+CNAME+QMIN", "slowDoS"}[i]
+func (i SubqueryUnchained) String() string {
+	return [...]string{"subquery", "subquery+CNAME", "subquery+CNAME+QMIN"}[i]
+}
+
+type SlowDNS int
+
+const (
+	SlowDNS_Basic SlowDNS = iota
+	SlowDNS_CNAME
+	SlowDNS_CNAME_QMIN
+)
+
+func (i SlowDNS) String() string {
+	return [...]string{"slowDNS", "slowDNS+CNAME", "slowDNS+CNAME+QMIN"}[i]
 }

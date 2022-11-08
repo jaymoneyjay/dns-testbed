@@ -1,5 +1,5 @@
 zone "target.com." {
 		type master;
-		file "/etc/zones/subquery+CNAME+QMIN/ns-del-10.zone";
+		file "/etc/zones/slowDNS+CNAME/target.zone";
 	};
 	
