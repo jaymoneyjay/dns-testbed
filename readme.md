@@ -39,14 +39,14 @@ The IP addresses are assigned as follows:
 
 ## Installation
 1. Install [Docker](https://docs.docker.com/get-docker/)
-
+2. Install [docker-compose](https://docs.docker.com/compose/install/linux/)
 ## Run
 The docker containers are build and run with docker compose.
 
 * Start the testbed: 
 
 ```bash
-compose -f testbed/docker/buildContext/docker-compose.yml up -d
+docker-compose -f testbed/docker/buildContext/docker-compose.yml up -d
 ```
 * Create a new experiment
 

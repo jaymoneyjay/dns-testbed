@@ -17,7 +17,7 @@ func AttachClient(containerID string) (*Client, error) {
 	}
 	return &Client{
 		Container:              container,
-		ResolverImplementation: Bind9,
+		ResolverImplementation: Bind_9_11_3,
 	}, nil
 }
 

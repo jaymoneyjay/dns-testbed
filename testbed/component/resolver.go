@@ -15,7 +15,7 @@ type Version int
 func AttachResolver(implementation Implementation) (Resolver, error) {
 	containerID := fmt.Sprintf("resolver-%s", implementation.String())
 	switch implementation {
-	case Bind9:
+	case Bind_9_11_3:
 		return newBind(containerID)
 	case Unbound10, Unbound16, Unbound17:
 		return newUnbound(containerID)

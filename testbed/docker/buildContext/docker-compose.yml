@@ -155,18 +155,18 @@ services:
         service bind9 start
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
-  resolver-bind9:
+  resolver-bind-9.11.3:
     container_name: resolver-bind-9.11.3
-    build: resolver/bind9
+    build: resolver/bind-9.11.3
     volumes:
       - type: bind
-        source: resolver/bind9/named.conf.options
+        source: resolver/bind-9.11.3/named.conf.options
         target: /etc/bind/named.conf.options
       - type: bind
         source: resolver/db.root
         target: /etc/bind/db.root
       - type: bind
-        source: resolver/bind9/logs
+        source: resolver/bind-9.11.3/logs
         target: /etc/logs
     networks:
       dns-testbed:
@@ -265,6 +265,30 @@ services:
       - -c
       - |
         /etc/init.d/pdns-recursor start
+        tail -F anything
+  resolver-bind-9.18.4:
+    container_name: resolver-bind-9.18.4
+    build: resolver/bind-9.18.4
+    volumes:
+      - type: bind
+        source: resolver/bind-9.18.4/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: resolver/db.root
+        target: /etc/bind/db.root
+      - type: bind
+        source: resolver/bind-9.18.4/logs
+        target: /etc/logs
+    networks:
+      dns-testbed:
+        ipv4_address: 172.20.0.15
+    command:
+      - /bin/sh
+      - -c
+      - |
+        ldconfig
+        service bind9 start
+        tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
 #  resolver-knot:
 #    container_name: resolver-knot

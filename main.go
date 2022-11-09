@@ -22,7 +22,7 @@ func runSubqueryExperiment(attack experiment.SubqueryUnchained) {
 
 func runTimingExperiment(attack experiment.SlowDNS) {
 	implementations := []component.Implementation{
-		component.Bind9,
+		component.Bind_9_11_3,
 		//component.Unbound10,
 		component.Unbound16,
 		component.PowerDNS47,

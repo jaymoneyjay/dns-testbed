@@ -47,15 +47,15 @@ func NewTestbed() (*Testbed, error) {
 	if err != nil {
 		return nil, err
 	}
-	bind9, err := component.AttachResolver(component.Bind9)
+	bind9, err := component.AttachResolver(component.Bind_9_11_3)
 	unbound16, err := component.AttachResolver(component.Unbound16)
 	unbound10, err := component.AttachResolver(component.Unbound10)
 	powerDNS47, err := component.AttachResolver(component.PowerDNS47)
 	resolvers := map[component.Implementation]component.Resolver{
-		component.Bind9:      bind9,
-		component.Unbound16:  unbound16,
-		component.Unbound10:  unbound10,
-		component.PowerDNS47: powerDNS47,
+		component.Bind_9_11_3: bind9,
+		component.Unbound16:   unbound16,
+		component.Unbound10:   unbound10,
+		component.PowerDNS47:  powerDNS47,
 	}
 	if err != nil {
 		return nil, err
