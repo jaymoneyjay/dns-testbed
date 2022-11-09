@@ -32,12 +32,12 @@ func (l *QueryLog) CountQueries() (int, error) {
 	return len(lines) - 1, nil
 }
 
-func (l *QueryLog) GetQueryDuration(timeout time.Duration) (time.Duration, error) {
+func (l *QueryLog) GetQueryDuration() (time.Duration, error) {
 	var lines []string
 	var err error
-	/*numberOfCurrentLines := 0
+	numberOfCurrentLines := 0
 	for true {
-		time.Sleep(time.Second * 20)
+		time.Sleep(time.Second * 5)
 		lines, err = l.readCleanedLines()
 		if err != nil {
 			return 0, err
@@ -46,11 +46,6 @@ func (l *QueryLog) GetQueryDuration(timeout time.Duration) (time.Duration, error
 			break
 		}
 		numberOfCurrentLines = len(lines)
-	}*/
-	time.Sleep(timeout)
-	lines, err = l.readCleanedLines()
-	if err != nil {
-		return 0, err
 	}
 	if len(lines) < 2 {
 		return 0, nil

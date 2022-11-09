@@ -44,13 +44,12 @@ func (e *TimingExperiment) Run(delays []int, implementations []component.Impleme
 	if err != nil {
 		return err
 	}
-	for i, delay := range delays {
+	for _, delay := range delays {
 		err = e.dnsTestbed.FlushResolverCache()
 		if err != nil {
 			return err
 		}
-		delayResponse, err := target.SetDelay(delay)
-		fmt.Println(delayResponse)
+		_, err := target.SetDelay(delay)
 		fmt.Printf("Set delay at target to %d ms\n", delay)
 		if err != nil {
 			return err
@@ -68,7 +67,7 @@ func (e *TimingExperiment) Run(delays []int, implementations []component.Impleme
 			if err != nil {
 				return err
 			}
-			queryDuration, err := target.GetQueryDuration(time.Duration(i) * 5 * time.Second)
+			queryDuration, err := target.GetQueryDuration()
 			if err != nil {
 				return err
 			}
@@ -87,9 +86,9 @@ func (e *TimingExperiment) Run(delays []int, implementations []component.Impleme
 		}
 	}
 	dfResults := dataframe.New(
-		series.New(dataDelay, series.Int, "Delay"),
-		series.New(dataQueryDuration, series.Int, "Query Duration"),
-		series.New(dataImpl, series.String, "Implementation"),
+		series.New(dataDelay, series.Int, "x"),
+		series.New(dataQueryDuration, series.Int, "y"),
+		series.New(dataImpl, series.String, "hue"),
 	)
 	resultsFile, err := os.Create(e.resultCSV)
 	if err != nil {
@@ -105,6 +104,6 @@ func (e *TimingExperiment) Run(delays []int, implementations []component.Impleme
 func (e *TimingExperiment) warmup(zone string, repetitions int) {
 	for i := 0; i < repetitions; i++ {
 		_, _ = e.dnsTestbed.Query(zone, "A")
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Millisecond * 200)
 	}
 }

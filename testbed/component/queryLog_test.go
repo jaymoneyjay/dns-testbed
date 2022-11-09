@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGetQueryDuration(t *testing.T) {
-	actual, _ := NewLog("test_query.log").GetQueryDuration(time.Second)
+	actual, _ := NewLog("test_query.log").GetQueryDuration()
 	expected := time.Millisecond * 59464
 	if actual != expected {
 		log.Fatalf("Actual: %s\n Expected: %s", actual, expected)
