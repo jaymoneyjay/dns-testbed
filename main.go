@@ -8,11 +8,12 @@ import (
 )
 
 func main() {
-	runTimingExperiment(experiment.SlowDNS_CNAME)
+	//runTimingExperiment(experiment.SlowDNS_CNAME)
+	runSubqueryExperiment(experiment.SubqueryCNAME)
 }
 
-func runSubqueryExperiment() {
-	subqueryCNAMEExperiment := experiment.NewSubqueryExperiment(experiment.SubqueryCNAME_QMIN)
+func runSubqueryExperiment(attack experiment.SubqueryUnchained) {
+	subqueryCNAMEExperiment := experiment.NewSubqueryExperiment(attack)
 	err := subqueryCNAMEExperiment.Run(utils.MakeRange(1, 10, 1))
 	if err != nil {
 		log.Fatalln(err)

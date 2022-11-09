@@ -35,6 +35,14 @@ func (e *SubqueryExperiment) Run(nsDelegations []int) error {
 	}
 	target := e.dnsTestbed.Nameservers["sld"][0]
 	inter := e.dnsTestbed.Nameservers["sld"][1]
+	_, err = target.SetDelay(0)
+	if err != nil {
+		return err
+	}
+	_, err = inter.SetDelay(0)
+	if err != nil {
+		return err
+	}
 	var dataNSDel []int
 	var dataNumQueries []int
 	var dataImpl []string
@@ -65,6 +73,10 @@ func (e *SubqueryExperiment) Run(nsDelegations []int) error {
 			fmt.Print(queryResult)
 			numberOfQueries, err := target.CountQueries()
 			fmt.Println(numberOfQueries)
+			if err != nil {
+				return err
+			}
+			err = saveQueryLog(target, fmt.Sprintf("%s-%d.log", implementation.String(), nsDel), e.attack.String())
 			if err != nil {
 				return err
 			}

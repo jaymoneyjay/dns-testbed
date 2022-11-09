@@ -3,11 +3,9 @@ package experiment
 import (
 	"dns-testbed-go/testbed"
 	"dns-testbed-go/testbed/component"
-	"errors"
 	"fmt"
 	"github.com/go-gota/gota/dataframe"
 	"github.com/go-gota/gota/series"
-	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -75,7 +73,7 @@ func (e *TimingExperiment) Run(delays []int, implementations []component.Impleme
 				return err
 			}
 			fileName := fmt.Sprintf("%s-%dms.log", implementation.String(), delay)
-			err = e.saveQueryLog(target, fileName)
+			err = saveQueryLog(target, fileName, e.attack.String())
 			if err != nil {
 				return err
 			}
@@ -109,27 +107,4 @@ func (e *TimingExperiment) warmup(zone string, repetitions int) {
 		_, _ = e.dnsTestbed.Query(zone, "A")
 		time.Sleep(time.Second * 1)
 	}
-}
-
-func (e *TimingExperiment) saveQueryLog(target *component.Nameserver, fileName string) error {
-	logFile, err := os.Open(target.LogFile)
-	if err != nil {
-		return err
-	}
-	attackDirPath := fmt.Sprintf("results/logs/%s", e.attack.String())
-	if _, err := os.Stat(attackDirPath); errors.Is(err, os.ErrNotExist) {
-		err := os.Mkdir(attackDirPath, os.ModePerm)
-		if err != nil {
-			return err
-		}
-	}
-	destFile, err := os.Create(filepath.Join(attackDirPath, fileName))
-	if err != nil {
-		return err
-	}
-	_, err = io.Copy(destFile, logFile)
-	if err != nil {
-		return err
-	}
-	return nil
 }

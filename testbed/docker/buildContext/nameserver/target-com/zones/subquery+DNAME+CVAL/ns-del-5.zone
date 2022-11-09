@@ -1,0 +1,92 @@
+$TTL 0
+@                       IN      SOA     server.target.com. username.target.com. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.target.com.
+                        IN      A       172.20.0.7
+ns.target.com.         IN      A       172.20.0.5
+
+; DNAME chains
+
+a1.target.com.         IN      DNAME   b1.target.com.
+b1.target.com.         IN      DNAME   c1.target.com.
+c1.target.com.         IN      DNAME   d1.target.com.
+d1.target.com.         IN      DNAME   e1.target.com.
+e1.target.com.         IN      DNAME   f1.target.com.
+f1.target.com.         IN      DNAME   g1.target.com.
+g1.target.com.         IN      DNAME   h1.target.com.
+h1.target.com.         IN      DNAME   i1.target.com.
+i1.target.com.         IN      DNAME   j1.target.com.
+j1.target.com.         IN      DNAME   k1.target.com.
+k1.target.com.         IN      DNAME   l1.target.com.
+l1.target.com.         IN      DNAME   m1.target.com.
+m1.target.com.         IN      DNAME   n1.target.com.
+n1.target.com.         IN      DNAME   o1.target.com.
+o1.target.com.         IN      DNAME   p1.target.com.
+p1.target.com.         IN      DNAME   q1.target.com.
+
+a2.target.com.         IN      DNAME   b2.target.com.
+b2.target.com.         IN      DNAME   c2.target.com.
+c2.target.com.         IN      DNAME   d2.target.com.
+d2.target.com.         IN      DNAME   e2.target.com.
+e2.target.com.         IN      DNAME   f2.target.com.
+f2.target.com.         IN      DNAME   g2.target.com.
+g2.target.com.         IN      DNAME   h2.target.com.
+h2.target.com.         IN      DNAME   i2.target.com.
+i2.target.com.         IN      DNAME   j2.target.com.
+j2.target.com.         IN      DNAME   k2.target.com.
+k2.target.com.         IN      DNAME   l2.target.com.
+l2.target.com.         IN      DNAME   m2.target.com.
+m2.target.com.         IN      DNAME   n2.target.com.
+n2.target.com.         IN      DNAME   o2.target.com.
+o2.target.com.         IN      DNAME   p2.target.com.
+p2.target.com.         IN      DNAME   q2.target.com.
+
+a3.target.com.         IN      DNAME   b3.target.com.
+b3.target.com.         IN      DNAME   c3.target.com.
+c3.target.com.         IN      DNAME   d3.target.com.
+d3.target.com.         IN      DNAME   e3.target.com.
+e3.target.com.         IN      DNAME   f3.target.com.
+f3.target.com.         IN      DNAME   g3.target.com.
+g3.target.com.         IN      DNAME   h3.target.com.
+h3.target.com.         IN      DNAME   i3.target.com.
+i3.target.com.         IN      DNAME   j3.target.com.
+j3.target.com.         IN      DNAME   k3.target.com.
+k3.target.com.         IN      DNAME   l3.target.com.
+l3.target.com.         IN      DNAME   m3.target.com.
+m3.target.com.         IN      DNAME   n3.target.com.
+n3.target.com.         IN      DNAME   o3.target.com.
+o3.target.com.         IN      DNAME   p3.target.com.
+p3.target.com.         IN      DNAME   q3.target.com.
+
+a4.target.com.         IN      DNAME   b4.target.com.
+b4.target.com.         IN      DNAME   c4.target.com.
+c4.target.com.         IN      DNAME   d4.target.com.
+d4.target.com.         IN      DNAME   e4.target.com.
+e4.target.com.         IN      DNAME   f4.target.com.
+f4.target.com.         IN      DNAME   g4.target.com.
+g4.target.com.         IN      DNAME   h4.target.com.
+h4.target.com.         IN      DNAME   i4.target.com.
+i4.target.com.         IN      DNAME   j4.target.com.
+j4.target.com.         IN      DNAME   k4.target.com.
+k4.target.com.         IN      DNAME   l4.target.com.
+l4.target.com.         IN      DNAME   m4.target.com.
+m4.target.com.         IN      DNAME   n4.target.com.
+n4.target.com.         IN      DNAME   o4.target.com.
+o4.target.com.         IN      DNAME   p4.target.com.
+p4.target.com.         IN      DNAME   q4.target.com.
+
+a5.target.com.         IN      DNAME   b5.target.com.
+b5.target.com.         IN      DNAME   c5.target.com.
+c5.target.com.         IN      DNAME   d5.target.com.
+d5.target.com.         IN      DNAME   e5.target.com.
+e5.target.com.         IN      DNAME   f5.target.com.
+f5.target.com.         IN      DNAME   g5.target.com.
+g5.target.com.         IN      DNAME   h5.target.com.
+h5.target.com.         IN      DNAME   i5.target.com.
+i5.target.com.         IN      DNAME   j5.target.com.
+j5.target.com.         IN      DNAME   k5.target.com.
+k5.target.com.         IN      DNAME   l5.target.com.
+l5.target.com.         IN      DNAME   m5.target.com.
+m5.target.com.         IN      DNAME   n5.target.com.
+n5.target.com.         IN      DNAME   o5.target.com.
+o5.target.com.         IN      DNAME   p5.target.com.
+p5.target.com.         IN      DNAME   q5.target.com.

@@ -13,11 +13,6 @@ del.inter.net.        IN      NS      sub.a2.target.com.
 del.inter.net.        IN      NS      sub.a3.target.com.
 del.inter.net.        IN      NS      sub.a4.target.com.
 del.inter.net.        IN      NS      sub.a5.target.com.
-del.inter.net.        IN      NS      sub.a6.target.com.
-del.inter.net.        IN      NS      sub.a7.target.com.
-del.inter.net.        IN      NS      sub.a8.target.com.
-del.inter.net.        IN      NS      sub.a9.target.com.
-del.inter.net.        IN      NS      sub.a10.target.com.
 
 ; DNAME chains
 b1.inter.net.         IN      DNAME   c1.target.com.
