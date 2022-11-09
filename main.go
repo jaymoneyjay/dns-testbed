@@ -8,8 +8,8 @@ import (
 )
 
 func main() {
-	//runTimingExperiment(experiment.SlowDNS_CNAME)
-	runSubqueryExperiment(experiment.SubqueryCNAME)
+	runTimingExperiment(experiment.SlowDNS_CNAME)
+	//runSubqueryExperiment(experiment.SubqueryCNAME)
 }
 
 func runSubqueryExperiment(attack experiment.SubqueryUnchained) {
@@ -23,8 +23,8 @@ func runSubqueryExperiment(attack experiment.SubqueryUnchained) {
 func runTimingExperiment(attack experiment.SlowDNS) {
 	implementations := []component.Implementation{
 		component.Bind9,
-		component.Unbound10,
-		//component.Unbound16,
+		//component.Unbound10,
+		component.Unbound16,
 		component.PowerDNS47,
 	}
 	timingExperiment := experiment.NewTimingExperiment(attack)

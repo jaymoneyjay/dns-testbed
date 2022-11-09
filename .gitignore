@@ -7,3 +7,4 @@ go.sum
 **/target-com/named.conf.local
 **/inter-net/named.conf.local
 .ipynb_checkpoints/
+results/results_lukas/**
