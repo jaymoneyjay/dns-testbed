@@ -1,5 +1,0 @@
-zone "inter.net." {
-		type master;
-		file "/etc/zones/subquery+CNAME/ns-del-10.zone";
-	};
-	

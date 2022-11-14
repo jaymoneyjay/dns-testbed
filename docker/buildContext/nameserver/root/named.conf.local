@@ -1,0 +1,5 @@
+zone "." {
+		type master;
+		file "/etc/zones/active.zone";
+	};
+	

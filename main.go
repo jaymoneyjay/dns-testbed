@@ -1,35 +1,54 @@
 package main
 
 import (
-	"dns-testbed-go/experiment"
-	"dns-testbed-go/testbed/component"
-	"dns-testbed-go/utils"
-	"log"
+	"dns-testbed-go/lab"
 )
 
 func main() {
-	runTimingExperiment(experiment.SlowDNS_CNAME)
-	//runSubqueryExperiment(experiment.SubqueryCNAME)
+	dnsTestlab := lab.New("results")
+
+	dnsTestlab.Conduct(
+		lab.Subquery_CNAME,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+	)
+	dnsTestlab.SaveResults()
+
+	dnsTestlab.Conduct(
+		lab.Subquery_CNAME_Scrubbing,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+	)
+	dnsTestlab.SaveResults()
+
+	dnsTestlab.Conduct(
+		lab.Subquery_CNAME_Scrubbing_QMIN,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+	)
+	dnsTestlab.SaveResults()
+
+	dnsTestlab.Conduct(
+		lab.Subquery_DNAME,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+	)
+	dnsTestlab.SaveResults()
+
+	dnsTestlab.Conduct(
+		lab.Subquery_DNAME_Scrubbing,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+	)
+	dnsTestlab.SaveResults()
+
+	/*dnsTestlab.Conduct(
+		lab.SlowDNS_CNAME_Scrubbing,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(0, 1400, 200)),
+	)
+	dnsTestlab.SaveResults()*/
 }
 
-func runSubqueryExperiment(attack experiment.SubqueryUnchained) {
-	subqueryCNAMEExperiment := experiment.NewSubqueryExperiment(attack)
-	err := subqueryCNAMEExperiment.Run(utils.MakeRange(1, 10, 1))
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
-func runTimingExperiment(attack experiment.SlowDNS) {
-	implementations := []component.Implementation{
-		component.Bind_9_11_3,
-		//component.Unbound10,
-		component.Unbound16,
-		component.PowerDNS47,
-	}
-	timingExperiment := experiment.NewTimingExperiment(attack)
-	err := timingExperiment.Run(utils.MakeRange(0, 1400, 200), implementations)
-	if err != nil {
-		log.Fatalln(err)
+func getImplementations() []string {
+	return []string{
+		"bind-9.11.3",
+		"unbound-1.10.0",
+		"unbound-1.16.0",
+		"powerDNS-4.7.3",
 	}
 }

@@ -1,5 +1,0 @@
-zone "net." {
-		type master;
-		file "/etc/zones/template.zone";
-	};
-	
