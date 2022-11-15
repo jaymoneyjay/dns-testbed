@@ -1,0 +1,2 @@
+Nov 15 08:35:11 unbound[18:0] info: start of service (unbound 1.10.0).
+Nov 15 08:35:15 unbound[18:0] query: 172.20.0.9 del.inter.net. A IN

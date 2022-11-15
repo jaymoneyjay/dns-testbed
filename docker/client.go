@@ -11,7 +11,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 type Client struct {
@@ -42,7 +41,6 @@ type ExecResult struct {
 }
 
 func (cli *Client) Exec(containerID string, cmd []string) (ExecResult, error) {
-
 	execConfig := types.ExecConfig{
 		AttachStdout: true,
 		AttachStderr: true,
@@ -101,11 +99,6 @@ func (cli *Client) inspectExecResp(execID string) (ExecResult, error) {
 		StdOut:   string(stdout),
 		StdErr:   string(stderr),
 	}, nil
-}
-
-func (cli *Client) RestartContainer(containerID string) error {
-	duration := 5 * time.Second
-	return cli.client.ContainerRestart(cli.ctx, containerID, &duration)
 }
 
 func (cli *Client) WriteZoneFile(containerID, srcPath string) {

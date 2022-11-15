@@ -8,40 +8,10 @@ func main() {
 	dnsTestlab := lab.New("results")
 
 	dnsTestlab.Conduct(
-		lab.Subquery_CNAME,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
-	)
-	dnsTestlab.SaveResults()
-
-	dnsTestlab.Conduct(
-		lab.Subquery_CNAME_Scrubbing,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
-	)
-	dnsTestlab.SaveResults()
-
-	dnsTestlab.Conduct(
-		lab.Subquery_CNAME_Scrubbing_QMIN,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
-	)
-	dnsTestlab.SaveResults()
-
-	dnsTestlab.Conduct(
-		lab.Subquery_DNAME,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
-	)
-	dnsTestlab.SaveResults()
-
-	dnsTestlab.Conduct(
-		lab.Subquery_DNAME_Scrubbing,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
-	)
-	dnsTestlab.SaveResults()
-
-	/*dnsTestlab.Conduct(
 		lab.SlowDNS_CNAME_Scrubbing,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(0, 1400, 200)),
+		lab.NewDataIterator([]string{"powerDNS-4.7.3"}, lab.MakeRange(0, 800, 200)),
 	)
-	dnsTestlab.SaveResults()*/
+	dnsTestlab.SaveResults()
 }
 
 func getImplementations() []string {

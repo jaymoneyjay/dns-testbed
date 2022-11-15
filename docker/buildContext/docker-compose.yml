@@ -157,16 +157,16 @@ services:
         tail -F anything
   resolver-bind-9.11.3:
     container_name: resolver-bind-9.11.3
-    build: resolver/bind-9.11.3
+    build: resolver/resolver-bind-9.11.3
     volumes:
       - type: bind
-        source: resolver/bind-9.11.3/named.conf.options
+        source: resolver/resolver-bind-9.11.3/named.conf.options
         target: /etc/bind/named.conf.options
       - type: bind
         source: resolver/db.root
         target: /etc/bind/db.root
       - type: bind
-        source: resolver/bind-9.11.3/logs
+        source: resolver/resolver-bind-9.11.3/logs
         target: /etc/logs
     networks:
       dns-testbed:
@@ -180,16 +180,16 @@ services:
         tail -F anything
   resolver-unbound-1.17.0:
     container_name: resolver-unbound-1.17.0
-    build: resolver/unbound-1.17.0
+    build: resolver/resolver-unbound-1.17.0
     volumes:
       - type: bind
-        source: resolver/unbound-1.17.0/unbound.conf
+        source: resolver/resolver-unbound-1.17.0/unbound.conf
         target: /usr/local/etc/unbound/unbound.conf
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
       - type: bind
-        source: resolver/unbound-1.17.0/logs
+        source: resolver/resolver-unbound-1.17.0/logs
         target: /usr/local/etc/logs
     networks:
       dns-testbed:
@@ -203,16 +203,16 @@ services:
         tail -F anything
   resolver-unbound-1.16.0:
     container_name: resolver-unbound-1.16.0
-    build: resolver/unbound-1.16.0
+    build: resolver/resolver-unbound-1.16.0
     volumes:
       - type: bind
-        source: resolver/unbound-1.16.0/unbound.conf
+        source: resolver/resolver-unbound-1.16.0/unbound.conf
         target: /usr/local/etc/unbound/unbound.conf
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
       - type: bind
-        source: resolver/unbound-1.16.0/logs
+        source: resolver/resolver-unbound-1.16.0/logs
         target: /usr/local/etc/logs
     networks:
       dns-testbed:
@@ -226,16 +226,16 @@ services:
         tail -F anything
   resolver-unbound-1.10.0:
     container_name: resolver-unbound-1.10.0
-    build: resolver/unbound-1.10.0
+    build: resolver/resolver-unbound-1.10.0
     volumes:
       - type: bind
-        source: resolver/unbound-1.10.0/unbound.conf
+        source: resolver/resolver-unbound-1.10.0/unbound.conf
         target: /usr/local/etc/unbound/unbound.conf
       - type: bind
         source: resolver/db.root
         target: /usr/local/etc/unbound/db.root
       - type: bind
-        source: resolver/unbound-1.10.0/logs
+        source: resolver/resolver-unbound-1.10.0/logs
         target: /usr/local/etc/logs
     networks:
       dns-testbed:
@@ -249,10 +249,10 @@ services:
         tail -F anything
   resolver-powerdns-4.7.3:
     container_name: resolver-powerDNS-4.7.3
-    build: resolver/powerdns-4.7.3
+    build: resolver/resolver-powerdns-4.7.3
     volumes:
       - type: bind
-        source: resolver/powerdns-4.7.3/recursor.conf
+        source: resolver/resolver-powerdns-4.7.3/recursor.conf
         target: /etc/powerdns/recursor.conf
       - type: bind
         source: resolver/db.root
@@ -268,16 +268,16 @@ services:
         tail -F anything
   resolver-bind-9.18.4:
     container_name: resolver-bind-9.18.4
-    build: resolver/bind-9.18.4
+    build: resolver/resolver-bind-9.18.4
     volumes:
       - type: bind
-        source: resolver/bind-9.18.4/named.conf.options
+        source: resolver/resolver-bind-9.18.4/named.conf.options
         target: /etc/bind/named.conf.options
       - type: bind
         source: resolver/db.root
         target: /etc/bind/db.root
       - type: bind
-        source: resolver/bind-9.18.4/logs
+        source: resolver/resolver-bind-9.18.4/logs
         target: /etc/logs
     networks:
       dns-testbed:

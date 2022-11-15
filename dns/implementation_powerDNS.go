@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strings"
+	"time"
 )
 
 type powerDNS struct {
@@ -29,25 +31,41 @@ func (p powerDNS) Version() string {
 	return p.version
 }
 
-func (p powerDNS) RestartExecution() execution {
-	return execution{
-		command: []string{"/etc/init.d/pdns-recursor", "restart"},
-		responseVerification: func(response string) {
-			matched, err := regexp.MatchString("Restarting PowerDNS Recursor \\.\\.\\.done", response)
-			if err != nil {
-				return
-			}
-			if err != nil {
-				panic(err)
-			}
-			if !matched {
-				err = errors.New(fmt.Sprintf("powerDNS cache could not be restarted successfully: %s", response))
-				panic(err)
-			}
-		},
+func (p powerDNS) restart(containerID string) {
+	execResult, err := p.dockerCli.Exec(containerID, []string{"/etc/init.d/pdns-recursor", "restart"})
+	if err != nil {
+		panic(err)
+	}
+	matched, err := regexp.MatchString("Restarting PowerDNS Recursor \\.\\.\\.done", execResult.StdOut)
+	if err != nil {
+		return
+	}
+	if err != nil {
+		panic(err)
+	}
+	if !matched {
+		err = errors.New(fmt.Sprintf("powerDNS cache could not be restarted successfully: %s", execResult.StdOut))
+		panic(err)
 	}
 }
 
-func (p powerDNS) FlushCacheExecution() execution {
-	return p.RestartExecution()
+func (p powerDNS) flushCache(containerID string) {
+	p.restart(containerID)
+}
+
+func (p powerDNS) readQueryLog(containerID, containerType string, minTimeout time.Duration) []byte {
+	//TODO implement
+	var lines []string
+	numberOfCurrentLines := 0
+	for true {
+		time.Sleep(minTimeout)
+		log := p.dockerCli.ReadLog(containerID, containerType, "query.log")
+		lines = strings.Split(string(log), "\n")
+		if len(lines) == numberOfCurrentLines {
+			break
+		}
+		numberOfCurrentLines = len(lines)
+	}
+	queries := strings.Join(lines[0:len(lines)-1], "\n")
+	return []byte(queries)
 }

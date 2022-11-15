@@ -1,10 +1,13 @@
 package dns
 
+import "time"
+
 type implementation interface {
 	Kind() string
 	Version() string
-	FlushCacheExecution() execution
-	RestartExecution() execution
+	flushCache(containerID string)
+	restart(containerID string)
+	readQueryLog(containerID, containerType string, minTimeout time.Duration) []byte
 }
 
 type implementationKind int

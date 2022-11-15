@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"regexp"
+	"strings"
+	"time"
 )
 
 type unbound struct {
-	*queryLog
 	kind      implementationKind
 	version   string
 	dockerCli *docker.Client
@@ -30,23 +31,52 @@ func (u unbound) Version() string {
 	return u.version
 }
 
-func (u unbound) RestartExecution() execution {
-	return execution{
-		command: []string{"unbound-control", "reload"},
-		responseVerification: func(response string) {
-			reloadOK, err := regexp.MatchString("ok", response)
-			if err != nil {
-				panic(err)
-			}
-			if !reloadOK {
-				err = errors.New(fmt.Sprintf("unbound cache could not be restarted successfully: %s", response))
-				panic(err)
-			}
-		},
+func (u unbound) restart(containerID string) {
+	execResult, err := u.dockerCli.Exec(containerID, []string{"unbound-control", "reload"})
+	if err != nil {
+		panic(err)
 	}
-
+	reloadOK, err := regexp.MatchString("ok", execResult.StdOut)
+	if err != nil {
+		panic(err)
+	}
+	if !reloadOK {
+		err = errors.New(fmt.Sprintf("unbound cache could not be restarted successfully: %s", execResult.StdOut))
+		panic(err)
+	}
 }
 
-func (u unbound) FlushCacheExecution() execution {
-	return u.RestartExecution()
+func (u unbound) flushCache(containerID string) {
+	u.restart(containerID)
+}
+
+func (u unbound) readQueryLog(containerID, containerType string, minTimeout time.Duration) []byte {
+	var lines []string
+	numberOfCurrentLines := 0
+	for true {
+		time.Sleep(minTimeout)
+		log := u.dockerCli.ReadLog(containerID, containerType, "query.log")
+		lines = strings.Split(string(log), "\n")
+		if len(lines) == numberOfCurrentLines {
+			break
+		}
+		numberOfCurrentLines = len(lines)
+	}
+	lines = lines[0 : len(lines)-1]
+	queries := u.filterQueries(lines)
+	return []byte(strings.Join(queries, "\n"))
+}
+
+func (u unbound) filterQueries(lines []string) []string {
+	var queries []string
+	for _, line := range lines {
+		matched, err := regexp.MatchString("(query:|reply:)", line)
+		if err != nil {
+			panic(err)
+		}
+		if matched {
+			queries = append(queries, line)
+		}
+	}
+	return queries
 }

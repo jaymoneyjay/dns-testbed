@@ -43,7 +43,7 @@ func (t *timingExperiment) computeQueryDuration(queryLog []byte) (time.Duration,
 	if err != nil {
 		return 0, err
 	}
-	endTime, err := t.parseTimestamp(lines[len(lines)-2])
+	endTime, err := t.parseTimestamp(lines[len(lines)-1])
 	if err != nil {
 		return 0, err
 	}
@@ -51,6 +51,13 @@ func (t *timingExperiment) computeQueryDuration(queryLog []byte) (time.Duration,
 }
 
 func (t *timingExperiment) parseTimestamp(queryLogLine string) (time.Time, error) {
-	timestamp := strings.Split(queryLogLine, " ")[0] + " " + strings.Split(queryLogLine, " ")[1]
-	return time.Parse("02-Jan-2006 15:04:05.000", timestamp)
+	elems := strings.Split(queryLogLine, " ")[0:2]
+	timestamp := strings.Join(elems, " ")
+	parsedTimestamp, err := time.Parse("02-Jan-2006 15:04:05.000", timestamp)
+	if err == nil {
+		return parsedTimestamp, nil
+	}
+	e := strings.Split(queryLogLine, " ")[0:3]
+	timestamp = strings.Join(e, " ")
+	return time.Parse("Jan 02 15:04:05", timestamp)
 }

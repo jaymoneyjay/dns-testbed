@@ -4,12 +4,13 @@ import (
 	"dns-testbed-go/docker"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Resolver struct {
 	implementation
-	*queryLog
-	ip string
+	ip        string
+	dockerCli *docker.Client
 }
 
 func newResolver(kind implementationKind, version, ip string, client *docker.Client) *Resolver {
@@ -27,7 +28,7 @@ func newResolver(kind implementationKind, version, ip string, client *docker.Cli
 	return &Resolver{
 		ip:             ip,
 		implementation: implementation,
-		queryLog:       newQueryLog(fmt.Sprintf("%s-%s", implementation.Kind(), implementation.Version()), "resolver", client),
+		dockerCli:      client,
 	}
 }
 
@@ -40,19 +41,17 @@ func (r *Resolver) ID() string {
 }
 
 func (r *Resolver) Restart() {
-	exec := r.implementation.RestartExecution()
-	execResult, err := r.dockerCli.Exec(r.ID(), exec.command)
-	if err != nil {
-		panic(err)
-	}
-	exec.responseVerification(execResult.StdOut)
+	r.implementation.restart(r.ID())
 }
 
 func (r *Resolver) FlushCache() {
-	exec := r.implementation.FlushCacheExecution()
-	execResult, err := r.dockerCli.Exec(r.ID(), exec.command)
-	if err != nil {
-		panic(err)
-	}
-	exec.responseVerification(execResult.StdOut)
+	r.implementation.restart(r.ID())
+}
+
+func (r *Resolver) ReadQueryLog(minTimeout time.Duration) []byte {
+	return r.implementation.readQueryLog(r.ID(), "resolver", minTimeout)
+}
+
+func (r *Resolver) flushQueryLog() {
+	r.dockerCli.FlushLog(r.ID(), "resolver", "query.log")
 }

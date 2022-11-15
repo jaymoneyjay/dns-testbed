@@ -4,7 +4,8 @@ RUN apt-get update \
   && apt-get install -y \
   gnupg \
   wget \
-  vim
+  vim \
+  locate
 
 RUN touch /etc/apt/sources.list.d/pdns.list
 RUN echo "deb [arch=amd64] http://repo.powerdns.com/ubuntu bionic-rec-47 main" > /etc/apt/sources.list.d/pdns.list
