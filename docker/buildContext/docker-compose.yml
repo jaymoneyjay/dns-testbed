@@ -307,6 +307,10 @@ services:
   client:
     container_name: client
     build: client
+    volumes:
+      - type: bind
+        source: client/resolv.conf
+        target: /etc/resolv.conf
     networks:
       dns-testbed:
         ipv4_address: 172.20.0.9
