@@ -8,8 +8,8 @@ func main() {
 	dnsTestlab := lab.New("results")
 
 	dnsTestlab.Conduct(
-		lab.SlowDNS_CNAME_Scrubbing,
-		lab.NewDataIterator([]string{"powerDNS-4.7.3"}, lab.MakeRange(0, 800, 200)),
+		lab.Test_QMIN,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(10, 10, 1)),
 	)
 	dnsTestlab.SaveResults()
 }

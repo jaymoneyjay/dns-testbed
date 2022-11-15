@@ -20,4 +20,5 @@ var (
 	SlowDNS_CNAME                 = newTimingExperiment("slowDNS+CNAME", "zones")
 	SlowDNS_CNAME_Scrubbing       = newTimingExperiment("slowDNS+CNAME+Scrubbing", "zones")
 	SlowDNS_CNAME_Scrubbing_QMIN  = newTimingExperiment("slowDNS+CNAME+Scrubbing", "zones")
+	Test_QMIN                     = newTestExperiment("test+QMIN", "zones")
 )

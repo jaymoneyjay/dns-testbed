@@ -11,6 +11,8 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
+	"time"
 )
 
 type Client struct {
@@ -30,7 +32,20 @@ func NewClient() *Client {
 	if err != nil {
 		panic(err)
 	}
-	logger := zerolog.New(executionLog).With().Timestamp().Logger()
+	output := zerolog.ConsoleWriter{Out: executionLog, TimeFormat: time.RFC3339}
+	output.FormatLevel = func(i interface{}) string {
+		return strings.ToUpper(fmt.Sprintf("| %-6s|", i))
+	}
+	output.FormatMessage = func(i interface{}) string {
+		return fmt.Sprintf("***\n%s****", i)
+	}
+	output.FormatFieldName = func(i interface{}) string {
+		return fmt.Sprintf("%s:", i)
+	}
+	output.FormatFieldValue = func(i interface{}) string {
+		return strings.ToUpper(fmt.Sprintf("%s", i))
+	}
+	logger := zerolog.New(output).With().Timestamp().Logger()
 	return &Client{client: cli, ctx: context.Background(), basePath: basePath, logger: logger}
 }
 
@@ -55,7 +70,7 @@ func (cli *Client) Exec(containerID string, cmd []string) (ExecResult, error) {
 		return ExecResult{}, err
 	}
 	cli.logger.Info().
-		Str("containterID", containerID).
+		Str("containerID", containerID).
 		Msg(execResp.StdOut)
 	return execResp, nil
 }
