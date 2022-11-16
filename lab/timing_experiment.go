@@ -42,7 +42,7 @@ func (t *TimingExperiment) warmup(system *dns.System, delayMS int) {
 		"www1.target.com",
 	}
 	for _, zone := range zones {
-		for i := 0; i < 2; i++ {
+		for i := 0; i < 10; i++ {
 			system.Client.Query(zone, "A", system.Resolver)
 		}
 	}

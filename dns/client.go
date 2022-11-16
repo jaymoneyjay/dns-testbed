@@ -18,7 +18,7 @@ func newClient(ID string, client *docker.Client) *Client {
 }
 
 func (c *Client) Query(zone, record string, resolver *Resolver) string {
-	execResult, err := c.dockerCli.Exec(c.ID, []string{"dig", fmt.Sprintf("@%s", resolver.IP()), zone, record})
+	execResult, err := c.dockerCli.Exec(c.ID, []string{"dig", "+tries=1", fmt.Sprintf("@%s", resolver.IP()), zone, record})
 	if err != nil {
 		panic(err)
 	}
