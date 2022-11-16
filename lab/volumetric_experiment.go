@@ -21,13 +21,10 @@ func (v *volumetricExperiment) String() string {
 }
 
 func (v *volumetricExperiment) getMeasure() measure {
-	return func(system *dns.System, numberOfDelegations int) float64 {
+	return func(system *dns.System, numberOfDelegations int, entryZone string) float64 {
 		system.Inter.SetZone(v.getZonePath(numberOfDelegations, system.Inter.ID()))
 		system.Target.SetZone(v.getZonePath(numberOfDelegations, system.Target.ID()))
-		err := system.Client.Query("del.inter.net", "A", system.Resolver)
-		if err != nil {
-			panic(err)
-		}
+		system.Client.Query(entryZone, "A", system.Resolver)
 		targetLog := system.Target.ReadQueryLog(0)
 		numberOfQueries := v.countQueries(targetLog)
 		return numberOfQueries

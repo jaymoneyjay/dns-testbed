@@ -4,7 +4,7 @@ import (
 	"dns-testbed-go/dns"
 )
 
-type measure func(system *dns.System, x int) float64
+type measure func(system *dns.System, x int, entryZone string) float64
 
 type experiment interface {
 	getMeasure() measure

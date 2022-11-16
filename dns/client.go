@@ -2,9 +2,7 @@ package dns
 
 import (
 	"dns-testbed-go/docker"
-	"errors"
 	"fmt"
-	"regexp"
 )
 
 type Client struct {
@@ -19,17 +17,10 @@ func newClient(ID string, client *docker.Client) *Client {
 	}
 }
 
-func (c *Client) Query(zone, record string, resolver *Resolver) error {
+func (c *Client) Query(zone, record string, resolver *Resolver) string {
 	execResult, err := c.dockerCli.Exec(c.ID, []string{"dig", fmt.Sprintf("@%s", resolver.IP()), zone, record})
 	if err != nil {
 		panic(err)
 	}
-	matched, err := regexp.MatchString(";; QUESTION SECTION:", execResult.StdOut)
-	if err != nil {
-		panic(err)
-	}
-	if !matched {
-		return errors.New(fmt.Sprintf("could not query zone %s for %s record:\n%s", zone, record, execResult.StdOut))
-	}
-	return nil
+	return execResult.StdOut
 }

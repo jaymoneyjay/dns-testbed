@@ -25,7 +25,7 @@ func New(resultsDir string) *lab {
 	return &lab{dnsSystem: dns.New(), logs: []*queryLog{}, resultsDir: resultsDir}
 }
 
-func (l *lab) Conduct(experiment experiment, dataIterator *dataIterator) {
+func (l *lab) Conduct(experiment experiment, dataIterator *dataIterator, entryZone string) {
 	l.experimentID = fmt.Sprintf("%s-%s", time.Now().Format("2006-01-02-15:04:05"), experiment)
 	fmt.Printf("# Start measurements for %s experiment:\n", experiment)
 	l.reset()
@@ -33,7 +33,7 @@ func (l *lab) Conduct(experiment experiment, dataIterator *dataIterator) {
 		hue, x := dataIterator.getNextDataPoint()
 		l.dnsSystem.SetResolver(hue)
 		l.dnsSystem.FlushQueryLogs()
-		y := experiment.getMeasure()(l.dnsSystem, x)
+		y := experiment.getMeasure()(l.dnsSystem, x, entryZone)
 		l.appendResult(x, y, hue)
 		l.appendLogs(x, hue)
 		fmt.Printf("\t%s, %d, %f\n", hue, x, y)

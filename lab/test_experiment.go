@@ -21,13 +21,10 @@ func (v *testExperiment) String() string {
 }
 
 func (v *testExperiment) getMeasure() measure {
-	return func(system *dns.System, numberOfDelegations int) float64 {
+	return func(system *dns.System, numberOfDelegations int, entryZone string) float64 {
 		system.Inter.SetZone(v.getZonePath(numberOfDelegations, system.Inter.ID()))
 		system.Target.SetZone(v.getZonePath(numberOfDelegations, system.Target.ID()))
-		err := system.Client.Query("lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a1.target.com.", "A", system.Resolver)
-		if err != nil {
-			panic(err)
-		}
+		system.Client.Query(entryZone, "A", system.Resolver)
 		targetLog := system.Target.ReadQueryLog(0)
 		numberOfQueries := v.countQueries(targetLog)
 		return numberOfQueries

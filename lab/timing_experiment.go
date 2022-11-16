@@ -21,10 +21,11 @@ func (t *timingExperiment) String() string {
 }
 
 func (t *timingExperiment) getMeasure() measure {
-	return func(system *dns.System, delayInMS int) float64 {
+	return func(system *dns.System, delayInMS int, entryZone string) float64 {
 		system.Target.SetZone(filepath.Join(t.zonesDir, t.name, "target.zone"))
 		system.Target.SetDelay(time.Duration(delayInMS) * time.Millisecond)
-		system.Client.Query("a1.target.com", "A", system.Resolver)
+		t.warmup(system, delayInMS)
+		system.Client.Query(entryZone, "A", system.Resolver)
 		targetLog := system.Target.ReadQueryLog(2 * time.Second)
 		queryDuration, err := t.computeQueryDuration(targetLog)
 		if err != nil {
@@ -32,6 +33,21 @@ func (t *timingExperiment) getMeasure() measure {
 		}
 		return queryDuration.Seconds()
 	}
+}
+
+func (t *timingExperiment) warmup(system *dns.System, delayMS int) {
+	zones := []string{
+		"target.com",
+		"www.target.com",
+		"www1.target.com",
+	}
+	for _, zone := range zones {
+		for i := 0; i < 2; i++ {
+			system.Client.Query(zone, "A", system.Resolver)
+		}
+	}
+	time.Sleep(time.Millisecond * 2 * time.Duration(delayMS))
+	system.FlushQueryLogs()
 }
 
 func (t *timingExperiment) computeQueryDuration(queryLog []byte) (time.Duration, error) {
