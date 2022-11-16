@@ -13,8 +13,6 @@ type System struct {
 func New() *System {
 	dockerCli := docker.NewClient()
 	resolvers := map[string]*Resolver{
-		"bind-9.11.3":    newResolver(Bind, "9.11.3", "172.20.0.10", dockerCli),
-		"unbound-1.17.0": newResolver(Unbound, "1.17.0", "172.20.0.11", dockerCli),
 		"unbound-1.16.0": newResolver(Unbound, "1.16.0", "172.20.0.12", dockerCli),
 		"unbound-1.10.0": newResolver(Unbound, "1.10.0", "172.20.0.13", dockerCli),
 		"powerDNS-4.7.3": newResolver(PowerDNS, "4.7.3", "172.20.0.14", dockerCli),
@@ -25,7 +23,7 @@ func New() *System {
 		Inter:     newNameserver("inter-net", dockerCli),
 		resolvers: resolvers,
 		Client:    newClient("client", dockerCli),
-		Resolver:  resolvers["bind-9.11.3"],
+		Resolver:  resolvers["bind-9.18.4"],
 	}
 }
 

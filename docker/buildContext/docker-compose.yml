@@ -155,52 +155,6 @@ services:
         service bind9 start
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
-  resolver-bind-9.11.3:
-    container_name: resolver-bind-9.11.3
-    build: resolver/resolver-bind-9.11.3
-    volumes:
-      - type: bind
-        source: resolver/resolver-bind-9.11.3/named.conf.options
-        target: /etc/bind/named.conf.options
-      - type: bind
-        source: resolver/db.root
-        target: /etc/bind/db.root
-      - type: bind
-        source: resolver/resolver-bind-9.11.3/logs
-        target: /etc/logs
-    networks:
-      dns-testbed:
-        ipv4_address: 172.20.0.10
-    command:
-      - /bin/sh
-      - -c
-      - |
-        service bind9 start
-        tc qdisc add dev eth0 root netem delay 0ms
-        tail -F anything
-  resolver-unbound-1.17.0:
-    container_name: resolver-unbound-1.17.0
-    build: resolver/resolver-unbound-1.17.0
-    volumes:
-      - type: bind
-        source: resolver/resolver-unbound-1.17.0/unbound.conf
-        target: /usr/local/etc/unbound/unbound.conf
-      - type: bind
-        source: resolver/db.root
-        target: /usr/local/etc/unbound/db.root
-      - type: bind
-        source: resolver/resolver-unbound-1.17.0/logs
-        target: /usr/local/etc/logs
-    networks:
-      dns-testbed:
-        ipv4_address: 172.20.0.11
-    command:
-      - /bin/sh
-      - -c
-      - |
-        unbound-control-setup
-        unbound-control start
-        tail -F anything
   resolver-unbound-1.16.0:
     container_name: resolver-unbound-1.16.0
     build: resolver/resolver-unbound-1.16.0
@@ -290,20 +244,6 @@ services:
         service bind9 start
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
-#  resolver-knot:
-#    container_name: resolver-knot
-#    image: cznic/knot-resolver
-#    volumes:
-#      - type: bind
-#        source: resolver/knot/kresd.conf
-#        target: /etc/knot-resolver/kresd.conf
-#    networks:
-#      dns-testbed:
-#        ipv4_address: 172.20.0.15
-#    entrypoint: /bin/bash -c
-#    command:
-#      - |
-#        tail -F anything
   client:
     container_name: client
     build: client
