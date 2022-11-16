@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-type lab struct {
+type Lab struct {
 	dnsSystem    *dns.System
 	dataX        []int
 	dataY        []float64
@@ -21,11 +21,11 @@ type lab struct {
 	experimentID string
 }
 
-func New(resultsDir string) *lab {
-	return &lab{dnsSystem: dns.New(), logs: []*queryLog{}, resultsDir: resultsDir}
+func New(resultsDir string) *Lab {
+	return &Lab{dnsSystem: dns.New(), logs: []*queryLog{}, resultsDir: resultsDir}
 }
 
-func (l *lab) Conduct(experiment experiment, dataIterator *dataIterator, entryZone string) {
+func (l *Lab) Conduct(experiment experiment, dataIterator *dataIterator, entryZone string) {
 	l.experimentID = fmt.Sprintf("%s-%s", time.Now().Format("2006-01-02-15:04:05"), experiment)
 	fmt.Printf("# Start measurements for %s experiment:\n", experiment)
 	l.reset()
@@ -40,7 +40,7 @@ func (l *lab) Conduct(experiment experiment, dataIterator *dataIterator, entryZo
 	}
 }
 
-func (l *lab) reset() {
+func (l *Lab) reset() {
 	l.logs = []*queryLog{}
 	l.dataX = []int{}
 	l.dataY = []float64{}
@@ -49,13 +49,13 @@ func (l *lab) reset() {
 	l.dnsSystem.Inter.SetDelay(0)
 }
 
-func (l *lab) appendResult(dataX int, dataY float64, dataHue string) {
+func (l *Lab) appendResult(dataX int, dataY float64, dataHue string) {
 	l.dataX = append(l.dataX, dataX)
 	l.dataY = append(l.dataY, dataY)
 	l.dataHue = append(l.dataHue, dataHue)
 }
 
-func (l *lab) appendLogs(x int, hue string) {
+func (l *Lab) appendLogs(x int, hue string) {
 	targetLog := l.dnsSystem.Target.ReadQueryLog(0)
 	interLog := l.dnsSystem.Inter.ReadQueryLog(0)
 	resolverLog := l.dnsSystem.Resolver.ReadQueryLog(0)
@@ -70,7 +70,7 @@ func (l *lab) appendLogs(x int, hue string) {
 	l.logs = append(l.logs, queryLog)
 }
 
-func (l *lab) SaveResults() {
+func (l *Lab) SaveResults() {
 	perm := fs.ModePerm
 	createDirIfNotExists(l.resultsDir)
 	experimentResultsDir := filepath.Join(l.resultsDir, l.experimentID)
@@ -87,7 +87,7 @@ func (l *lab) SaveResults() {
 	l.saveLogs(experimentLogsDir)
 }
 
-func (l *lab) saveData(dir string) {
+func (l *Lab) saveData(dir string) {
 	dfResults := dataframe.New(
 		series.New(l.dataX, series.Int, "x"),
 		series.New(l.dataY, series.Float, "y"),
@@ -105,7 +105,7 @@ func (l *lab) saveData(dir string) {
 	}
 }
 
-func (l *lab) saveLogs(dir string) {
+func (l *Lab) saveLogs(dir string) {
 	for _, log := range l.logs {
 		log.save(dir)
 	}

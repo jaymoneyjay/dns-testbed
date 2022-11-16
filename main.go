@@ -5,20 +5,32 @@ import (
 )
 
 func main() {
-	dnsTestlab := lab.New("results")
+	dnsTestLab := lab.New("results")
+	runSlowDNSExperiment(dnsTestLab, lab.SlowDNS_CNAME_Scrubbing)
+}
 
-	dnsTestlab.Conduct(
-		lab.SlowDNS_CNAME_Scrubbing,
-		lab.NewDataIterator([]string{"bind-9.18.4"}, lab.MakeRange(0, 1400, 200)),
+func runSubqueryExperiment(dnsTestLab *lab.Lab, experiment *lab.VolumetricExperiment) {
+	dnsTestLab.Conduct(
+		experiment,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(1, 10, 1)),
+		"del.inter.net",
+	)
+	dnsTestLab.SaveResults()
+}
+
+func runSlowDNSExperiment(dnsTestLab *lab.Lab, experiment *lab.TimingExperiment) {
+	dnsTestLab.Conduct(
+		experiment,
+		lab.NewDataIterator(getImplementations(), lab.MakeRange(0, 1400, 200)),
 		"a1.target.com",
 	)
-	dnsTestlab.SaveResults()
+	dnsTestLab.SaveResults()
 }
 
 func getImplementations() []string {
 	return []string{
 		"bind-9.18.4",
-		//"unbound-1.10.0",
+		"unbound-1.10.0",
 		"unbound-1.16.0",
 		"powerDNS-4.7.3",
 	}

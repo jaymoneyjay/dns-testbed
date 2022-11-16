@@ -7,20 +7,20 @@ import (
 	"time"
 )
 
-type timingExperiment struct {
+type TimingExperiment struct {
 	name     string
 	zonesDir string
 }
 
-func newTimingExperiment(name, zonesDir string) *timingExperiment {
-	return &timingExperiment{name: name, zonesDir: zonesDir}
+func newTimingExperiment(name, zonesDir string) *TimingExperiment {
+	return &TimingExperiment{name: name, zonesDir: zonesDir}
 }
 
-func (t *timingExperiment) String() string {
+func (t *TimingExperiment) String() string {
 	return t.name
 }
 
-func (t *timingExperiment) getMeasure() measure {
+func (t *TimingExperiment) getMeasure() measure {
 	return func(system *dns.System, delayInMS int, entryZone string) float64 {
 		system.Target.SetZone(filepath.Join(t.zonesDir, t.name, "target.zone"))
 		system.Target.SetDelay(time.Duration(delayInMS) * time.Millisecond)
@@ -35,7 +35,7 @@ func (t *timingExperiment) getMeasure() measure {
 	}
 }
 
-func (t *timingExperiment) warmup(system *dns.System, delayMS int) {
+func (t *TimingExperiment) warmup(system *dns.System, delayMS int) {
 	zones := []string{
 		"target.com",
 		"www.target.com",
@@ -50,7 +50,7 @@ func (t *timingExperiment) warmup(system *dns.System, delayMS int) {
 	system.FlushQueryLogs()
 }
 
-func (t *timingExperiment) computeQueryDuration(queryLog []byte) (time.Duration, error) {
+func (t *TimingExperiment) computeQueryDuration(queryLog []byte) (time.Duration, error) {
 	lines := strings.Split(string(queryLog), "\n")
 	if len(lines) < 2 {
 		return 0, nil
@@ -66,7 +66,7 @@ func (t *timingExperiment) computeQueryDuration(queryLog []byte) (time.Duration,
 	return endTime.Sub(startTime), nil
 }
 
-func (t *timingExperiment) parseTimestamp(queryLogLine string) (time.Time, error) {
+func (t *TimingExperiment) parseTimestamp(queryLogLine string) (time.Time, error) {
 	elems := strings.Split(queryLogLine, " ")[0:2]
 	timestamp := strings.Join(elems, " ")
 	parsedTimestamp, err := time.Parse("02-Jan-2006 15:04:05.000", timestamp)
