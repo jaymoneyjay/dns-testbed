@@ -37,5 +37,5 @@ func (v *volumetricExperiment) getZonePath(numberOfDelegations int, nsID string)
 
 func (v *volumetricExperiment) countQueries(queryLog []byte) float64 {
 	lines := strings.Split(string(queryLog), "\n")
-	return float64(len(lines) - 1)
+	return float64(len(lines))
 }

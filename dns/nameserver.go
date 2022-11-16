@@ -17,7 +17,7 @@ func newNameserver(id string, client *docker.Client) *Nameserver {
 	return &Nameserver{
 		id:             id,
 		dockerCli:      client,
-		implementation: newBind("9.11.3", client),
+		implementation: newBind("9.18.4", client),
 	}
 }
 

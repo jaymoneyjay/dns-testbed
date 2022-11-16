@@ -66,6 +66,11 @@ func (p powerDNS) readQueryLog(containerID, containerType string, minTimeout tim
 		}
 		numberOfCurrentLines = len(lines)
 	}
-	queries := strings.Join(lines[0:len(lines)-1], "\n")
-	return []byte(queries)
+	queries := p.filterQueries(lines)
+	return []byte(strings.Join(queries, "\n"))
+}
+
+func (p powerDNS) filterQueries(lines []string) []string {
+	//TODO implement
+	return lines
 }

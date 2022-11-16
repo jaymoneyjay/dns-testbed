@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:kinetic
 
 RUN apt-get update \
   && apt-get install -y \
@@ -6,7 +6,8 @@ RUN apt-get update \
   bind9utils \
   bind9-doc \
   vim \
-  iproute2
+    iproute2\
+    locate
 
 # Enable IPv4
-RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9
+#RUN sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/bind9

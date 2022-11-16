@@ -32,7 +32,7 @@ func (b bind) Version() string {
 }
 
 func (b bind) restart(containerID string) {
-	execResult, err := b.dockerCli.Exec(containerID, []string{"service", "bind9", "restart"})
+	execResult, err := b.dockerCli.Exec(containerID, []string{"service", "named", "restart"})
 	if err != nil {
 		panic(err)
 	}
@@ -68,6 +68,20 @@ func (b bind) readQueryLog(containerID, containerType string, minTimeout time.Du
 		}
 		numberOfCurrentLines = len(lines)
 	}
-	queries := strings.Join(lines[0:len(lines)-1], "\n")
-	return []byte(queries)
+	queries := b.filterQueries(lines)
+	return []byte(strings.Join(queries, "\n"))
+}
+
+func (b bind) filterQueries(lines []string) []string {
+	var queries []string
+	for _, line := range lines {
+		matched, err := regexp.MatchString("(query:)", line)
+		if err != nil {
+			panic(err)
+		}
+		if matched {
+			queries = append(queries, line)
+		}
+	}
+	return queries
 }

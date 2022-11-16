@@ -9,7 +9,7 @@ func main() {
 
 	dnsTestlab.Conduct(
 		lab.SlowDNS_CNAME_Scrubbing,
-		lab.NewDataIterator(getImplementations(), lab.MakeRange(0, 1400, 200)),
+		lab.NewDataIterator([]string{"bind-9.18.4"}, lab.MakeRange(0, 1400, 200)),
 		"a1.target.com",
 	)
 	dnsTestlab.SaveResults()

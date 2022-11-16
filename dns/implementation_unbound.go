@@ -62,7 +62,6 @@ func (u unbound) readQueryLog(containerID, containerType string, minTimeout time
 		}
 		numberOfCurrentLines = len(lines)
 	}
-	lines = lines[0 : len(lines)-1]
 	queries := u.filterQueries(lines)
 	return []byte(strings.Join(queries, "\n"))
 }
