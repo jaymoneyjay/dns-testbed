@@ -8,12 +8,13 @@ import (
 )
 
 type TimingExperiment struct {
-	name     string
-	zonesDir string
+	name      string
+	zonesDir  string
+	entryZone string
 }
 
-func newTimingExperiment(name, zonesDir string) *TimingExperiment {
-	return &TimingExperiment{name: name, zonesDir: zonesDir}
+func newTimingExperiment(name, entryZone, zonesDir string) *TimingExperiment {
+	return &TimingExperiment{name: name, entryZone: entryZone, zonesDir: zonesDir}
 }
 
 func (t *TimingExperiment) String() string {
@@ -21,11 +22,11 @@ func (t *TimingExperiment) String() string {
 }
 
 func (t *TimingExperiment) getMeasure() measure {
-	return func(system *dns.System, delayInMS int, entryZone string) float64 {
+	return func(system *dns.System, delayInMS int) float64 {
 		system.Target.SetZone(filepath.Join(t.zonesDir, t.name, "target.zone"))
 		system.Target.SetDelay(time.Duration(delayInMS) * time.Millisecond)
 		t.warmup(system, delayInMS)
-		system.Client.Query(entryZone, "A", system.Resolver)
+		system.Client.Query(t.entryZone, "A", system.Resolver)
 		targetLog := system.Target.ReadQueryLog(2 * time.Second)
 		queryDuration, err := t.computeQueryDuration(targetLog)
 		if err != nil {

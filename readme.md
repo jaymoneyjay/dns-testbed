@@ -108,10 +108,10 @@ We provide the possibility to create new experiments based on templates we provi
 
 To create a new experiment run the following steps:
 
-* Create a new instance of the respective experiment by specifying the name of the experiment and the base directory of the zone configuration files. The configuration files should be collected in a subdirectory of the base directory with the same name as the experiment. If more than one nameserver is involved, the zone configuration files for each nameserver should be contained in another subdirectory with the name of the nameserver.
+* Create a new instance of the respective experiment by specifying the name of the experiment, the entry zone triggering the query resolution and the base directory of the zone configuration files. The configuration files should be collected in a subdirectory of the base directory with the same name as the experiment. If more than one nameserver is involved, the zone configuration files for each nameserver should be contained in another subdirectory with the name of the nameserver.
 
 ```
-volumetricExperiment := lab.newVolumetricExperiment("subquery+CNAME", "zones")
+volumetricExperiment := lab.newVolumetricExperiment("subquery+CNAME", "del.inter.net", "zones")
 
 /*
 directory structure:
@@ -127,7 +127,7 @@ directory structure:
 			ns-del-n.zone
 */
 
-newTimingExperiment("slowDNS+CNAME", "zones")
+newTimingExperiment("slowDNS+CNAME", "a1.target.com", "zones")
 
 /*
 directory structure:
@@ -141,7 +141,7 @@ directory structure:
  ```
 dnsTestLab := lab.New("results")
 ```
-* Conduct the experiment by specifying the resolver implementations that should be tested, a data range and the entry zone. The data range corresponds to the delay (in ms) at the nameserver for the timing experiment and the zone configuration (more specifically the `n` in the name of the zone configuration) of the nameservers for the volumetric experiment.
+* Conduct the experiment by specifying the resolver implementations that should be tested and a data range. The data range corresponds to the delay (in ms) at the nameserver for the timing experiment and the zone configuration (more specifically the `n` in the name of the zone configuration) of the nameservers for the volumetric experiment.
 
 ```
 dnsTestLab.Conduct(
@@ -153,7 +153,6 @@ dnsTestLab.Conduct(
 			},
 			lab.MakeRange(1, 10, 1)
 		),
-		"del.inter.net",
 )
 dnsTestLab.SaveResults()
 ```
