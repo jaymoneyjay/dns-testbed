@@ -15,6 +15,11 @@ func getImplementations() []string {
 
 func main() {
 	dnsTestLab := lab.New("results")
+	runSubqueryExperiment(dnsTestLab, lab.Subquery_CNAME)
+	runSubqueryExperiment(dnsTestLab, lab.Subquery_DNAME)
+	runSubqueryExperiment(dnsTestLab, lab.Subquery_CNAME_Scrubbing)
+	runSubqueryExperiment(dnsTestLab, lab.Subquery_DNAME_Scrubbing)
+	runSlowDNSExperiment(dnsTestLab, lab.SlowDNS_CNAME_Scrubbing)
 	runSlowDNSExperiment(dnsTestLab, lab.SlowDNS_DNAME_Scrubbing)
 }
 
