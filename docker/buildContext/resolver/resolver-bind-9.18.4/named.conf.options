@@ -3,7 +3,7 @@ options {
     dnssec-validation no;
     listen-on-v6 { any; };
     querylog yes;
-    //qname-minimization disabled;
+    qname-minimization disabled;
 };
 
 logging {
