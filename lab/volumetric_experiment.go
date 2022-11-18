@@ -8,13 +8,14 @@ import (
 )
 
 type VolumetricExperiment struct {
-	name      string
-	zonesDir  string
-	entryZone string
+	name       string
+	entryZone  string
+	zonesDir   string
+	zonePrefix string
 }
 
-func newVolumetricExperiment(name, entryZone, zonesDir string) *VolumetricExperiment {
-	return &VolumetricExperiment{name: name, entryZone: entryZone, zonesDir: zonesDir}
+func newVolumetricExperiment(name, entryZone, zonesDir, zonePrefix string) *VolumetricExperiment {
+	return &VolumetricExperiment{name: name, entryZone: entryZone, zonesDir: zonesDir, zonePrefix: zonePrefix}
 }
 
 func (v *VolumetricExperiment) String() string {
@@ -33,7 +34,7 @@ func (v *VolumetricExperiment) getMeasure() measure {
 }
 
 func (v *VolumetricExperiment) getZonePath(numberOfDelegations int, nsID string) string {
-	return filepath.Join(v.zonesDir, v.name, nsID, fmt.Sprintf("ns-del-%d.zone", numberOfDelegations))
+	return filepath.Join(v.zonesDir, v.name, nsID, fmt.Sprintf("%s-%d.zone", v.zonePrefix, numberOfDelegations))
 }
 
 func (v *VolumetricExperiment) countQueries(queryLog []byte) float64 {

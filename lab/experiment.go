@@ -12,11 +12,11 @@ type experiment interface {
 }
 
 var (
-	Subquery_CNAME                = newVolumetricExperiment("subquery+CNAME", "del.inter.net.", "zones")
-	Subquery_CNAME_Scrubbing      = newVolumetricExperiment("subquery+CNAME+scrubbing", "del.inter.net.", "zones")
-	Subquery_CNAME_Scrubbing_QMIN = newVolumetricExperiment("subquery+CNAME+scrubbing+QMIN", "del.inter.net.", "zones")
-	Subquery_DNAME                = newVolumetricExperiment("subquery+DNAME", "del.inter.net.", "zones")
-	Subquery_DNAME_Scrubbing      = newVolumetricExperiment("subquery+DNAME+scrubbing", "del.inter.net.", "zones")
+	Subquery_CNAME                = newVolumetricExperiment("subquery+CNAME", "del.inter.net.", "zones", "ns-del")
+	Subquery_CNAME_Scrubbing      = newVolumetricExperiment("subquery+CNAME+scrubbing", "del.inter.net.", "zones", "ns-del")
+	Subquery_CNAME_Scrubbing_QMIN = newVolumetricExperiment("subquery+CNAME+scrubbing+QMIN", "del.inter.net.", "zones", "ns-del")
+	Subquery_DNAME                = newVolumetricExperiment("subquery+DNAME", "del.inter.net.", "zones", "ns-del")
+	Subquery_DNAME_Scrubbing      = newVolumetricExperiment("subquery+DNAME+scrubbing", "del.inter.net.", "zones", "ns-del")
 	SlowDNS_CNAME                 = newTimingExperiment("slowDNS+CNAME", "a1.target.com.", "zones")
 	SlowDNS_CNAME_Scrubbing       = newTimingExperiment("slowDNS+CNAME+scrubbing", "a1.target.com.", "zones")
 	SlowDNS_DNAME_Scrubbing       = newTimingExperiment("slowDNS+DNAME+scrubbing", "sub.a1.target.com.", "zones")

@@ -108,10 +108,10 @@ We provide the possibility to create new experiments based on templates we provi
 
 To create a new experiment run the following steps:
 
-* Create a new instance of the respective experiment by specifying the name of the experiment, the entry zone triggering the query resolution and the base directory of the zone configuration files. The configuration files should be collected in a subdirectory of the base directory with the same name as the experiment. If more than one nameserver is involved, the zone configuration files for each nameserver should be contained in another subdirectory with the name of the nameserver.
+* Create a new instance of the respective experiment by specifying the name of the experiment, the entry zone triggering the query resolution, the base directory of the zone configuration files and the prefix of the zone name (for volumetric experiments only). The configuration files should be collected in a subdirectory of the base directory with the same name as the experiment. If more than one nameserver is involved, the zone configuration files for each nameserver should be contained in another subdirectory with the name of the nameserver.
 
 ```
-volumetricExperiment := lab.newVolumetricExperiment("subquery+CNAME", "del.inter.net", "zones")
+volumetricExperiment := lab.newVolumetricExperiment("subquery+CNAME", "del.inter.net", "zones", "ns-del")
 
 /*
 directory structure:
@@ -157,4 +157,4 @@ dnsTestLab.Conduct(
 dnsTestLab.SaveResults()
 ```
 
-* The results will the be stored in the specified directory as a .csv.
+* The results will be stored in the specified directory as a .csv.
