@@ -8,14 +8,15 @@ import (
 )
 
 type VolumetricExperiment struct {
-	name       string
-	entryZone  string
-	zonesDir   string
-	zonePrefix string
+	name           string
+	entryZone      string
+	zonesDir       string
+	zonePrefix     string
+	intermediateNS bool
 }
 
-func newVolumetricExperiment(name, entryZone, zonesDir, zonePrefix string) *VolumetricExperiment {
-	return &VolumetricExperiment{name: name, entryZone: entryZone, zonesDir: zonesDir, zonePrefix: zonePrefix}
+func newVolumetricExperiment(name, entryZone, zonesDir, zonePrefix string, intermediateNS bool) *VolumetricExperiment {
+	return &VolumetricExperiment{name: name, entryZone: entryZone, zonesDir: zonesDir, zonePrefix: zonePrefix, intermediateNS: intermediateNS}
 }
 
 func (v *VolumetricExperiment) String() string {
@@ -24,7 +25,9 @@ func (v *VolumetricExperiment) String() string {
 
 func (v *VolumetricExperiment) getMeasure() measure {
 	return func(system *dns.System, numberOfDelegations int) float64 {
-		system.Inter.SetZone(v.getZonePath(numberOfDelegations, system.Inter.ID()))
+		if v.intermediateNS {
+			system.Inter.SetZone(v.getZonePath(numberOfDelegations, system.Inter.ID()))
+		}
 		system.Target.SetZone(v.getZonePath(numberOfDelegations, system.Target.ID()))
 		system.Client.Query(v.entryZone, "A", system.Resolver)
 		targetLog := system.Target.ReadQueryLog(0)

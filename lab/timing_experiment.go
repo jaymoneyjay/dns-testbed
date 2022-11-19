@@ -23,7 +23,7 @@ func (t *TimingExperiment) String() string {
 
 func (t *TimingExperiment) getMeasure() measure {
 	return func(system *dns.System, delayInMS int) float64 {
-		system.Target.SetZone(filepath.Join(t.zonesDir, t.name, "target.zone"))
+		system.Target.SetZone(filepath.Join(t.zonesDir, t.name, system.Target.ID(), "target.zone"))
 		system.Target.SetDelay(time.Duration(delayInMS) * time.Millisecond)
 		t.warmup(system, delayInMS)
 		system.Client.Query(t.entryZone, "A", system.Resolver)

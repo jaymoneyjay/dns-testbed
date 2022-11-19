@@ -2,6 +2,10 @@ options {
     directory "/var/cache/bind";
     querylog yes;
     recursion no;
+    //dnstap { all; };
+    //dnstap-output unix "/etc/logs/dnstap.sock";
+    //dnstap-identity "tiggr";
+    //dnstap-version "bind-9.18.4";
 };
 
 logging {

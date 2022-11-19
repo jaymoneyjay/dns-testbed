@@ -14,12 +14,4 @@ e1.target.com.         IN      CNAME   f1.target.com.
 f1.target.com.         IN      CNAME   g1.target.com.
 g1.target.com.         IN      CNAME   h1.target.com.
 h1.target.com.         IN      CNAME   i1.target.com.
-i1.target.com.         IN      CNAME   j1.target.com.
-j1.target.com.         IN      CNAME   k1.target.com.
-k1.target.com.         IN      CNAME   l1.target.com.
-l1.target.com.         IN      CNAME   m1.target.com.
-m1.target.com.         IN      CNAME   n1.target.com.
-n1.target.com.         IN      CNAME   o1.target.com.
-o1.target.com.         IN      CNAME   p1.target.com.
-p1.target.com.         IN      CNAME   q1.target.com.
-q1.target.com.         IN      CNAME   r1.target.com.
+i1.target.com. IN A 172.20.0.7

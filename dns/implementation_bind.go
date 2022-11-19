@@ -32,22 +32,25 @@ func (b bind) Version() string {
 }
 
 func (b bind) restart(containerID string) {
-	execResult, err := b.dockerCli.Exec(containerID, []string{"service", "named", "restart"})
+	execResult, err := b.dockerCli.Exec(containerID, []string{"rndc", "flush"})
 	if err != nil {
 		panic(err)
 	}
-	patternStopOK := "(\\* Stopping)[^*]*done"
-	patternStartOK := "(\\* Starting)[^*]*done"
-	stoppedOK, err := regexp.MatchString(patternStopOK, execResult.StdOut)
+	flushedOK, err := regexp.MatchString("", execResult.StdOut)
 	if err != nil {
 		panic(err)
 	}
-	startedOK, err := regexp.MatchString(patternStartOK, execResult.StdOut)
+	if !flushedOK {
+		err = errors.New(fmt.Sprintf("bind cache could not be flushed successfully: %s", execResult.StdOut))
+		panic(err)
+	}
+	execResult, err = b.dockerCli.Exec(containerID, []string{"rndc", "reload"})
+	reloadOK, err := regexp.MatchString("server reload successful", execResult.StdOut)
 	if err != nil {
 		panic(err)
 	}
-	if !(stoppedOK && startedOK) {
-		err = errors.New(fmt.Sprintf("bind cache could not be restarted successfully: %s", execResult.StdOut))
+	if !reloadOK {
+		err = errors.New(fmt.Sprintf("bind cache could not be reloaded successfully: %s", execResult.StdOut))
 		panic(err)
 	}
 }
