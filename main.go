@@ -15,22 +15,18 @@ func getImplementations() []string {
 
 func main() {
 	dnsTestLab := lab.New("results")
-	/*
-		runVolumetricExperiment(dnsTestLab, lab.Subquery_CNAME, []string{"bind-9.18.4"})
-		runVolumetricExperiment(dnsTestLab, lab.Subquery_DNAME, getImplementations())
-
-			runVolumetricExperiment(dnsTestLab, lab.Subquery_CNAME_Scrubbing, getImplementations())
-			runVolumetricExperiment(dnsTestLab, lab.Subquery_DNAME_Scrubbing, getImplementations())
-			runTimingExperiment(dnsTestLab, lab.SlowDNS_CNAME_Scrubbing, getImplementations())
-			runTimingExperiment(dnsTestLab, lab.SlowDNS_DNAME_Scrubbing, getImplementations())
-	*/
-	runVolumetricExperiment(dnsTestLab, lab.Chain_CNAME_Scrubbing, []string{"bind-9.18.4"})
+	runVolumetricExperiment(dnsTestLab, lab.Subquery_CNAME, getImplementations())
+	runVolumetricExperiment(dnsTestLab, lab.Subquery_DNAME, getImplementations())
+	runVolumetricExperiment(dnsTestLab, lab.Subquery_CNAME_Scrubbing, getImplementations())
+	runVolumetricExperiment(dnsTestLab, lab.Subquery_DNAME_Scrubbing, getImplementations())
+	runTimingExperiment(dnsTestLab, lab.SlowDNS_CNAME_Scrubbing, getImplementations())
+	runTimingExperiment(dnsTestLab, lab.SlowDNS_DNAME_Scrubbing, getImplementations())
 }
 
 func runVolumetricExperiment(dnsTestLab *lab.Lab, experiment *lab.VolumetricExperiment, implementations []string) {
 	dnsTestLab.Conduct(
 		experiment,
-		lab.NewDataIterator(implementations, lab.MakeRange(9, 18, 1)),
+		lab.NewDataIterator(implementations, lab.MakeRange(1, 10, 1)),
 	)
 	dnsTestLab.SaveResults()
 }

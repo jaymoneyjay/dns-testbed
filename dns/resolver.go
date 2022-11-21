@@ -45,7 +45,7 @@ func (r *Resolver) Restart() {
 }
 
 func (r *Resolver) FlushCache() {
-	r.implementation.restart(r.ID())
+	r.implementation.flushCache(r.ID())
 }
 
 func (r *Resolver) ReadQueryLog(minTimeout time.Duration) []byte {

@@ -32,6 +32,18 @@ func (b bind) Version() string {
 }
 
 func (b bind) restart(containerID string) {
+	execResult, err := b.dockerCli.Exec(containerID, []string{"rndc", "reload"})
+	reloadOK, err := regexp.MatchString("server reload successful", execResult.StdOut)
+	if err != nil {
+		panic(err)
+	}
+	if !reloadOK {
+		err = errors.New(fmt.Sprintf("bind cache could not be reloaded successfully: %s", execResult.StdOut))
+		panic(err)
+	}
+}
+
+func (b bind) flushCache(containerID string) {
 	execResult, err := b.dockerCli.Exec(containerID, []string{"rndc", "flush"})
 	if err != nil {
 		panic(err)
@@ -44,19 +56,6 @@ func (b bind) restart(containerID string) {
 		err = errors.New(fmt.Sprintf("bind cache could not be flushed successfully: %s", execResult.StdOut))
 		panic(err)
 	}
-	execResult, err = b.dockerCli.Exec(containerID, []string{"rndc", "reload"})
-	reloadOK, err := regexp.MatchString("server reload successful", execResult.StdOut)
-	if err != nil {
-		panic(err)
-	}
-	if !reloadOK {
-		err = errors.New(fmt.Sprintf("bind cache could not be reloaded successfully: %s", execResult.StdOut))
-		panic(err)
-	}
-}
-
-func (b bind) flushCache(containerID string) {
-	b.restart(containerID)
 }
 
 func (b bind) readQueryLog(containerID, containerType string, minTimeout time.Duration) []byte {

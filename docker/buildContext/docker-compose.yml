@@ -240,8 +240,7 @@ services:
       - /bin/sh
       - -c
       - |
-        sed -i 's/OPTIONS=.*/OPTIONS="-4 -u bind"/' /etc/default/named
-        service named start
+        named -u bind -4 -d 2
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
   client:

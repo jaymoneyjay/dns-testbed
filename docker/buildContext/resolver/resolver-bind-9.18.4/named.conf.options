@@ -4,6 +4,8 @@ options {
     listen-on-v6 { any; };
     querylog yes;
     qname-minimization disabled;
+    dnstap {auth; client; resolver; forwarder;};
+    dnstap-output file "/etc/logs/log.dnstap";
 };
 
 logging {
