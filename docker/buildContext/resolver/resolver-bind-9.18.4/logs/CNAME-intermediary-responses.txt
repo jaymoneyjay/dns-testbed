@@ -1,0 +1,510 @@
+22-Nov-2022 16:56:42.281 CQ 172.20.0.9:48031 -> 172.20.0.15:0 UDP 54b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  65333
+;; flags: rd ad; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 0fcd442cc6a6197b
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.305 RQ 0.0.0.0:60261 -> 172.20.0.2:53 UDP 40b ./IN/NS
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  56949
+;; flags:; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 93cfdd7278a6fbd4
+;; QUESTION SECTION:
+;.				IN	NS
+
+22-Nov-2022 16:56:42.306 RQ 0.0.0.0:51224 -> 172.20.0.2:53 UDP 54b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  64571
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 93cfdd7278a6fbd4
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.314 RR 0.0.0.0:60261 <- 172.20.0.2:53 UDP 71b ./IN/NS
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  56949
+;; flags: qr aa; QUESTION: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 93cfdd7278a6fbd401000000637cff4a871bc49061d2f87e
+;; QUESTION SECTION:
+;.				IN	NS
+
+;; ANSWER SECTION:
+.			3600	IN	NS	ns.
+
+22-Nov-2022 16:56:42.319 RR 0.0.0.0:51224 <- 172.20.0.2:53 UDP 106b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  64571
+;; flags: qr cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 2
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 93cfdd7278a6fbd401000000637cff4a871bc49061d2f87e
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+;; AUTHORITY SECTION:
+com.			3600	IN	NS	ns.com.
+
+;; ADDITIONAL SECTION:
+ns.com.			3600	IN	A	172.20.0.3
+
+22-Nov-2022 16:56:42.347 RQ 0.0.0.0:53325 -> 172.20.0.5:53 UDP 70b d1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  50687
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;d1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.319 RQ 0.0.0.0:49093 -> 172.20.0.3:53 UDP 54b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  26962
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: ba7e26196f97acf7
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.350 RR 0.0.0.0:53325 <- 172.20.0.5:53 UDP 343b d1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  50687
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 13, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;d1.target.com.			IN	A
+
+;; ANSWER SECTION:
+d1.target.com.		0	IN	CNAME	e1.target.com.
+e1.target.com.		0	IN	CNAME	f1.target.com.
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.326 RR 0.0.0.0:49093 <- 172.20.0.3:53 UDP 103b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  26962
+;; flags: qr cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 2
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: ba7e26196f97acf701000000637cff4a0482356f35b8e21d
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+;; AUTHORITY SECTION:
+target.com.		3600	IN	NS	ns.target.com.
+
+;; ADDITIONAL SECTION:
+ns.target.com.		3600	IN	A	172.20.0.5
+
+22-Nov-2022 16:56:42.353 RQ 0.0.0.0:39133 -> 172.20.0.5:53 UDP 70b e1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:   1975
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;e1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.326 RQ 0.0.0.0:38912 -> 172.20.0.5:53 UDP 54b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  16569
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f60
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.356 RR 0.0.0.0:39133 <- 172.20.0.5:53 UDP 326b e1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:   1975
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 12, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;e1.target.com.			IN	A
+
+;; ANSWER SECTION:
+e1.target.com.		0	IN	CNAME	f1.target.com.
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.332 RR 0.0.0.0:38912 <- 172.20.0.5:53 UDP 394b a1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  16569
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 16, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;a1.target.com.			IN	A
+
+;; ANSWER SECTION:
+a1.target.com.		0	IN	CNAME	b1.target.com.
+b1.target.com.		0	IN	CNAME	c1.target.com.
+c1.target.com.		0	IN	CNAME	d1.target.com.
+d1.target.com.		0	IN	CNAME	e1.target.com.
+e1.target.com.		0	IN	CNAME	f1.target.com.
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.369 RQ 0.0.0.0:48815 -> 172.20.0.5:53 UDP 70b h1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  62180
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;h1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.335 RQ 0.0.0.0:47346 -> 172.20.0.5:53 UDP 70b b1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  20180
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;b1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.372 RR 0.0.0.0:48815 <- 172.20.0.5:53 UDP 275b h1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  62180
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 9, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;h1.target.com.			IN	A
+
+;; ANSWER SECTION:
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.338 RR 0.0.0.0:47346 <- 172.20.0.5:53 UDP 377b b1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  20180
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 15, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;b1.target.com.			IN	A
+
+;; ANSWER SECTION:
+b1.target.com.		0	IN	CNAME	c1.target.com.
+c1.target.com.		0	IN	CNAME	d1.target.com.
+d1.target.com.		0	IN	CNAME	e1.target.com.
+e1.target.com.		0	IN	CNAME	f1.target.com.
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.374 RQ 0.0.0.0:57950 -> 172.20.0.5:53 UDP 70b i1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  20939
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;i1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.341 RQ 0.0.0.0:39815 -> 172.20.0.5:53 UDP 70b c1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  61027
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;c1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.377 RR 0.0.0.0:57950 <- 172.20.0.5:53 UDP 258b i1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  20939
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 8, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;i1.target.com.			IN	A
+
+;; ANSWER SECTION:
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.344 RR 0.0.0.0:39815 <- 172.20.0.5:53 UDP 360b c1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  61027
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 14, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;c1.target.com.			IN	A
+
+;; ANSWER SECTION:
+c1.target.com.		0	IN	CNAME	d1.target.com.
+d1.target.com.		0	IN	CNAME	e1.target.com.
+e1.target.com.		0	IN	CNAME	f1.target.com.
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.390 RQ 0.0.0.0:54025 -> 172.20.0.5:53 UDP 70b l1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  59863
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;l1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.358 RQ 0.0.0.0:53116 -> 172.20.0.5:53 UDP 70b f1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:   3072
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;f1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.393 RR 0.0.0.0:54025 <- 172.20.0.5:53 UDP 207b l1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  59863
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 5, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;l1.target.com.			IN	A
+
+;; ANSWER SECTION:
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.361 RR 0.0.0.0:53116 <- 172.20.0.5:53 UDP 309b f1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:   3072
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 11, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;f1.target.com.			IN	A
+
+;; ANSWER SECTION:
+f1.target.com.		0	IN	CNAME	g1.target.com.
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.399 RQ 0.0.0.0:50177 -> 172.20.0.5:53 UDP 70b n1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  34765
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;n1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.364 RQ 0.0.0.0:57656 -> 172.20.0.5:53 UDP 70b g1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  33918
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;g1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.402 RR 0.0.0.0:50177 <- 172.20.0.5:53 UDP 173b n1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  34765
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 3, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;n1.target.com.			IN	A
+
+;; ANSWER SECTION:
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.367 RR 0.0.0.0:57656 <- 172.20.0.5:53 UDP 292b g1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  33918
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 10, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;g1.target.com.			IN	A
+
+;; ANSWER SECTION:
+g1.target.com.		0	IN	CNAME	h1.target.com.
+h1.target.com.		0	IN	CNAME	i1.target.com.
+i1.target.com.		0	IN	CNAME	j1.target.com.
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.409 RQ 0.0.0.0:50682 -> 172.20.0.5:53 UDP 70b p1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  60160
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;p1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.380 RQ 0.0.0.0:46657 -> 172.20.0.5:53 UDP 70b j1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:   4822
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;j1.target.com.			IN	A
+
+22-Nov-2022 16:56:42.411 RR 0.0.0.0:50682 <- 172.20.0.5:53 UDP 139b p1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:  60160
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;p1.target.com.			IN	A
+
+;; ANSWER SECTION:
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.383 RR 0.0.0.0:46657 <- 172.20.0.5:53 UDP 241b j1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id:   4822
+;; flags: qr aa cd; QUESTION: 1, ANSWER: 7, AUTHORITY: 1, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;j1.target.com.			IN	A
+
+;; ANSWER SECTION:
+j1.target.com.		0	IN	CNAME	k1.target.com.
+k1.target.com.		0	IN	CNAME	l1.target.com.
+l1.target.com.		0	IN	CNAME	m1.target.com.
+m1.target.com.		0	IN	CNAME	n1.target.com.
+n1.target.com.		0	IN	CNAME	o1.target.com.
+o1.target.com.		0	IN	CNAME	p1.target.com.
+p1.target.com.		0	IN	CNAME	q1.target.com.
+
+;; AUTHORITY SECTION:
+target.com.		0	IN	SOA	server.target.com. username.target.com. 2006032201 7200 3600 1209600 0
+
+22-Nov-2022 16:56:42.385 RQ 0.0.0.0:44336 -> 172.20.0.5:53 UDP 70b k1.target.com/IN/A
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id:  38200
+;; flags: cd; QUESTION: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags: do; udp: 1232
+; COOKIE: 1c952499d3d39f6001000000637cff4ab62d80cfb245985a
+;; QUESTION SECTION:
+;k1.target.com.			IN	A
+
