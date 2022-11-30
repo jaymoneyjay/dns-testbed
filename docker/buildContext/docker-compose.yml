@@ -2,7 +2,7 @@ version: "3.9"
 services:
   root:
     container_name: root
-    build: nameserver
+    image: jodokvieli/nameserver
     volumes:
       - type: bind
         source: nameserver/db.root
@@ -33,7 +33,7 @@ services:
         tail -F anything
   com:
     container_name: com
-    build: nameserver
+    image: jodokvieli/nameserver
     volumes:
       - type: bind
         source: nameserver/db.root
@@ -64,7 +64,7 @@ services:
         tail -F anything
   net:
     container_name: net
-    build: nameserver
+    image: jodokvieli/nameserver
     volumes:
       - type: bind
         source: nameserver/db.root
@@ -95,7 +95,7 @@ services:
         tail -F anything
   target-com:
     container_name: target-com
-    build: nameserver
+    image: jodokvieli/nameserver
     volumes:
       - type: bind
         source: nameserver/db.root
@@ -126,7 +126,7 @@ services:
         tail -F anything
   inter-net:
     container_name: inter-net
-    build: nameserver
+    image: jodokvieli/nameserver
     volumes:
       - type: bind
         source: nameserver/db.root
@@ -157,7 +157,7 @@ services:
         tail -F anything
   resolver-unbound-1.16.0:
     container_name: resolver-unbound-1.16.0
-    build: resolver/resolver-unbound-1.16.0
+    image: jodokvieli/resolver:unbound-1.16.0
     volumes:
       - type: bind
         source: resolver/resolver-unbound-1.16.0/unbound.conf
@@ -180,7 +180,7 @@ services:
         tail -F anything
   resolver-unbound-1.10.0:
     container_name: resolver-unbound-1.10.0
-    build: resolver/resolver-unbound-1.10.0
+    image: jodokvieli/resolver:unbound-1.10.0
     volumes:
       - type: bind
         source: resolver/resolver-unbound-1.10.0/unbound.conf
@@ -203,7 +203,7 @@ services:
         tail -F anything
   resolver-powerdns-4.7.3:
     container_name: resolver-powerDNS-4.7.3
-    build: resolver/resolver-powerdns-4.7.3
+    image: jodokvieli/resolver:powerDNS-4.7.3
     volumes:
       - type: bind
         source: resolver/resolver-powerdns-4.7.3/recursor.conf
@@ -222,7 +222,7 @@ services:
         tail -F anything
   resolver-bind-9.18.4:
     container_name: resolver-bind-9.18.4
-    build: resolver/resolver-bind-9.18.4
+    image: jodokvieli/resolver:bind-9.18.4
     volumes:
       - type: bind
         source: resolver/resolver-bind-9.18.4/named.conf.options
@@ -245,7 +245,7 @@ services:
         tail -F anything
   client:
     container_name: client
-    build: client
+    image: jodokvieli/client
     volumes:
       - type: bind
         source: client/resolv.conf
