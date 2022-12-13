@@ -1,0 +1,92 @@
+$TTL 0
+@                       IN      SOA     server.target.com. username.target.com. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.target.com.
+                        IN      A       1.2.3.4
+ns.target.com.         IN      A       172.20.0.5
+
+; CNAME chains
+
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p1.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p1.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.q1.target.com.
+
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p2.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p2.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.q2.target.com.
+
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p3.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p3.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.q3.target.com.
+
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p4.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p4.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.q4.target.com.
+
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.a5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.b5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.c5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.d5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.e5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.f5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.g5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.h5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.i5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.j5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.k5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.l5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.m5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.n5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.o5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p5.target.com.
+lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.p5.target.com.         IN      CNAME   lab12.lab11.lab10.lab9.lab8.lab7.lab6.lab5.lab4.lab3.lab2.lab1.q5.target.com.

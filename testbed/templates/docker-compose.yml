@@ -1,0 +1,82 @@
+version: "3.9"
+services:
+{{range $zone := .Zones}}
+  {{$zone.ID}}:
+    container_name: {{$zone.ID}}
+    image: jodokvieli/nameserver
+    volumes:
+      - type: bind
+        source: db.root
+        target: /etc/bind/db.root
+      - type: bind
+        source: {{$zone.ID}}/named.conf.options
+        target: /etc/bind/named.conf.options
+      - type: bind
+        source: {{$zone.ID}}/named.conf.local
+        target: /etc/bind/named.conf.local
+      - type: bind
+        source: zones
+        target: /zones
+      - type: bind
+        source: {{$zone.ID}}/query.log
+        target: /etc/logs/query.log
+    networks:
+      dns-testbed:
+        ipv4_address: {{$zone.IP}}
+    cap_add:
+      - NET_ADMIN
+    command:
+      - /bin/sh
+      - -c
+      - |
+        service named start
+        tc qdisc add dev eth0 root netem delay 0ms
+        tail -F anything
+{{end}}
+  
+{{range $resolver := .Resolvers}}
+  {{$resolver.ID}}:
+    container_name: {{$resolver.ID}}
+    image: jodokvieli/resolver:{{$resolver.Implementation}}-{{$resolver.Version}}
+    volumes:
+      - type: bind
+        source: {{$resolver.ID}}/{{$resolver.Implementation}}.conf
+        target: {{$resolver.ConfigTarget}}
+      - type: bind
+        source: db.root
+        target: {{$resolver.RootHintsTarget}}
+      - type: bind
+        source: {{$resolver.ID}}/query.log
+        target: {{$resolver.LogsTarget}}
+    networks:
+      dns-testbed:
+        ipv4_address: {{$resolver.IP}}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        tail -F anything
+{{end}}
+
+  {{.Client.ID}}:
+    container_name: {{.Client.ID}}
+    image: jodokvieli/client
+    volumes:
+      - type: bind
+        source: {{.Client.ID}}/resolv.conf
+        target: /etc/resolv.conf
+    networks:
+      dns-testbed:
+        ipv4_address: {{.Client.IP}}
+    command:
+      - /bin/sh
+      - -c
+      - |
+        tail -F anything
+networks:
+  dns-testbed:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1

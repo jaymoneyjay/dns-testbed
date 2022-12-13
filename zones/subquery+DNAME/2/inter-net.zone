@@ -1,0 +1,31 @@
+$TTL 0
+@                       IN      SOA     server.inter.net. username.inter.net. (2006032201 7200 3600 1209600 36000)
+                        IN      NS      ns.inter.net.
+                        IN      A       1.2.3.4
+ns.inter.net.         IN      A       172.20.0.6
+www.inter.net.        IN      DNAME   inter.net.
+
+; intermediary
+
+; fake delegation
+del.inter.net.        IN      NS      sub.a1.target.com.
+del.inter.net.        IN      NS      sub.a2.target.com.
+
+; DNAME chains
+b1.inter.net.         IN      DNAME   c1.target.com.
+d1.inter.net.         IN      DNAME   e1.target.com.
+f1.inter.net.         IN      DNAME   g1.target.com.
+h1.inter.net.         IN      DNAME   i1.target.com.
+j1.inter.net.         IN      DNAME   k1.target.com.
+l1.inter.net.         IN      DNAME   m1.target.com.
+n1.inter.net.         IN      DNAME   o1.target.com.
+p1.inter.net.         IN      DNAME   q1.target.com.
+
+b2.inter.net.         IN      DNAME   c2.target.com.
+d2.inter.net.         IN      DNAME   e2.target.com.
+f2.inter.net.         IN      DNAME   g2.target.com.
+h2.inter.net.         IN      DNAME   i2.target.com.
+j2.inter.net.         IN      DNAME   k2.target.com.
+l2.inter.net.         IN      DNAME   m2.target.com.
+n2.inter.net.         IN      DNAME   o2.target.com.
+p2.inter.net.         IN      DNAME   q2.target.com.
