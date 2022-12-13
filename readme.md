@@ -39,7 +39,6 @@ Usage:
   testbed [command]
 
 Available Commands:
-  completion  Generate the autocompletion script for the specified shell
   delay       Delay the responses of a zone by the specified duration (in ms)
   flush       Flush the cache of all resolvers
   help        Help about any command
