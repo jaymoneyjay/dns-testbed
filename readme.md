@@ -34,6 +34,12 @@ The **client** is a container running `dig`  to submit the DNS queries.
 2. Install [docker-compose](https://docs.docker.com/compose/install/linux/)
 3. Inside the project root run `go install`
 ## Usage
+To initialize and start the defautl testbed run 
+```
+$ testbed init config.yaml zones/default
+$ testbed start
+```
+For the full list of commands run `testbed -h`:
 ```
 Usage:
   testbed [command]
