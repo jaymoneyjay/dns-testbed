@@ -1,5 +1,0 @@
-zone "com." {
-		type master;
-		file "/etc/zones/active.zone";
-	};
-	

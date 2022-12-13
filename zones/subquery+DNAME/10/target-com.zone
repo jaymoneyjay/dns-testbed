@@ -1,0 +1,96 @@
+$TTL 0
+@                       IN      SOA     server.target.com. username.target.com. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.target.com.
+                        IN      A       1.2.3.4
+ns.target.com.         IN      A       172.20.0.5
+
+; DNAME chains
+a1.target.com.         IN      DNAME   b1.inter.net.
+c1.target.com.         IN      DNAME   d1.inter.net.
+e1.target.com.         IN      DNAME   f1.inter.net.
+g1.target.com.         IN      DNAME   h1.inter.net.
+i1.target.com.         IN      DNAME   j1.inter.net.
+k1.target.com.         IN      DNAME   l1.inter.net.
+m1.target.com.         IN      DNAME   n1.inter.net.
+o1.target.com.         IN      DNAME   p1.inter.net.
+
+a2.target.com.         IN      DNAME   b2.inter.net.
+c2.target.com.         IN      DNAME   d2.inter.net.
+e2.target.com.         IN      DNAME   f2.inter.net.
+g2.target.com.         IN      DNAME   h2.inter.net.
+i2.target.com.         IN      DNAME   j2.inter.net.
+k2.target.com.         IN      DNAME   l2.inter.net.
+m2.target.com.         IN      DNAME   n2.inter.net.
+o2.target.com.         IN      DNAME   p2.inter.net.
+
+a3.target.com.         IN      DNAME   b3.inter.net.
+c3.target.com.         IN      DNAME   d3.inter.net.
+e3.target.com.         IN      DNAME   f3.inter.net.
+g3.target.com.         IN      DNAME   h3.inter.net.
+i3.target.com.         IN      DNAME   j3.inter.net.
+k3.target.com.         IN      DNAME   l3.inter.net.
+m3.target.com.         IN      DNAME   n3.inter.net.
+o3.target.com.         IN      DNAME   p3.inter.net.
+
+a4.target.com.         IN      DNAME   b4.inter.net.
+c4.target.com.         IN      DNAME   d4.inter.net.
+e4.target.com.         IN      DNAME   f4.inter.net.
+g4.target.com.         IN      DNAME   h4.inter.net.
+i4.target.com.         IN      DNAME   j4.inter.net.
+k4.target.com.         IN      DNAME   l4.inter.net.
+m4.target.com.         IN      DNAME   n4.inter.net.
+o4.target.com.         IN      DNAME   p4.inter.net.
+
+a5.target.com.         IN      DNAME   b5.inter.net.
+c5.target.com.         IN      DNAME   d5.inter.net.
+e5.target.com.         IN      DNAME   f5.inter.net.
+g5.target.com.         IN      DNAME   h5.inter.net.
+i5.target.com.         IN      DNAME   j5.inter.net.
+k5.target.com.         IN      DNAME   l5.inter.net.
+m5.target.com.         IN      DNAME   n5.inter.net.
+o5.target.com.         IN      DNAME   p5.inter.net.
+
+a6.target.com.         IN      DNAME   b6.inter.net.
+c6.target.com.         IN      DNAME   d6.inter.net.
+e6.target.com.         IN      DNAME   f6.inter.net.
+g6.target.com.         IN      DNAME   h6.inter.net.
+i6.target.com.         IN      DNAME   j6.inter.net.
+k6.target.com.         IN      DNAME   l6.inter.net.
+m6.target.com.         IN      DNAME   n6.inter.net.
+o6.target.com.         IN      DNAME   p6.inter.net.
+
+a7.target.com.         IN      DNAME   b7.inter.net.
+c7.target.com.         IN      DNAME   d7.inter.net.
+e7.target.com.         IN      DNAME   f7.inter.net.
+g7.target.com.         IN      DNAME   h7.inter.net.
+i7.target.com.         IN      DNAME   j7.inter.net.
+k7.target.com.         IN      DNAME   l7.inter.net.
+m7.target.com.         IN      DNAME   n7.inter.net.
+o7.target.com.         IN      DNAME   p7.inter.net.
+
+a8.target.com.         IN      DNAME   b8.inter.net.
+c8.target.com.         IN      DNAME   d8.inter.net.
+e8.target.com.         IN      DNAME   f8.inter.net.
+g8.target.com.         IN      DNAME   h8.inter.net.
+i8.target.com.         IN      DNAME   j8.inter.net.
+k8.target.com.         IN      DNAME   l8.inter.net.
+m8.target.com.         IN      DNAME   n8.inter.net.
+o8.target.com.         IN      DNAME   p8.inter.net.
+
+a9.target.com.         IN      DNAME   b9.inter.net.
+c9.target.com.         IN      DNAME   d9.inter.net.
+e9.target.com.         IN      DNAME   f9.inter.net.
+g9.target.com.         IN      DNAME   h9.inter.net.
+i9.target.com.         IN      DNAME   j9.inter.net.
+k9.target.com.         IN      DNAME   l9.inter.net.
+m9.target.com.         IN      DNAME   n9.inter.net.
+o9.target.com.         IN      DNAME   p9.inter.net.
+
+a10.target.com.         IN      DNAME   b10.inter.net.
+c10.target.com.         IN      DNAME   d10.inter.net.
+e10.target.com.         IN      DNAME   f10.inter.net.
+g10.target.com.         IN      DNAME   h10.inter.net.
+i10.target.com.         IN      DNAME   j10.inter.net.
+k10.target.com.         IN      DNAME   l10.inter.net.
+m10.target.com.         IN      DNAME   n10.inter.net.
+o10.target.com.         IN      DNAME   p10.inter.net.

@@ -1,0 +1,24 @@
+$TTL 0
+@                       IN      SOA     server.target.com. username.target.com. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.target.com.
+                        IN      A       1.2.3.4
+ns.target.com.         IN      A       172.20.0.5
+
+; CNAME chains
+a1.target.com.         IN      CNAME   b1.inter.net.
+c1.target.com.         IN      CNAME   d1.inter.net.
+e1.target.com.         IN      CNAME   f1.inter.net.
+g1.target.com.         IN      CNAME   h1.inter.net.
+i1.target.com.         IN      CNAME   j1.inter.net.
+k1.target.com.         IN      CNAME   l1.inter.net.
+m1.target.com.         IN      CNAME   n1.inter.net.
+o1.target.com.         IN      CNAME   p1.inter.net.
+
+a2.target.com.         IN      CNAME   b2.inter.net.
+c2.target.com.         IN      CNAME   d2.inter.net.
+e2.target.com.         IN      CNAME   f2.inter.net.
+g2.target.com.         IN      CNAME   h2.inter.net.
+i2.target.com.         IN      CNAME   j2.inter.net.
+k2.target.com.         IN      CNAME   l2.inter.net.
+m2.target.com.         IN      CNAME   n2.inter.net.
+o2.target.com.         IN      CNAME   p2.inter.net.

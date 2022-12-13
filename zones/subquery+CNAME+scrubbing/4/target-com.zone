@@ -1,0 +1,75 @@
+$TTL 0
+@                       IN      SOA     server.target.com. username.target.com. (2006032201 7200 3600 1209600 0)
+                        IN      NS      ns.target.com.
+                        IN      A       1.2.3.4
+ns.target.com.         IN      A       172.20.0.5
+
+; CNAME chains
+
+a1.target.com.         IN      CNAME   b1.target.com.
+b1.target.com.         IN      CNAME   c1.target.com.
+c1.target.com.         IN      CNAME   d1.target.com.
+d1.target.com.         IN      CNAME   e1.target.com.
+e1.target.com.         IN      CNAME   f1.target.com.
+f1.target.com.         IN      CNAME   g1.target.com.
+g1.target.com.         IN      CNAME   h1.target.com.
+h1.target.com.         IN      CNAME   i1.target.com.
+i1.target.com.         IN      CNAME   j1.target.com.
+j1.target.com.         IN      CNAME   k1.target.com.
+k1.target.com.         IN      CNAME   l1.target.com.
+l1.target.com.         IN      CNAME   m1.target.com.
+m1.target.com.         IN      CNAME   n1.target.com.
+n1.target.com.         IN      CNAME   o1.target.com.
+o1.target.com.         IN      CNAME   p1.target.com.
+p1.target.com.         IN      CNAME   q1.target.com.
+
+a2.target.com.         IN      CNAME   b2.target.com.
+b2.target.com.         IN      CNAME   c2.target.com.
+c2.target.com.         IN      CNAME   d2.target.com.
+d2.target.com.         IN      CNAME   e2.target.com.
+e2.target.com.         IN      CNAME   f2.target.com.
+f2.target.com.         IN      CNAME   g2.target.com.
+g2.target.com.         IN      CNAME   h2.target.com.
+h2.target.com.         IN      CNAME   i2.target.com.
+i2.target.com.         IN      CNAME   j2.target.com.
+j2.target.com.         IN      CNAME   k2.target.com.
+k2.target.com.         IN      CNAME   l2.target.com.
+l2.target.com.         IN      CNAME   m2.target.com.
+m2.target.com.         IN      CNAME   n2.target.com.
+n2.target.com.         IN      CNAME   o2.target.com.
+o2.target.com.         IN      CNAME   p2.target.com.
+p2.target.com.         IN      CNAME   q2.target.com.
+
+a3.target.com.         IN      CNAME   b3.target.com.
+b3.target.com.         IN      CNAME   c3.target.com.
+c3.target.com.         IN      CNAME   d3.target.com.
+d3.target.com.         IN      CNAME   e3.target.com.
+e3.target.com.         IN      CNAME   f3.target.com.
+f3.target.com.         IN      CNAME   g3.target.com.
+g3.target.com.         IN      CNAME   h3.target.com.
+h3.target.com.         IN      CNAME   i3.target.com.
+i3.target.com.         IN      CNAME   j3.target.com.
+j3.target.com.         IN      CNAME   k3.target.com.
+k3.target.com.         IN      CNAME   l3.target.com.
+l3.target.com.         IN      CNAME   m3.target.com.
+m3.target.com.         IN      CNAME   n3.target.com.
+n3.target.com.         IN      CNAME   o3.target.com.
+o3.target.com.         IN      CNAME   p3.target.com.
+p3.target.com.         IN      CNAME   q3.target.com.
+
+a4.target.com.         IN      CNAME   b4.target.com.
+b4.target.com.         IN      CNAME   c4.target.com.
+c4.target.com.         IN      CNAME   d4.target.com.
+d4.target.com.         IN      CNAME   e4.target.com.
+e4.target.com.         IN      CNAME   f4.target.com.
+f4.target.com.         IN      CNAME   g4.target.com.
+g4.target.com.         IN      CNAME   h4.target.com.
+h4.target.com.         IN      CNAME   i4.target.com.
+i4.target.com.         IN      CNAME   j4.target.com.
+j4.target.com.         IN      CNAME   k4.target.com.
+k4.target.com.         IN      CNAME   l4.target.com.
+l4.target.com.         IN      CNAME   m4.target.com.
+m4.target.com.         IN      CNAME   n4.target.com.
+n4.target.com.         IN      CNAME   o4.target.com.
+o4.target.com.         IN      CNAME   p4.target.com.
+p4.target.com.         IN      CNAME   q4.target.com.
