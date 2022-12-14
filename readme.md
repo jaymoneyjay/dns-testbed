@@ -33,17 +33,23 @@ The **client** is a container running `dig`  to submit the DNS queries.
 1. Install [Docker](https://docs.docker.com/get-docker/)
 2. Install [docker-compose](https://docs.docker.com/compose/install/linux/)
 3. Inside the project root run
+
+
    ```
    $ go mod tidy
    $ go install
    ```
+
 ## Usage
 To initialize and start the defautl testbed run 
+
 ```
 $ testbed init config.yaml zones/default
 $ testbed start
 ```
+
 For the full list of commands run `testbed -h`:
+
 ```
 Usage:
   testbed [command]
@@ -60,4 +66,45 @@ Available Commands:
 
 Flags:
   -h, --help   help for testbed
+
+```
+
+### Customization
+The testbed can be customized by providing a custom testbed configuration as `.yaml` in the `testbed init [config, default zones]` command. The configuration is structured as follows:
+
+```yaml
+zones:
+- qname:
+  ip: 
+  [...]
+
+resolvers:
+- implementation:
+  version:
+  ip:
+  [...]
+
+client:
+  id:
+  ip:
+  nameserver:
+```
+
+The file `config.yaml` can be used as a template.
+
+Some commands require specifying the id of the component. For the zones the id corresponds to the qname with intermediary dots replaced by dashes. Zone files must always be named after the id of the respective zone.
+
+|qname				|	id|
+|-------------|----|
+|.| root|
+|.com| com|
+|target.com| target-com|
+
+The id of the resolvers corresponds to the concatenation of the identifier *resolver*, the implementation and the version.
+
+
+|implementation|version	|	id|
+|-------------|----|----|
+|bind| 9.18.4|resolver-bind-9.18.4|
+|unbound| 1.10.0|resolver-unbound-1.10.0|
 

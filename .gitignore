@@ -6,3 +6,4 @@ go.sum
 .ipynb_checkpoints/
 results/results_lukas/**
 build/**
+config/config.yaml
