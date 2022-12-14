@@ -7,9 +7,10 @@ import (
 )
 
 var cmdStop = &cobra.Command{
-	Use:   "stop",
-	Short: "Stop the dns testbed",
-	Args:  cobra.NoArgs,
+	Use:     "stop",
+	Short:   "Stop the dns testbed",
+	Example: "testbed stop",
+	Args:    cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		testbedConfig, err := config.New().LoadTestbedConfig()
 		if err != nil {

@@ -8,9 +8,10 @@ import (
 )
 
 var cmdInit = &cobra.Command{
-	Use:   "init [testbed config, default zone files]",
-	Short: "Initialize a dns testbed",
-	Args:  cobra.ExactArgs(2),
+	Use:     "init [testbed config, default zone files]",
+	Short:   "Initialize a dns testbed",
+	Example: "testbed init config.yaml zones/default",
+	Args:    cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := config.New()
 		build := c.Load("build").(string)

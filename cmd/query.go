@@ -12,9 +12,10 @@ var volume bool
 var target string
 
 var cmdQuery = &cobra.Command{
-	Use:   "query [resolver id, qname, record]",
-	Short: "Query a resolver for a specific qname and record",
-	Args:  cobra.ExactArgs(3),
+	Use:     "query [resolver id, qname, record type]",
+	Short:   "Query a resolver for a specific qname and record",
+	Example: "testbed query resolver-bind-9.18.4 a1.target.com A -v -t target-com",
+	Args:    cobra.ExactArgs(3),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		testbedConfig, err := config.New().LoadTestbedConfig()
 		if err != nil {

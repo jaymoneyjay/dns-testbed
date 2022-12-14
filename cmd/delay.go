@@ -9,9 +9,10 @@ import (
 )
 
 var cmdDelay = &cobra.Command{
-	Use:   "delay [zone, duration (ms)]",
-	Short: "Delay the responses of a zone by the specified duration (in ms)",
-	Args:  cobra.ExactArgs(2),
+	Use:     "delay [zone, duration (ms)]",
+	Short:   "Delay the responses of a zone by the specified duration (in ms)",
+	Example: "testbed delay target-com 800 ",
+	Args:    cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		testbedConfig, err := config.New().LoadTestbedConfig()
 		if err != nil {

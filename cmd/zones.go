@@ -10,9 +10,10 @@ import (
 )
 
 var cmdZones = &cobra.Command{
-	Use:   "zones [directory with zone files (named after id of zone, e.g. target-com.zone)]",
-	Short: "Set zone files",
-	Args:  cobra.ExactArgs(1),
+	Use:     "zones [directory with zone files (named after id of zone, e.g. target-com.zone)]",
+	Short:   "Set zone files",
+	Example: "testbed zones zones/CNAME+scrubbing/14",
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fileInfo, err := os.Stat(args[0])
 		if err == os.ErrNotExist {
