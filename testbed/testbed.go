@@ -189,7 +189,7 @@ func (t *Testbed) Stop() string {
 }
 
 func (t *Testbed) Remove() string {
-	cmd := exec.Command("docker-compose", "-f", filepath.Join(t.Build, "docker-compose.yml"), "down")
+	cmd := exec.Command("docker-compose", "-f", filepath.Join(t.Build, "docker-compose.yml"), "down", "--remove-orphans")
 	stdout, err := cmd.Output()
 	if err != nil {
 		panic(err)

@@ -32,7 +32,11 @@ The **client** is a container running `dig`  to submit the DNS queries.
 ## Installation
 1. Install [Docker](https://docs.docker.com/get-docker/)
 2. Install [docker-compose](https://docs.docker.com/compose/install/linux/)
-3. Inside the project root run `go install`
+3. Inside the project root run
+   ```
+   $ go mod tidy
+   $ go install
+   ```
 ## Usage
 To initialize and start the defautl testbed run 
 ```

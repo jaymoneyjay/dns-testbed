@@ -82,15 +82,6 @@ func generateResolverID(impl, version string) string {
 	return fmt.Sprintf("resolver-%s-%s", impl, version)
 }
 
-func (c *Config) Save(key string, value interface{}) error {
-	c.v.Set(key, value)
-	err := c.v.WriteConfig()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
 func (c *Config) Load(key string) interface{} {
 	return c.v.Get(key)
 }
