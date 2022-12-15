@@ -78,7 +78,7 @@ func (b bind) filterQueries(queryLog []byte) []byte {
 	return []byte(strings.Join(queries, "\n"))
 }
 
-func (b bind) setConfig(qmin, reload bool) {
+func (b bind) SetConfig(qmin, reload bool) {
 	tmpl, err := template.ParseFiles(filepath.Join(b.templatesDir, "resolver-bind.conf"))
 	if err != nil {
 		panic(err)

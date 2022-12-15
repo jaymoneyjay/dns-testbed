@@ -12,7 +12,7 @@ import (
 var cmdZones = &cobra.Command{
 	Use:     "zones [directory with zone files (named after id of zone, e.g. target-com.zone)]",
 	Short:   "Set zone files",
-	Example: "testbed zones zones/CNAME+scrubbing/14",
+	Example: "testbed zones validation/zones/CNAME+scrubbing/14",
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fileInfo, err := os.Stat(args[0])
@@ -36,7 +36,11 @@ var cmdZones = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		testbed.New(testbedConfig).SetZoneFiles(args[0])
+		t := testbed.New(testbedConfig)
+		for _, zone := range t.Zones {
+			zone.SetDefault(true)
+		}
+		t.SetZoneFiles(args[0])
 		return nil
 	},
 }

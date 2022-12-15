@@ -19,7 +19,7 @@ type Container struct {
 	client   client.APIClient
 	ctx      context.Context
 	logger   zerolog.Logger
-	id       string
+	ID       string
 	dir      string
 	queryLog string
 	ip       string
@@ -57,7 +57,7 @@ func NewContainer(id, dir, ip string) *Container {
 		client:   cli,
 		ctx:      context.Background(),
 		logger:   logger,
-		id:       id,
+		ID:       id,
 		dir:      dir,
 		ip:       ip,
 		queryLog: queryLog,
@@ -76,7 +76,7 @@ func (c *Container) Exec(cmd []string) (ExecResult, error) {
 		AttachStderr: true,
 		Cmd:          cmd,
 	}
-	createResp, err := c.client.ContainerExecCreate(c.ctx, c.id, execConfig)
+	createResp, err := c.client.ContainerExecCreate(c.ctx, c.ID, execConfig)
 	if err != nil {
 		return ExecResult{}, err
 	}
@@ -85,7 +85,7 @@ func (c *Container) Exec(cmd []string) (ExecResult, error) {
 		return ExecResult{}, err
 	}
 	c.logger.Info().
-		Str("containerID", c.id).
+		Str("containerID", c.ID).
 		Msg(execResp.StdOut)
 	return execResp, nil
 }

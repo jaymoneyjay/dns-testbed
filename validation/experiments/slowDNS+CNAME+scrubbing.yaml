@@ -1,0 +1,20 @@
+name: "slowDNS+CNAME+scrubbing"
+resolverIDs:
+  - "resolver-bind-9.18.4"
+  - "resolver-unbound-1.10.0"
+  - "resolver-unbound-1.16.0"
+  - "resolver-powerdns-4.7.3"
+zonesDir: validation/zones/slowDNS+CNAME+scrubbing
+target: "target-com"
+measure: "duration"
+query:
+  recordType: "A"
+  qname: "a1.target.com"
+qmin: false
+delay: [0, 200, 400, 600, 800, 1000, 1200, 1400]
+delayedZones:
+  - "target-com"
+warmup:
+  - "target.com"
+  - "www.target.com"
+  - "www1.target.com"

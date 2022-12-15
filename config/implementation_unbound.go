@@ -18,3 +18,10 @@ func (u unbound) rootHintsTarget() string {
 func (u unbound) logsTarget() string {
 	return "/usr/local/etc/logs/query.log"
 }
+
+func (u unbound) startCommands() []string {
+	return []string{
+		"unbound-control-setup",
+		"unbound-control start",
+	}
+}

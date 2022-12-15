@@ -1,15 +1,19 @@
-
 zones:
 - qname: .
   ip: 172.20.0.2
+  defaultZoneFile: validation/zones/default/root.zone
 - qname: com.
   ip: 172.20.0.3
+  defaultZoneFile: validation/zones/default/com.zone
 - qname: net.
   ip: 172.20.0.4
+  defaultZoneFile: validation/zones/default/net.zone
 - qname: target.com.
   ip: 172.20.0.5
+  defaultZoneFile: validation/zones/default/target-com.zone
 - qname: inter.net.
   ip: 172.20.0.6
+  defaultZoneFile: validation/zones/default/inter-net.zone
 
 resolvers:
 - implementation: bind

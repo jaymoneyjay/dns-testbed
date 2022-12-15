@@ -21,7 +21,7 @@ type Testbed struct {
 
 var perm = os.FileMode(0777)
 
-func Build(testbedConfig *config.Testbed, zoneFiles string) {
+func Build(testbedConfig *config.Testbed) {
 	if err := os.RemoveAll(testbedConfig.Build); err != nil {
 		panic(err)
 	}
@@ -38,24 +38,6 @@ func Build(testbedConfig *config.Testbed, zoneFiles string) {
 	}
 	if err := os.Mkdir(filepath.Join(testbedConfig.Build, "zones"), perm); err != nil {
 		panic(err)
-	}
-	entries, err := os.ReadDir(zoneFiles)
-	if err != nil {
-		panic(err)
-	}
-	for _, entry := range entries {
-		// TODO sanity check over zone files
-		zoneSrc, err := template.ParseFiles(filepath.Join(zoneFiles, entry.Name()))
-		if err != nil {
-			panic(err)
-		}
-		zoneDest, err := os.Create(filepath.Join(testbedConfig.Build, "zones", entry.Name()))
-		if err != nil {
-			panic(err)
-		}
-		if err := zoneSrc.Execute(zoneDest, nil); err != nil {
-			panic(err)
-		}
 	}
 	dockerTmpl, err := template.ParseFiles(filepath.Join(testbedConfig.Templates, "docker-compose.yml"))
 	if err != nil {
@@ -107,7 +89,7 @@ func buildResolvers(testbedConfig *config.Testbed) error {
 			return err
 		}
 		resolver := newResolver(resolverConfig, testbedConfig.Templates)
-		resolver.setConfig(testbedConfig.QMin, false)
+		resolver.SetConfig(testbedConfig.QMin, false)
 	}
 	return nil
 }
@@ -145,6 +127,7 @@ func buildZones(testbedConfig *config.Testbed) error {
 		); err != nil {
 			return err
 		}
+		newZone(zoneConfig, testbedConfig.Templates).SetDefault(false)
 	}
 	return nil
 }
@@ -173,9 +156,6 @@ func (t *Testbed) Start() string {
 	if err != nil {
 		panic(err)
 	}
-	for _, resolver := range t.Resolvers {
-		resolver.start()
-	}
 	return string(stdout)
 }
 
@@ -203,21 +183,52 @@ func (t *Testbed) Flush() {
 	}
 }
 
+func (t *Testbed) Reset() {
+	t.Flush()
+	for _, zone := range t.Zones {
+		zone.SetDefault(true)
+		zone.SetDelay(0)
+	}
+	t.FlushQueryLogs()
+}
+
 func (t *Testbed) SetZoneFiles(zoneFiles string) {
+	stats, err := os.Stat(zoneFiles)
+	if err != nil {
+		panic(err)
+	}
+	if !stats.IsDir() {
+		t.setZoneFile(zoneFiles)
+		return
+	}
 	entries, err := os.ReadDir(zoneFiles)
 	if err != nil {
 		panic(err)
 	}
 	for _, entry := range entries {
-		zoneID := strings.Split(entry.Name(), ".")[0]
-		if zoneID == "" {
-			continue
-		}
+		t.setZoneFile(filepath.Join(zoneFiles, entry.Name()))
+	}
+}
+
+func (t *Testbed) setZoneFile(path string) {
+	zoneID := strings.Split(filepath.Base(path), ".")[0]
+	if zoneID == "" {
+		return
+	}
+	zone, err := t.FindZone(zoneID)
+	if err != nil {
+		panic(errors.New(fmt.Sprintf("%s should be a zone file named after the zone ID", zoneID)))
+	}
+	zone.Set(path, true)
+}
+
+func (t *Testbed) SetDelay(delay time.Duration, zoneIDs []string) {
+	for _, zoneID := range zoneIDs {
 		zone, err := t.FindZone(zoneID)
 		if err != nil {
 			panic(err)
 		}
-		zone.Set(filepath.Join(zoneFiles, entry.Name()))
+		zone.SetDelay(delay)
 	}
 }
 
@@ -252,7 +263,9 @@ func (t *Testbed) Measure(volume, duration bool, target string) (int64, string) 
 		return result, unit
 	}
 	if val, ok := t.Resolvers[target]; ok {
-		result, err := measurement(val.ReadQueryLog(timeout))
+		queryLog := val.ReadQueryLog(timeout)
+		queryLog = val.filterQueries(queryLog)
+		result, err := measurement(queryLog)
 		if err != nil {
 			panic(err)
 		}
@@ -263,6 +276,9 @@ func (t *Testbed) Measure(volume, duration bool, target string) (int64, string) 
 }
 
 func (t *Testbed) computeQueryVolume(queryLog []byte) (int64, error) {
+	if len(queryLog) == 0 {
+		return 0, nil
+	}
 	lines := strings.Split(string(queryLog), "\n")
 	return int64(len(lines)), nil
 }
@@ -318,4 +334,21 @@ func (t *Testbed) FindZone(zoneID string) (*Zone, error) {
 		return nil, errors.New(fmt.Sprintf("zone %s does not exist", zoneID))
 	}
 	return zone, nil
+}
+
+func (t *Testbed) SaveLogs(activeResolverID string, dest string) {
+	for _, zone := range t.Zones {
+		queryLog := zone.ReadQueryLog(0)
+		if err := os.WriteFile(filepath.Join(dest, fmt.Sprintf("%s.log", zone.ID)), queryLog, perm); err != nil {
+			panic(err)
+		}
+	}
+	resolver, err := t.FindResolver(activeResolverID)
+	if err != nil {
+		panic(err)
+	}
+	queryLog := resolver.ReadQueryLog(0)
+	if err := os.WriteFile(filepath.Join(dest, fmt.Sprintf("%s.log", resolver.ID)), queryLog, perm); err != nil {
+		panic(err)
+	}
 }

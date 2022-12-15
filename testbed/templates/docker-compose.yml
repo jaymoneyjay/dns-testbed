@@ -55,6 +55,9 @@ services:
       - /bin/sh
       - -c
       - |
+      {{range $cmd := $resolver.StartCommands}}
+        {{$cmd}}
+      {{end}}
         tail -F anything
 {{end}}
 

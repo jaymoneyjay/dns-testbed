@@ -5,7 +5,7 @@ type Implementation interface {
 	reload()
 	start()
 	filterQueries(queryLog []byte) []byte
-	setConfig(qmin, reload bool)
+	SetConfig(qmin, reload bool)
 }
 
 type implementationKind int

@@ -18,3 +18,7 @@ func (b bind) rootHintsTarget() string {
 func (b bind) logsTarget() string {
 	return "/etc/logs/query.log"
 }
+
+func (b bind) startCommands() []string {
+	return []string{"named -u bind -4 -d 2"}
+}

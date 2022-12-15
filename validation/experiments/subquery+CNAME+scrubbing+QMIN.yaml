@@ -1,0 +1,13 @@
+name: "subquery+CNAME+scrubbing+QMIN"
+resolverIDs:
+  - "resolver-bind-9.18.4"
+  - "resolver-unbound-1.10.0"
+  - "resolver-unbound-1.16.0"
+  - "resolver-powerdns-4.7.3"
+zonesDir: validation/zones/subquery+CNAME+scrubbing
+target: "target-com"
+measure: "volume"
+query:
+  recordType: "A"
+  qname: "del.inter.net"
+qmin: true

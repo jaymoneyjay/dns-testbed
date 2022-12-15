@@ -10,9 +10,10 @@ import (
 )
 
 type Zone struct {
-	QName          string
-	ZoneFileHost   string
-	ZoneFileTarget string
+	QName           string
+	ZoneFileHost    string
+	ZoneFileTarget  string
+	DefaultZoneFile string
 	*Container
 	Implementation
 }
@@ -21,15 +22,16 @@ func newZone(zoneConfig *config.Zone, templates string) *Zone {
 	container := NewContainer(zoneConfig.ID, zoneConfig.Dir, zoneConfig.IP)
 	impl := newBind(templates, container)
 	return &Zone{
-		QName:          zoneConfig.QName,
-		ZoneFileHost:   zoneConfig.ZoneFileHost,
-		ZoneFileTarget: zoneConfig.ZoneFileTarget,
-		Container:      container,
-		Implementation: impl,
+		QName:           zoneConfig.QName,
+		ZoneFileHost:    zoneConfig.ZoneFileHost,
+		ZoneFileTarget:  zoneConfig.ZoneFileTarget,
+		DefaultZoneFile: zoneConfig.DefaultZoneFile,
+		Container:       container,
+		Implementation:  impl,
 	}
 }
 
-func (z *Zone) Set(zoneFile string) {
+func (z *Zone) Set(zoneFile string, reload bool) {
 	tmpl, err := template.ParseFiles(zoneFile)
 	if err != nil {
 		panic(err)
@@ -42,7 +44,13 @@ func (z *Zone) Set(zoneFile string) {
 	if err != nil {
 		return
 	}
-	z.reload()
+	if reload {
+		z.reload()
+	}
+}
+
+func (z *Zone) SetDefault(reload bool) {
+	z.Set(z.DefaultZoneFile, reload)
 }
 
 func (z *Zone) SetDelay(duration time.Duration) {

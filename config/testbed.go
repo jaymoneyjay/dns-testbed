@@ -2,38 +2,56 @@ package config
 
 import (
 	"fmt"
-	"github.com/spf13/viper"
-	"os"
 	"path/filepath"
 	"strings"
 )
 
-type Config struct {
-	v *viper.Viper
+type Testbed struct {
+	Templates string
+	Build     string
+	Zones     []*Zone
+	Resolvers []*Resolver
+	Client    *Client
+	QMin      bool
 }
 
-func New() *Config {
-	v := viper.New()
-	v.AddConfigPath("config")
-	v.SetDefault("Build", "build")
-	v.SetDefault("Templates", filepath.Join("testbed", "templates"))
-	v.SetDefault("QMin", false)
-	return &Config{
-		v: v,
-	}
+type Zone struct {
+	ID              string
+	IP              string
+	QName           string
+	ZoneFileHost    string
+	ZoneFileTarget  string
+	Dir             string
+	DefaultZoneFile string
 }
 
-func (c *Config) SetConfig(config string) error {
-	configSrc, err := os.ReadFile(config)
-	if err != nil {
-		return err
-	}
-	if err := os.WriteFile(filepath.Join("config", "config.yaml"), configSrc, 0777); err != nil {
-		return err
-	}
-	return nil
+type Resolver struct {
+	ID              string
+	IP              string
+	Version         string
+	Implementation  string
+	Dir             string
+	ConfigTarget    string
+	RootHintsTarget string
+	LogsTarget      string
+	StartCommands   []string
 }
+
+type Client struct {
+	ID         string
+	IP         string
+	Nameserver string
+	Dir        string
+}
+
+type DockerCompose struct {
+	Zones     []*Zone
+	Resolvers []*Resolver
+	Client    *Client
+}
+
 func (c *Config) LoadTestbedConfig() (*Testbed, error) {
+	c.v.SetConfigFile(filepath.Join(c.path, "testbed.yaml"))
 	if err := c.v.ReadInConfig(); err != nil {
 		return nil, err
 	}
@@ -64,6 +82,7 @@ func (c *Config) completeResolverConfig(testbedConfig *Testbed) {
 		resolver.ConfigTarget = impl.configTarget()
 		resolver.RootHintsTarget = impl.rootHintsTarget()
 		resolver.LogsTarget = impl.logsTarget()
+		resolver.StartCommands = impl.startCommands()
 	}
 }
 
@@ -80,8 +99,4 @@ func generateZoneID(qname string) string {
 
 func generateResolverID(impl, version string) string {
 	return fmt.Sprintf("resolver-%s-%s", impl, version)
-}
-
-func (c *Config) Load(key string) interface{} {
-	return c.v.Get(key)
 }

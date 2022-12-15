@@ -19,3 +19,7 @@ func (p powerDNS) logsTarget() string {
 	//TODO
 	return "/query.log"
 }
+
+func (p powerDNS) startCommands() []string {
+	return []string{"/etc/init.d/pdns-recursor start"}
+}

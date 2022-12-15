@@ -9,6 +9,7 @@ type implementation interface {
 	configTarget() string
 	rootHintsTarget() string
 	logsTarget() string
+	startCommands() []string
 }
 
 func newImplementation(impl string) implementation {

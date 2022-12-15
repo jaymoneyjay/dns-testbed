@@ -83,7 +83,7 @@ func (u unbound) filterQueries(queryLog []byte) []byte {
 	return []byte(strings.Join(queries, "\n"))
 }
 
-func (u unbound) setConfig(qmin, reload bool) {
+func (u unbound) SetConfig(qmin, reload bool) {
 	tmpl, err := template.ParseFiles(filepath.Join(u.templatesDir, "resolver-unbound.conf"))
 	if err != nil {
 		panic(err)

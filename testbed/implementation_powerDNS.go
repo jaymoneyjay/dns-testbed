@@ -63,7 +63,7 @@ func (p powerDNS) filterQueries(queryLog []byte) []byte {
 	return queryLog
 }
 
-func (p powerDNS) setConfig(qmin, reload bool) {
+func (p powerDNS) SetConfig(qmin, reload bool) {
 	tmpl, err := template.ParseFiles(filepath.Join(p.templatesDir, "resolver-powerdns.conf"))
 	if err != nil {
 		panic(err)

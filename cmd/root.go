@@ -26,6 +26,7 @@ func Execute() {
 	rootCmd.AddCommand(cmdZones)
 	rootCmd.AddCommand(cmdQuery)
 	rootCmd.AddCommand(cmdDelay)
+	rootCmd.AddCommand(cmdRun)
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)
