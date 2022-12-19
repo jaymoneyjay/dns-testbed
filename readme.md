@@ -39,21 +39,21 @@ A new testbed can be initialized by providing a `.yaml` file containing the conf
 
 ```yaml
 zones:
-- qname: 					string
-  ip: 						string
-  defaultZoneFile:		path
+- qname:           string
+  ip:              string
+  defaultZoneFile: path
   [...]
 
 resolvers:
-- implementation:		string
-  version:				string
-  ip:						string
+- implementation:  string
+  version:         string
+  ip:              string
   [...]
 
 client:
-  id:						string
-  ip:						string
-  nameserver:				string
+  id:              string
+  ip:              string
+  nameserver:	   string
 ```
 
 We provide a configuration for a basic testbed `validation/testbed-basic.yaml`. The testbed contains the following components
