@@ -103,7 +103,7 @@ We define a dns experiment to be a series of dns measurements. To run a dns meas
 name:         // string, name of the experiment
 resolverIDs:  // []string, ids of resolvers to query
 zonesDir:     // path, path to zone configurations; 
-	// the zone files should be named after the id of the zone
+	 the zone files should be named after the id of the zone
 	// and be collected in a directory specifying the measurement; e.g.
 	// /zonesDir
 	// 		/1
