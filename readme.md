@@ -100,17 +100,17 @@ Use "testbed [command] --help" for more information about a command.
 We define a dns experiment to be a series of dns measurements. To run a dns measurement a `.yaml` file with the configuration of the experiment has to be provided.
 
 ```yaml
-name:         string, name of the experiment
-resolverIDs:  []string, ids of resolvers to query
-zonesDir:     path, path to zone configurations; 
-	the zone files should be named after the id of the zone
-	and be collected in a directory specifying the measurement; e.g.
-	/zonesDir
-	    /1
-	         target-com.zone
-	         inter-net.zon
-	    /n
-                 ...
+name:            string, name of the experiment
+resolverIDs:     []string, ids of resolvers to query
+zonesDir:        path, path to zone configurations; 
+	         the zone files should be named after the id of the zone
+	         and be collected in a directory specifying the measurement; e.g.
+	         /zonesDir
+	              /1
+	                   target-com.zone
+	                   inter-net.zon
+	              /n
+                      ...
 target:          string, specifying the component where to measure the query volume or duration
 measure:         ["volume", "duration"], specifying the kind of measurement
 query:
