@@ -7,3 +7,4 @@ go.sum
 validation/results/results_lukas/**
 build/**
 config/*.yaml
+*.ipynb

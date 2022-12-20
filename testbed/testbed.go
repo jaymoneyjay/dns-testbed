@@ -33,7 +33,7 @@ func Build(testbedConfig *config.Testbed) {
 		panic(err)
 	}
 	rootHintsDest, err := os.Create(filepath.Join(testbedConfig.Build, "db.root"))
-	if err := rootHintsTmpl.Execute(rootHintsDest, nil); err != nil {
+	if err := rootHintsTmpl.Execute(rootHintsDest, testbedConfig.Root); err != nil {
 		panic(err)
 	}
 	if err := os.Mkdir(filepath.Join(testbedConfig.Build, "zones"), perm); err != nil {

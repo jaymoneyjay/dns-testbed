@@ -13,6 +13,7 @@ type Testbed struct {
 	Resolvers []*Resolver
 	Client    *Client
 	QMin      bool
+	Root      string
 }
 
 type Zone struct {

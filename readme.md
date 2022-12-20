@@ -38,6 +38,7 @@ The **client** is a container running `dig`  to submit the DNS queries.
 A new testbed can be initialized by providing a `.yaml` file containing the configuration of the testbed. This configuration file is structured as follows:
 
 ```yaml
+root:              string, e.g. 172.20.0.2
 zones:
 - qname:           string
   ip:              string
