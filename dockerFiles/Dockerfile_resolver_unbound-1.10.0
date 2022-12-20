@@ -11,9 +11,19 @@ RUN apt-get update \
     libssl-dev \
     build-essential
 
+RUN apt-get install -y \
+    libuv1-dev \
+    libnghttp2-dev \
+    libcap-dev \
+    libprotobuf-c-dev libprotobuf-c1 \
+    protobuf-c-compiler \
+    fstrm-bin libfstrm0 libfstrm-dev \
+    libprotobuf-c-dev libprotobuf-c1
+
 RUN wget https://www.nlnetlabs.nl/downloads/unbound/unbound-1.10.0.tar.gz
 RUN tar xzf unbound-1.10.0.tar.gz
-RUN ./unbound-1.10.0/configure
+WORKDIR unbound-1.10.0
+RUN ./configure --enable-dnstap
 RUN make
 RUN make install
 

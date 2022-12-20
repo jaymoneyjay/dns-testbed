@@ -1,5 +1,7 @@
 package config
 
+import "path/filepath"
+
 type powerDNS struct {
 }
 
@@ -8,16 +10,16 @@ func newPowerDNS() powerDNS {
 }
 
 func (p powerDNS) configTarget() string {
-	return "/etc/powerdns/recursor.conf"
+	return filepath.Join("/etc", "powerdns", "recursor.conf")
 }
 
 func (p powerDNS) rootHintsTarget() string {
-	return "/usr/share/dns/myroot.hints"
+	return filepath.Join("/usr", "share", "dns", "myroot.hints")
 }
 
 func (p powerDNS) logsTarget() string {
 	//TODO
-	return "/query.log"
+	return filepath.Join("/")
 }
 
 func (p powerDNS) startCommands() []string {

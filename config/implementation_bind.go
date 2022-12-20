@@ -1,5 +1,7 @@
 package config
 
+import "path/filepath"
+
 type bind struct {
 }
 
@@ -8,15 +10,15 @@ func newBind() bind {
 }
 
 func (b bind) configTarget() string {
-	return "/etc/bind/named.conf.options"
+	return filepath.Join("/etc", "bind", "named.conf.options")
 }
 
 func (b bind) rootHintsTarget() string {
-	return "/usr/share/dns/root.hints"
+	return filepath.Join("/usr", "share", "dns", "root.hints")
 }
 
 func (b bind) logsTarget() string {
-	return "/etc/logs/query.log"
+	return filepath.Join("/etc", "logs")
 }
 
 func (b bind) startCommands() []string {

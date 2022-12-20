@@ -90,6 +90,7 @@ func buildResolvers(testbedConfig *config.Testbed) error {
 		}
 		resolver := newResolver(resolverConfig, testbedConfig.Templates)
 		resolver.SetConfig(testbedConfig.QMin, false)
+		createDNSTapLog(resolverConfig.Dir)
 	}
 	return nil
 }
@@ -128,8 +129,17 @@ func buildZones(testbedConfig *config.Testbed) error {
 			return err
 		}
 		newZone(zoneConfig, testbedConfig.Templates).SetDefault(false)
+		createDNSTapLog(zoneConfig.Dir)
 	}
 	return nil
+}
+
+func createDNSTapLog(dir string) {
+	dnstapLog := filepath.Join(dir, "log.dnstap")
+	_, err := os.Create(dnstapLog)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func New(testbedConfig *config.Testbed) *Testbed {

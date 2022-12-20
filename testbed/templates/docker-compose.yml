@@ -3,7 +3,7 @@ services:
 {{range $zone := .Zones}}
   {{$zone.ID}}:
     container_name: {{$zone.ID}}
-    image: jodokvieli/nameserver
+    image: jodokvieli/nameserver:bind-9.18.4
     volumes:
       - type: bind
         source: db.root
@@ -20,6 +20,9 @@ services:
       - type: bind
         source: {{$zone.ID}}/query.log
         target: /etc/logs/query.log
+      - type: bind
+        source: {{$zone.ID}}/log.dnstap
+        target: /etc/logs/log.dnstap
     networks:
       dns-testbed:
         ipv4_address: {{$zone.IP}}
@@ -29,7 +32,7 @@ services:
       - /bin/sh
       - -c
       - |
-        service named start
+        named -u bind -4 -d 2
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
 {{end}}
@@ -47,7 +50,10 @@ services:
         target: {{$resolver.RootHintsTarget}}
       - type: bind
         source: {{$resolver.ID}}/query.log
-        target: {{$resolver.LogsTarget}}
+        target: {{$resolver.LogsTarget}}/query.log
+      - type: bind
+        source: {{$resolver.ID}}/log.dnstap
+        target: {{$resolver.LogsTarget}}/log.dnstap
     networks:
       dns-testbed:
         ipv4_address: {{$resolver.IP}}
