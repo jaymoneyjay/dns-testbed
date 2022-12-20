@@ -108,7 +108,7 @@ zonesDir:        path, path to zone configurations;
 	         /zonesDir
 	              /1
 	                   target-com.zone
-	                   inter-net.zon
+	                   inter-net.zone
 	              /n
                       ...
 target:          string, specifying the component where to measure the query volume or duration
