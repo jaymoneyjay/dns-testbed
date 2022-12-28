@@ -16,21 +16,23 @@ import (
 )
 
 type Container struct {
-	client   client.APIClient
-	ctx      context.Context
-	logger   zerolog.Logger
-	ID       string
-	dir      string
-	queryLog string
-	ip       string
+	client client.APIClient
+	ctx    context.Context
+	logger zerolog.Logger
+	ID     string
+	Log    string
+	Config string
+	ip     string
 }
 
 func NewContainer(id, dir, ip string) *Container {
+	logs := filepath.Join(dir, "logs")
+	config := filepath.Join(dir, "config")
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
 		panic(err)
 	}
-	executionLog, err := os.Create(filepath.Join(dir, "execution.log"))
+	executionLog, err := os.Create(filepath.Join(logs, "execution.log"))
 	if err != nil {
 		panic(err)
 	}
@@ -54,13 +56,13 @@ func NewContainer(id, dir, ip string) *Container {
 		panic(err)
 	}
 	return &Container{
-		client:   cli,
-		ctx:      context.Background(),
-		logger:   logger,
-		ID:       id,
-		dir:      dir,
-		ip:       ip,
-		queryLog: queryLog,
+		client: cli,
+		ctx:    context.Background(),
+		logger: logger,
+		ID:     id,
+		Log:    logs,
+		Config: config,
+		ip:     ip,
 	}
 }
 
@@ -136,7 +138,7 @@ func (c *Container) ReadQueryLog(minTimeout time.Duration) []byte {
 	numberOfCurrentLines := 0
 	for true {
 		time.Sleep(minTimeout)
-		queryLog, err := os.ReadFile(c.queryLog)
+		queryLog, err := os.ReadFile(filepath.Join(c.Log, "query.log"))
 		queryLog = bytes.ReplaceAll(queryLog, []byte{'\x00'}, []byte{})
 		if err != nil {
 			panic(err)
@@ -151,7 +153,7 @@ func (c *Container) ReadQueryLog(minTimeout time.Duration) []byte {
 }
 
 func (c *Container) FlushQueryLog() {
-	_, err := os.Create(c.queryLog)
+	_, err := os.Create(filepath.Join(c.Log, "query.log"))
 	if err != nil {
 		panic(err)
 	}

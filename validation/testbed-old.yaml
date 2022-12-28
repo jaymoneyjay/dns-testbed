@@ -18,7 +18,7 @@ zones:
 
 resolvers:
 - implementation: "bind"
-  version: "9.18.4"
+  version: "9.16.3"
   ip: "172.20.0.51"
 - implementation: "unbound"
   version: "1.16.0"
@@ -27,10 +27,10 @@ resolvers:
   version: "1.10.0"
   ip: "172.20.0.53"
 - implementation: "powerdns"
-  version: "4.7"
+  version: "4.2"
   ip: "172.20.0.54"
 
 client:
-  id: client
-  ip: 172.20.0.99
-  nameserver: 172.20.0.51
+  id: "client"
+  ip: "172.20.0.99"
+  nameserver: "172.20.0.51"

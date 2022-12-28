@@ -1,0 +1,20 @@
+FROM ubuntu:bionic
+
+RUN apt-get update \
+    && apt-get install -y \
+    vim \
+    wget \
+    tar \
+    flex \
+    bison \
+    libexpat1-dev \
+    libssl-dev \
+    build-essential
+
+ARG VERSION
+
+RUN wget https://www.nlnetlabs.nl/downloads/unbound/unbound-$VERSION.tar.gz
+RUN tar xzf unbound-$VERSION.tar.gz
+RUN ./unbound-$VERSION/configure
+RUN make
+RUN make install

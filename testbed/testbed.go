@@ -3,11 +3,13 @@ package testbed
 import (
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 	"testbed/config"
+	"testbed/testbed/templates"
 	"text/template"
 	"time"
 )
@@ -26,6 +28,9 @@ func Build(testbedConfig *config.Testbed) {
 		panic(err)
 	}
 	if err := os.Mkdir(testbedConfig.Build, perm); err != nil {
+		panic(err)
+	}
+	if err := copyDockerfiles(testbedConfig); err != nil {
 		panic(err)
 	}
 	rootHintsTmpl, err := template.ParseFiles(filepath.Join(testbedConfig.Templates, "root.hints"))
@@ -65,8 +70,37 @@ func Build(testbedConfig *config.Testbed) {
 	}
 }
 
+func copyDockerfiles(testbedConfig *config.Testbed) error {
+	dockerfilesSrc := filepath.Join(testbedConfig.Templates, "dockerfiles")
+	dockerfilesDst := filepath.Join(testbedConfig.Build, "dockerfiles")
+	if err := os.Mkdir(dockerfilesDst, perm); err != nil {
+		return err
+	}
+	entries, err := os.ReadDir(dockerfilesSrc)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		src, err := os.Open(filepath.Join(dockerfilesSrc, entry.Name()))
+		if err != nil {
+			return err
+		}
+		dst, err := os.Create(filepath.Join(dockerfilesDst, entry.Name()))
+		if err != nil {
+			return err
+		}
+		if _, err = io.Copy(dst, src); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func buildClient(testbedConfig *config.Testbed) error {
 	if err := os.Mkdir(testbedConfig.Client.Dir, perm); err != nil {
+		panic(err)
+	}
+	if err := os.Mkdir(filepath.Join(testbedConfig.Client.Dir, "logs"), perm); err != nil {
 		panic(err)
 	}
 	resolvTmpl, err := template.ParseFiles(filepath.Join(testbedConfig.Templates, "resolv.conf"))
@@ -88,8 +122,19 @@ func buildResolvers(testbedConfig *config.Testbed) error {
 		if err := os.Mkdir(resolverConfig.Dir, perm); err != nil {
 			return err
 		}
-		resolver := newResolver(resolverConfig, testbedConfig.Templates)
-		resolver.SetConfig(testbedConfig.QMin, false)
+		if err := os.Mkdir(resolverConfig.Logs, perm); err != nil {
+			return err
+		}
+		if err := os.Mkdir(resolverConfig.Config, perm); err != nil {
+			return err
+		}
+		if err := copyConfig(
+			filepath.Join(testbedConfig.Templates, fmt.Sprintf("resolver-%s", resolverConfig.Implementation.Name)),
+			resolverConfig.Config,
+			&templates.Args{QMin: resolverConfig.Implementation.QMinParameter[false]},
+		); err != nil {
+			return err
+		}
 		createDNSTapLog(resolverConfig.Dir)
 	}
 	return nil
@@ -100,38 +145,48 @@ func buildZones(testbedConfig *config.Testbed) error {
 		if err := os.Mkdir(zoneConfig.Dir, perm); err != nil {
 			return err
 		}
-		localTmpl, err := template.ParseFiles(filepath.Join(testbedConfig.Templates, "named.conf.local"))
-		if err != nil {
+		if err := os.Mkdir(zoneConfig.Logs, perm); err != nil {
 			return err
 		}
-		localDest, err := os.Create(filepath.Join(zoneConfig.Dir, "named.conf.local"))
-		if err != nil {
+		if err := os.Mkdir(zoneConfig.Config, perm); err != nil {
 			return err
 		}
-		if err = localTmpl.Execute(
-			localDest,
-			zoneConfig,
-		); err != nil {
-			return err
-		}
-		optionsTmpl, err := template.ParseFiles(filepath.Join(testbedConfig.Templates, "bind.conf"))
-		if err != nil {
-			return err
-		}
-		optionsDest, err := os.Create(filepath.Join(zoneConfig.Dir, "named.conf.options"))
-		if err != nil {
-			return err
-		}
-		if err := optionsTmpl.Execute(
-			optionsDest,
-			nil,
+		configSrcDir := filepath.Join(testbedConfig.Templates, zoneConfig.Implementation.Name)
+		if err := copyConfig(
+			configSrcDir,
+			zoneConfig.Config,
+			&templates.Args{
+				QName:    zoneConfig.QName,
+				ZoneFile: zoneConfig.ZoneFileTarget,
+			},
 		); err != nil {
 			return err
 		}
 		newZone(zoneConfig, testbedConfig.Templates).SetDefault(false)
-		createDNSTapLog(zoneConfig.Dir)
+		createDNSTapLog(zoneConfig.Logs)
 	}
 	return nil
+}
+
+func copyConfig(configSrcDir, configDstDir string, opt *templates.Args) error {
+	configSrcs, err := os.ReadDir(configSrcDir)
+	if err != nil {
+		return err
+	}
+	for _, config := range configSrcs {
+		configTmpl, err := template.ParseFiles(filepath.Join(configSrcDir, config.Name()))
+		if err != nil {
+			return err
+		}
+		configDst, err := os.Create(filepath.Join(configDstDir, config.Name()))
+		if err != nil {
+			return err
+		}
+		if err = configTmpl.Execute(configDst, opt); err != nil {
+			return err
+		}
+	}
+	return err
 }
 
 func createDNSTapLog(dir string) {
@@ -361,4 +416,18 @@ func (t *Testbed) SaveLogs(activeResolverID string, dest string) {
 	if err := os.WriteFile(filepath.Join(dest, fmt.Sprintf("%s.log", resolver.ID)), queryLog, perm); err != nil {
 		panic(err)
 	}
+}
+
+func (t *Testbed) String() string {
+	var result []string
+	result = append(result, "\tzones:")
+	for _, zone := range t.Zones {
+		result = append(result, fmt.Sprintf("\t\t%s", zone.ID))
+	}
+	result = append(result, "\tresolvers:")
+	for _, resolver := range t.Resolvers {
+		result = append(result, fmt.Sprintf("\t\t%s", resolver.ID))
+	}
+	result = append(result, fmt.Sprintf("client: %s", t.Client.ID))
+	return strings.Join(result, "\n")
 }

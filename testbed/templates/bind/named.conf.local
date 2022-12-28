@@ -1,4 +1,4 @@
 zone "{{.QName}}" {
 		type master;
-		file "{{.ZoneFileTarget}}";
+		file "{{.ZoneFile}}";
 };

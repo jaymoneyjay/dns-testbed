@@ -3,26 +3,23 @@ services:
 {{range $zone := .Zones}}
   {{$zone.ID}}:
     container_name: {{$zone.ID}}
-    image: jodokvieli/nameserver:bind-9.18.4
+    build:
+      dockerfile: dockerfiles/Dockerfile_{{$zone.Implementation.Name}}
+      args:
+        VERSION: {{$zone.Implementation.Version}}
     volumes:
       - type: bind
         source: db.root
         target: /etc/bind/db.root
       - type: bind
-        source: {{$zone.ID}}/named.conf.options
-        target: /etc/bind/named.conf.options
-      - type: bind
-        source: {{$zone.ID}}/named.conf.local
-        target: /etc/bind/named.conf.local
+        source: {{$zone.ID}}/config/
+        target: {{$zone.Implementation.ConfigTarget}}
       - type: bind
         source: zones
         target: /zones
       - type: bind
-        source: {{$zone.ID}}/query.log
-        target: /etc/logs/query.log
-      - type: bind
-        source: {{$zone.ID}}/log.dnstap
-        target: /etc/logs/log.dnstap
+        source: {{$zone.ID}}/logs
+        target: {{$zone.Implementation.LogsTarget}}
     networks:
       dns-testbed:
         ipv4_address: {{$zone.IP}}
@@ -32,7 +29,9 @@ services:
       - /bin/sh
       - -c
       - |
-        named -u bind -4 -d 2
+      {{range $cmd := $zone.Implementation.StartCommands}}
+        {{$cmd}}
+      {{end}}
         tc qdisc add dev eth0 root netem delay 0ms
         tail -F anything
 {{end}}
@@ -40,20 +39,20 @@ services:
 {{range $resolver := .Resolvers}}
   {{$resolver.ID}}:
     container_name: {{$resolver.ID}}
-    image: jodokvieli/resolver:{{$resolver.Implementation}}-{{$resolver.Version}}
+    build:
+      dockerfile: dockerfiles/Dockerfile_{{$resolver.Implementation.Name}}
+      args:
+        VERSION: {{$resolver.Implementation.Version}}
     volumes:
       - type: bind
-        source: {{$resolver.ID}}/{{$resolver.Implementation}}.conf
-        target: {{$resolver.ConfigTarget}}
+        source: {{$resolver.ID}}/config
+        target: {{$resolver.Implementation.ConfigTarget}}
       - type: bind
         source: db.root
-        target: {{$resolver.RootHintsTarget}}
+        target: {{$resolver.Implementation.RootHintsTarget}}
       - type: bind
-        source: {{$resolver.ID}}/query.log
-        target: {{$resolver.LogsTarget}}/query.log
-      - type: bind
-        source: {{$resolver.ID}}/log.dnstap
-        target: {{$resolver.LogsTarget}}/log.dnstap
+        source: {{$resolver.ID}}/logs
+        target: {{$resolver.Implementation.LogsTarget}}
     networks:
       dns-testbed:
         ipv4_address: {{$resolver.IP}}
@@ -61,7 +60,7 @@ services:
       - /bin/sh
       - -c
       - |
-      {{range $cmd := $resolver.StartCommands}}
+      {{range $cmd := $resolver.Implementation.StartCommands}}
         {{$cmd}}
       {{end}}
         tail -F anything

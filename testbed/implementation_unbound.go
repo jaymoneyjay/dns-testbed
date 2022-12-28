@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"testbed/testbed/templates"
 	"text/template"
 )
 
@@ -84,21 +85,21 @@ func (u unbound) filterQueries(queryLog []byte) []byte {
 }
 
 func (u unbound) SetConfig(qmin, reload bool) {
-	tmpl, err := template.ParseFiles(filepath.Join(u.templatesDir, "resolver-unbound.conf"))
+	tmpl, err := template.ParseFiles(filepath.Join(u.templatesDir, "unbound.conf"))
 	if err != nil {
 		panic(err)
 	}
-	dest, err := os.Create(filepath.Join(u.container.dir, "unbound.conf"))
+	dest, err := os.Create(filepath.Join(u.container.Config, "unbound.conf"))
 	if err != nil {
 		panic(err)
 	}
-	var param string
+	options := &templates.Args{
+		QMin: "no",
+	}
 	if qmin {
-		param = "yes"
-	} else {
-		param = "no"
+		options.QMin = "yes"
 	}
-	err = tmpl.Execute(dest, param)
+	err = tmpl.Execute(dest, options)
 	if err != nil {
 		panic(err)
 	}

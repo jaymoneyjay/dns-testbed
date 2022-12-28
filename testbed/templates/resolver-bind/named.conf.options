@@ -4,7 +4,7 @@ options {
     listen-on-v6 { any; };
     querylog yes;
     recursion yes;
-    qname-minimization {{.}};
+    qname-minimization {{.QMin}};
     dnstap {auth; client; resolver; forwarder;};
     dnstap-output file "/etc/logs/log.dnstap";
 };

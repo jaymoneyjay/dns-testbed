@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"testbed/testbed/templates"
 	"text/template"
 )
 
@@ -22,33 +23,34 @@ func newPowerDNS(templatesDir string, container *Container) powerDNS {
 }
 
 func (p powerDNS) reload() {
-	execResult, err := p.container.Exec([]string{"/etc/init.d/pdns-recursor", "restart"})
+	_, err := p.container.Exec([]string{"/etc/init.d/pdns-recursor", "stop"})
 	if err != nil {
 		panic(err)
 	}
-	matched, err := regexp.MatchString("Restarting PowerDNS Recursor \\.\\.\\.done", execResult.StdOut)
-	if err != nil {
-		return
-	}
+	execResult, err := p.container.Exec([]string{"pdns_recursor", "--config-dir=/etc/powerdns/config/", "--daemon"})
 	if err != nil {
 		panic(err)
 	}
-	if !matched {
-		err = errors.New(fmt.Sprintf("powerDNS could not be reloaded successfully: %s", execResult.StdOut))
+	matched, err := regexp.MatchString("Exception:", execResult.StdOut)
+	if err != nil {
+		panic(err)
+	}
+	if matched {
+		err = errors.New(fmt.Sprintf("powerDNS could not be started successfully: %s", execResult.StdOut))
 		panic(err)
 	}
 }
 
 func (p powerDNS) start() {
-	execResult, err := p.container.Exec([]string{"/etc/init.d/pdns-recursor", "start"})
+	execResult, err := p.container.Exec([]string{"pdns_recursor", "--config-dir=/etc/powerdns/config/", "--daemon"})
 	if err != nil {
 		panic(err)
 	}
-	matched, err := regexp.MatchString("done", execResult.StdOut)
+	matched, err := regexp.MatchString("Exception:", execResult.StdOut)
 	if err != nil {
 		panic(err)
 	}
-	if !matched {
+	if matched {
 		err = errors.New(fmt.Sprintf("powerDNS could not be started successfully: %s", execResult.StdOut))
 		panic(err)
 	}
@@ -64,21 +66,21 @@ func (p powerDNS) filterQueries(queryLog []byte) []byte {
 }
 
 func (p powerDNS) SetConfig(qmin, reload bool) {
-	tmpl, err := template.ParseFiles(filepath.Join(p.templatesDir, "resolver-powerdns.conf"))
+	tmpl, err := template.ParseFiles(filepath.Join(p.templatesDir, "recursor.conf"))
 	if err != nil {
 		panic(err)
 	}
-	dest, err := os.Create(filepath.Join(p.container.dir, "powerdns.conf"))
+	dest, err := os.Create(filepath.Join(p.container.Config, "recursor.conf"))
 	if err != nil {
 		panic(err)
 	}
-	var param string
+	options := &templates.Args{
+		QMin: "no",
+	}
 	if qmin {
-		param = "yes"
-	} else {
-		param = "no"
+		options.QMin = "yes"
 	}
-	err = tmpl.Execute(dest, param)
+	err = tmpl.Execute(dest, options)
 	if err != nil {
 		panic(err)
 	}

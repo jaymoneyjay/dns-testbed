@@ -1,5 +1,7 @@
 options {
     directory "/var/cache/bind";
+    dnssec-validation no;
+    listen-on-v6 { any; };
     querylog yes;
     dnstap {auth; client; resolver; forwarder;};
     dnstap-output file "/etc/logs/log.dnstap";

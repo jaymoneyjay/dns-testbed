@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"testbed/testbed/templates"
 	"text/template"
 )
 
@@ -79,21 +80,21 @@ func (b bind) filterQueries(queryLog []byte) []byte {
 }
 
 func (b bind) SetConfig(qmin, reload bool) {
-	tmpl, err := template.ParseFiles(filepath.Join(b.templatesDir, "resolver-bind.conf"))
+	tmpl, err := template.ParseFiles(filepath.Join(b.templatesDir, "named.conf.options"))
 	if err != nil {
 		panic(err)
 	}
-	dest, err := os.Create(filepath.Join(b.container.dir, "bind.conf"))
+	dest, err := os.Create(filepath.Join(b.container.Config, "named.conf.options"))
 	if err != nil {
 		panic(err)
 	}
-	var param string
+	options := &templates.Args{
+		QMin: "off",
+	}
 	if qmin {
-		param = "strict"
-	} else {
-		param = "off"
+		options.QMin = "strict"
 	}
-	err = tmpl.Execute(dest, param)
+	err = tmpl.Execute(dest, options)
 	if err != nil {
 		panic(err)
 	}

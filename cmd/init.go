@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"github.com/spf13/cobra"
 	"os"
 	"testbed/config"
@@ -27,6 +28,8 @@ var cmdInit = &cobra.Command{
 			return err
 		}
 		testbed.Build(testbedConfig)
+		fmt.Println("### Initialized testbed ###")
+		fmt.Println(testbed.New(testbedConfig))
 		return nil
 	},
 }
