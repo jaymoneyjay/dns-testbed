@@ -1,0 +1,72 @@
+$TTL    3600
+@       IN      SOA     ns.com. username.com. (
+                        2022092001      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         3600 )       ; Negative Cache TTL
+
+		IN	NS	ns
+ns		IN	A	172.20.0.3
+
+zone1		IN	NS	ns.zone1
+ns.zone1	IN	A	172.20.0.5
+
+zone2		IN	NS	ns.zone2
+ns.zone2	IN	A	172.20.0.6
+
+zone3   	IN	NS	ns.zone3
+ns.zone3	IN	A	172.20.0.7
+
+zone4		IN	NS	ns.zone4
+ns.zone4	IN	A	172.20.0.8
+
+zone5		IN	NS	ns.zone5
+ns.zone5	IN	A	172.20.0.9
+
+zone6		IN	NS	ns.zone6
+ns.zone6	IN	A	172.20.0.10
+
+zone7		IN	NS	ns.zone7
+ns.zone7	IN	A	172.20.0.11
+
+zone8		IN	NS	ns.zone8
+ns.zone8	IN	A	172.20.0.12
+
+zone9		IN	NS	ns.zone9
+ns.zone9	IN	A	172.20.0.13
+
+zone10		IN	NS	ns.zone10
+ns.zone10	IN	A	172.20.0.14
+
+zone11		IN	NS	ns.zone11
+ns.zone11	IN	A	172.20.0.15
+
+zone12		IN	NS	ns.zone12
+ns.zone12	IN	A	172.20.0.16
+
+zone13		IN	NS	ns.zone13
+ns.zone13	IN	A	172.20.0.17
+
+zone14		IN	NS	ns.zone14
+ns.zone14	IN	A	172.20.0.18
+
+zone15		IN	NS	ns.zone15
+ns.zone15	IN	A	172.20.0.19
+
+zone16		IN	NS	ns.zone16
+ns.zone16	IN	A	172.20.0.20
+
+zone17		IN	NS	ns.zone17
+ns.zone17	IN	A	172.20.0.21
+
+zone18		IN	NS	ns.zone18
+ns.zone18	IN	A	172.20.0.22
+
+zone19		IN	NS	ns.zone19
+ns.zone19	IN	A	172.20.0.23
+
+zone20		IN	NS	ns.zone20
+ns.zone20	IN	A	172.20.0.24
+
+@		IN	TXT	"FAKE COM SERVER"

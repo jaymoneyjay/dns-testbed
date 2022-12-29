@@ -10,7 +10,7 @@ services:
     volumes:
       - type: bind
         source: db.root
-        target: /etc/bind/db.root
+        target: {{$zone.Implementation.RootHintsTarget}}
       - type: bind
         source: {{$zone.ID}}/config/
         target: {{$zone.Implementation.ConfigTarget}}

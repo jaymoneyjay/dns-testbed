@@ -50,8 +50,7 @@ func NewContainer(id, dir, ip string) *Container {
 		return strings.ToUpper(fmt.Sprintf("%s", i))
 	}
 	logger := zerolog.New(output).With().Timestamp().Logger()
-	queryLog := filepath.Join(dir, "query.log")
-	_, err = os.Create(queryLog)
+	_, err = os.Create(filepath.Join(logs, "query.log"))
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,17 @@
+$TTL    0
+@       IN      SOA     ns.zone2.com. admin.zone2.com. (
+                        2022092001      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         0 )       ; Negative Cache TTL
+
+; Name servers
+zone2.com.     IN      NS      ns.zone2.com.
+
+; A records for name servers
+ns              IN      A       172.20.0.6
+
+; Other A records
+@               IN      A    	1.2.3.4
+www             IN      A       1.2.3.4

@@ -1,0 +1,94 @@
+root: "172.20.0.2"
+zones:
+- qname: "."
+  ip: "172.20.0.2"
+  defaultZoneFile: validation/zones/default/root.zone
+
+- qname: "com."
+  ip: "172.20.0.3"
+  defaultZoneFile: validation/zones/default/com-large.zone
+
+- qname: "net."
+  ip: "172.20.0.4"
+  defaultZoneFile: validation/zones/default/net.zone
+
+- qname: "zone1.com."
+  ip: "172.20.0.5"
+  defaultZoneFile: validation/zones/default/zone1-com.zone
+- qname: "zone2.com."
+  ip: "172.20.0.6"
+  defaultZoneFile: validation/zones/default/zone2-com.zone
+- qname: "zone3.com."
+  ip: "172.20.0.7"
+  defaultZoneFile: validation/zones/default/zone3-com.zone
+- qname: "zone4.com."
+  ip: "172.20.0.8"
+  defaultZoneFile: validation/zones/default/zone4-com.zone
+- qname: "zone5.com."
+  ip: "172.20.0.9"
+  defaultZoneFile: validation/zones/default/zone5-com.zone
+- qname: "zone6.com."
+  ip: "172.20.0.10"
+  defaultZoneFile: validation/zones/default/zone6-com.zone
+- qname: "zone7.com."
+  ip: "172.20.0.11"
+  defaultZoneFile: validation/zones/default/zone7-com.zone
+- qname: "zone8.com."
+  ip: "172.20.0.12"
+  defaultZoneFile: validation/zones/default/zone8-com.zone
+- qname: "zone9.com."
+  ip: "172.20.0.13"
+  defaultZoneFile: validation/zones/default/zone9-com.zone
+- qname: "zone10.com."
+  ip: "172.20.0.14"
+  defaultZoneFile: validation/zones/default/zone10-com.zone
+- qname: "zone11.com."
+  ip: "172.20.0.15"
+  defaultZoneFile: validation/zones/default/zone11-com.zone
+- qname: "zone12.com."
+  ip: "172.20.0.16"
+  defaultZoneFile: validation/zones/default/zone12-com.zone
+- qname: "zone13.com."
+  ip: "172.20.0.17"
+  defaultZoneFile: validation/zones/default/zone13-com.zone
+- qname: "zone14.com."
+  ip: "172.20.0.18"
+  defaultZoneFile: validation/zones/default/zone14-com.zone
+- qname: "zone15.com."
+  ip: "172.20.0.19"
+  defaultZoneFile: validation/zones/default/zone15-com.zone
+- qname: "zone16.com."
+  ip: "172.20.0.20"
+  defaultZoneFile: validation/zones/default/zone16-com.zone
+- qname: "zone17.com."
+  ip: "172.20.0.21"
+  defaultZoneFile: validation/zones/default/zone17-com.zone
+- qname: "zone18.com."
+  ip: "172.20.0.22"
+  defaultZoneFile: validation/zones/default/zone18-com.zone
+- qname: "zone19.com."
+  ip: "172.20.0.23"
+  defaultZoneFile: validation/zones/default/zone19-com.zone
+- qname: "zone20.com."
+  ip: "172.20.0.24"
+  defaultZoneFile: validation/zones/default/zone20-com.zone
+
+
+resolvers:
+- implementation: "bind"
+  version: "9.18.4"
+  ip: "172.20.0.51"
+- implementation: "unbound"
+  version: "1.16.0"
+  ip: "172.20.0.52"
+- implementation: "unbound"
+  version: "1.10.0"
+  ip: "172.20.0.53"
+- implementation: "powerdns"
+  version: "4.7"
+  ip: "172.20.0.54"
+
+client:
+  id: client
+  ip: 172.20.0.99
+  nameserver: 172.20.0.51
