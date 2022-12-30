@@ -6,12 +6,6 @@ $TTL    0
                         2419200         ; Expire
                          0 )       ; Negative Cache TTL
 
-; Name servers
-zone8.com.     IN      NS      ns.zone8.com.
-
-; A records for name servers
-ns              IN      A       172.20.0.12
-
 ; Other A records
 @               IN      A    	1.2.3.4
 www             IN      A       1.2.3.4

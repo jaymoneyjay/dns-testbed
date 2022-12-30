@@ -1,7 +1,7 @@
 package config
 
 type DockerCompose struct {
-	Zones     []*Zone
-	Resolvers []*Resolver
-	Client    *Client
+	Nameservers []*Nameserver
+	Resolvers   []*Resolver
+	Client      *Client
 }

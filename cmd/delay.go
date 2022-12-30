@@ -9,8 +9,8 @@ import (
 )
 
 var cmdDelay = &cobra.Command{
-	Use:     "delay [zone, duration (ms)]",
-	Short:   "Delay the responses of a zone by the specified duration (in ms)",
+	Use:     "delay [nameserver, duration (ms)]",
+	Short:   "Delay the responses of a nameserver by the specified duration (in ms)",
 	Example: "testbed delay target-com 800 ",
 	Args:    cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -18,7 +18,7 @@ var cmdDelay = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		zone, err := testbed.New(testbedConfig).FindZone(args[0])
+		nameserver, err := testbed.New(testbedConfig).FindNameserver(args[0])
 		if err != nil {
 			return err
 		}
@@ -26,7 +26,7 @@ var cmdDelay = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		zone.SetDelay(time.Duration(duration) * time.Millisecond)
+		nameserver.SetDelay(time.Duration(duration) * time.Millisecond)
 		return nil
 	},
 }

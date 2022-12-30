@@ -1,7 +1,14 @@
 package templates
 
-type Args struct {
+type Zone struct {
 	QName    string
-	QMin     string
 	ZoneFile string
+}
+
+type NameServer struct {
+	Zones []*Zone
+}
+
+type Resolver struct {
+	QMin string
 }

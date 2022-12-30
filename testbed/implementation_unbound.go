@@ -93,7 +93,7 @@ func (u unbound) SetConfig(qmin, reload bool) {
 	if err != nil {
 		panic(err)
 	}
-	options := &templates.Args{
+	options := &templates.Resolver{
 		QMin: "no",
 	}
 	if qmin {

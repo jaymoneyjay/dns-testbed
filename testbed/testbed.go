@@ -15,10 +15,10 @@ import (
 )
 
 type Testbed struct {
-	Zones     map[string]*Zone
-	Resolvers map[string]*Resolver
-	Client    *Client
-	Build     string
+	Nameservers map[string]*Nameserver
+	Resolvers   map[string]*Resolver
+	Client      *Client
+	Build       string
 }
 
 var perm = os.FileMode(0777)
@@ -53,13 +53,13 @@ func Build(testbedConfig *config.Testbed) {
 		panic(err)
 	}
 	if err := dockerTmpl.Execute(dockerDest, config.DockerCompose{
-		Zones:     testbedConfig.Zones,
-		Resolvers: testbedConfig.Resolvers,
-		Client:    testbedConfig.Client,
+		Nameservers: testbedConfig.Nameservers,
+		Resolvers:   testbedConfig.Resolvers,
+		Client:      testbedConfig.Client,
 	}); err != nil {
 		panic(err)
 	}
-	if err := buildZones(testbedConfig); err != nil {
+	if err := buildNameServers(testbedConfig); err != nil {
 		panic(err)
 	}
 	if err := buildResolvers(testbedConfig); err != nil {
@@ -131,7 +131,7 @@ func buildResolvers(testbedConfig *config.Testbed) error {
 		if err := copyConfig(
 			filepath.Join(testbedConfig.Templates, fmt.Sprintf("resolver-%s", resolverConfig.Implementation.Name)),
 			resolverConfig.Config,
-			&templates.Args{QMin: resolverConfig.Implementation.QMinParameter[false]},
+			&templates.Resolver{QMin: resolverConfig.Implementation.QMinParameter[false]},
 		); err != nil {
 			return err
 		}
@@ -140,49 +140,55 @@ func buildResolvers(testbedConfig *config.Testbed) error {
 	return nil
 }
 
-func buildZones(testbedConfig *config.Testbed) error {
-	for _, zoneConfig := range testbedConfig.Zones {
-		if err := os.Mkdir(zoneConfig.Dir, perm); err != nil {
+func buildNameServers(testbedConfig *config.Testbed) error {
+	for _, nameserverConfig := range testbedConfig.Nameservers {
+		if err := os.Mkdir(nameserverConfig.Dir, perm); err != nil {
 			return err
 		}
-		if err := os.Mkdir(zoneConfig.Logs, perm); err != nil {
+		if err := os.Mkdir(nameserverConfig.Logs, perm); err != nil {
 			return err
 		}
-		if err := os.Mkdir(zoneConfig.Config, perm); err != nil {
+		if err := os.Mkdir(nameserverConfig.Config, perm); err != nil {
 			return err
 		}
-		configSrcDir := filepath.Join(testbedConfig.Templates, zoneConfig.Implementation.Name)
+		configSrcDir := filepath.Join(testbedConfig.Templates, nameserverConfig.Implementation.Name)
+		var zones []*templates.Zone
+		for _, zone := range nameserverConfig.Zones {
+			zones = append(zones, &templates.Zone{
+				QName:    zone.QName,
+				ZoneFile: zone.ZoneFileTarget,
+			})
+		}
 		if err := copyConfig(
 			configSrcDir,
-			zoneConfig.Config,
-			&templates.Args{
-				QName:    zoneConfig.QName,
-				ZoneFile: zoneConfig.ZoneFileTarget,
+			nameserverConfig.Config,
+			&templates.NameServer{
+				Zones: zones,
 			},
 		); err != nil {
 			return err
 		}
-		newZone(zoneConfig, testbedConfig.Templates).SetDefault(false)
-		createDNSTapLog(zoneConfig.Logs)
+		newNameServer(nameserverConfig, testbedConfig.Templates).SetDefaultZones(false)
+		createDNSTapLog(nameserverConfig.Logs)
 	}
 	return nil
 }
 
-func copyConfig(configSrcDir, configDstDir string, opt *templates.Args) error {
+func copyConfig(configSrcDir, configDstDir string, args interface{}) error {
 	configSrcs, err := os.ReadDir(configSrcDir)
 	if err != nil {
 		return err
 	}
-	for _, config := range configSrcs {
-		configTmpl, err := template.ParseFiles(filepath.Join(configSrcDir, config.Name()))
+	for _, configSrc := range configSrcs {
+		configTmpl, err := template.ParseFiles(filepath.Join(configSrcDir, configSrc.Name()))
 		if err != nil {
 			return err
 		}
-		configDst, err := os.Create(filepath.Join(configDstDir, config.Name()))
+		configDst, err := os.Create(filepath.Join(configDstDir, configSrc.Name()))
 		if err != nil {
 			return err
 		}
-		if err = configTmpl.Execute(configDst, opt); err != nil {
+		if err = configTmpl.Execute(configDst, args); err != nil {
 			return err
 		}
 	}
@@ -198,9 +204,9 @@ func createDNSTapLog(dir string) {
 }
 
 func New(testbedConfig *config.Testbed) *Testbed {
-	zones := make(map[string]*Zone)
-	for _, zoneConfig := range testbedConfig.Zones {
-		zones[zoneConfig.ID] = newZone(zoneConfig, testbedConfig.Templates)
+	nameservers := make(map[string]*Nameserver)
+	for _, nameserverConfig := range testbedConfig.Nameservers {
+		nameservers[nameserverConfig.ID] = newNameServer(nameserverConfig, testbedConfig.Templates)
 	}
 	resolvers := make(map[string]*Resolver)
 	for _, resolverConfig := range testbedConfig.Resolvers {
@@ -208,10 +214,10 @@ func New(testbedConfig *config.Testbed) *Testbed {
 	}
 	client := newClient(testbedConfig.Client)
 	return &Testbed{
-		Zones:     zones,
-		Resolvers: resolvers,
-		Client:    client,
-		Build:     testbedConfig.Build,
+		Nameservers: nameservers,
+		Resolvers:   resolvers,
+		Client:      client,
+		Build:       testbedConfig.Build,
 	}
 }
 
@@ -250,9 +256,9 @@ func (t *Testbed) Flush() {
 
 func (t *Testbed) Reset() {
 	t.Flush()
-	for _, zone := range t.Zones {
-		zone.SetDefault(true)
-		zone.SetDelay(0)
+	for _, nameserver := range t.Nameservers {
+		nameserver.SetDefaultZones(true)
+		nameserver.SetDelay(0)
 	}
 	t.FlushQueryLogs()
 }
@@ -280,20 +286,20 @@ func (t *Testbed) setZoneFile(path string) {
 	if zoneID == "" {
 		return
 	}
-	zone, err := t.FindZone(zoneID)
+	_, nameserver, err := t.FindZone(zoneID)
 	if err != nil {
 		panic(errors.New(fmt.Sprintf("%s should be a zone file named after the zone ID", zoneID)))
 	}
-	zone.Set(path, true)
+	nameserver.SetZone(zoneID, path)
 }
 
-func (t *Testbed) SetDelay(delay time.Duration, zoneIDs []string) {
-	for _, zoneID := range zoneIDs {
-		zone, err := t.FindZone(zoneID)
+func (t *Testbed) SetDelay(delay time.Duration, nameserverIDs []string) {
+	for _, nameserverID := range nameserverIDs {
+		nameserver, err := t.FindNameserver(nameserverID)
 		if err != nil {
 			panic(err)
 		}
-		zone.SetDelay(delay)
+		nameserver.SetDelay(delay)
 	}
 }
 
@@ -318,7 +324,7 @@ func (t *Testbed) Measure(volume, duration bool, target string) (int64, string) 
 		err := errors.New(fmt.Sprintf("volume and duration should be mutually exclusive. volume: %t, duration: %t", volume, duration))
 		panic(err)
 	}
-	if val, ok := t.Zones[target]; ok {
+	if val, ok := t.Nameservers[target]; ok {
 		queryLog := val.ReadQueryLog(timeout)
 		queryLog = val.filterQueries(queryLog)
 		result, err := measurement(queryLog)
@@ -377,8 +383,8 @@ func (t *Testbed) parseTimestamp(queryLogLine string) (time.Time, error) {
 }
 
 func (t *Testbed) FlushQueryLogs() {
-	for _, zone := range t.Zones {
-		zone.FlushQueryLog()
+	for _, nameserver := range t.Nameservers {
+		nameserver.FlushQueryLog()
 	}
 	for _, resolver := range t.Resolvers {
 		resolver.FlushQueryLog()
@@ -393,18 +399,28 @@ func (t *Testbed) FindResolver(resolverID string) (*Resolver, error) {
 	return resolver, nil
 }
 
-func (t *Testbed) FindZone(zoneID string) (*Zone, error) {
-	zone, exists := t.Zones[zoneID]
+func (t *Testbed) FindNameserver(nameserverID string) (*Nameserver, error) {
+	nameserver, exists := t.Nameservers[nameserverID]
 	if !exists {
-		return nil, errors.New(fmt.Sprintf("zone %s does not exist", zoneID))
+		return nil, errors.New(fmt.Sprintf("nameserver %s does not exist", nameserverID))
 	}
-	return zone, nil
+	return nameserver, nil
+}
+
+func (t *Testbed) FindZone(zoneID string) (*Zone, *Nameserver, error) {
+	for _, nameserver := range t.Nameservers {
+		zone, exists := nameserver.Zones[zoneID]
+		if exists {
+			return zone, nameserver, nil
+		}
+	}
+	return nil, nil, errors.New(fmt.Sprintf("zone %s does not exist", zoneID))
 }
 
 func (t *Testbed) SaveLogs(activeResolverID string, dest string) {
-	for _, zone := range t.Zones {
-		queryLog := zone.ReadQueryLog(0)
-		if err := os.WriteFile(filepath.Join(dest, fmt.Sprintf("%s.log", zone.ID)), queryLog, perm); err != nil {
+	for _, nameserver := range t.Nameservers {
+		queryLog := nameserver.ReadQueryLog(0)
+		if err := os.WriteFile(filepath.Join(dest, fmt.Sprintf("%s.log", nameserver.ID)), queryLog, perm); err != nil {
 			panic(err)
 		}
 	}
@@ -420,14 +436,17 @@ func (t *Testbed) SaveLogs(activeResolverID string, dest string) {
 
 func (t *Testbed) String() string {
 	var result []string
-	result = append(result, "\tzones:")
-	for _, zone := range t.Zones {
-		result = append(result, fmt.Sprintf("\t\t%s", zone.ID))
+	result = append(result, "\tnameservers:")
+	for _, nameserver := range t.Nameservers {
+		result = append(result, fmt.Sprintf("\t\t%s", nameserver.ID))
+		for id := range nameserver.Zones {
+			result = append(result, fmt.Sprintf("\t\t\t%s", id))
+		}
 	}
 	result = append(result, "\tresolvers:")
 	for _, resolver := range t.Resolvers {
 		result = append(result, fmt.Sprintf("\t\t%s", resolver.ID))
 	}
-	result = append(result, fmt.Sprintf("client: %s", t.Client.ID))
+	result = append(result, fmt.Sprintf("\tclient: %s", t.Client.ID))
 	return strings.Join(result, "\n")
 }

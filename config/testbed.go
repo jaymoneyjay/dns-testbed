@@ -6,20 +6,20 @@ import (
 )
 
 type TestbedInput struct {
-	Zones     []*ZoneInput
-	Resolvers []*ResolverInput
-	Client    *ClientInput
-	Root      string
+	Nameservers []*NameserverInput
+	Resolvers   []*ResolverInput
+	Client      *ClientInput
+	Root        string
 }
 
 type Testbed struct {
-	Templates string
-	Build     string
-	Zones     []*Zone
-	Resolvers []*Resolver
-	Client    *Client
-	QMin      bool
-	Root      string
+	Templates   string
+	Build       string
+	Nameservers []*Nameserver
+	Resolvers   []*Resolver
+	Client      *Client
+	QMin        bool
+	Root        string
 }
 
 func (c *Config) LoadTestbedConfig() (*Testbed, error) {
@@ -36,14 +36,14 @@ func (c *Config) LoadTestbedConfig() (*Testbed, error) {
 
 func (c *Config) newTestbed(input *TestbedInput) (*Testbed, error) {
 	build := "build"
-	var zones []*Zone
-	for _, zoneInput := range input.Zones {
-		zone, err := c.newZone(build, zoneInput)
+	var nameservers []*Nameserver
+	for _, nameserverInput := range input.Nameservers {
+		nameserver, err := c.newNameServer(build, nameserverInput)
 		if err != nil {
 			//TODO put user interaction into cmd package?
 			fmt.Println(err)
 		}
-		zones = append(zones, zone)
+		nameservers = append(nameservers, nameserver)
 	}
 	var resolvers []*Resolver
 	for _, resolverInput := range input.Resolvers {
@@ -55,12 +55,12 @@ func (c *Config) newTestbed(input *TestbedInput) (*Testbed, error) {
 		resolvers = append(resolvers, resolver)
 	}
 	return &Testbed{
-		Templates: filepath.Join("testbed", "templates"),
-		Build:     build,
-		Zones:     zones,
-		Resolvers: resolvers,
-		Client:    c.newClient(build, input.Client),
-		QMin:      false,
-		Root:      input.Root,
+		Templates:   filepath.Join("testbed", "templates"),
+		Build:       build,
+		Nameservers: nameservers,
+		Resolvers:   resolvers,
+		Client:      c.newClient(build, input.Client),
+		QMin:        false,
+		Root:        input.Root,
 	}, nil
 }

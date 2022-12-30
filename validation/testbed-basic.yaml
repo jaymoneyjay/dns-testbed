@@ -1,20 +1,30 @@
 root: "172.20.0.2"
-zones:
-- qname: "."
-  ip: "172.20.0.2"
-  defaultZoneFile: validation/zones/default/root.zone
-- qname: "com."
-  ip: "172.20.0.3"
-  defaultZoneFile: validation/zones/default/com.zone
-- qname: "net."
-  ip: "172.20.0.4"
-  defaultZoneFile: validation/zones/default/net.zone
-- qname: "target.com."
-  ip: "172.20.0.5"
-  defaultZoneFile: validation/zones/default/target-com.zone
-- qname: "inter.net."
-  ip: "172.20.0.6"
-  defaultZoneFile: validation/zones/default/inter-net.zone
+nameservers:
+  - id: "root"
+    ip: "172.20.0.2"
+    zones:
+      - qname: "."
+        defaultZoneFile: validation/zones/default/root.zone
+  - id: "com"
+    ip: "172.20.0.3"
+    zones:
+      - qname: "com."
+        defaultZoneFile: validation/zones/default/com.zone
+  - id: "net"
+    ip: "172.20.0.4"
+    zones:
+      - qname: "net."
+        defaultZoneFile: validation/zones/default/net.zone
+  - id: "inter-net"
+    ip: "172.20.0.6"
+    zones:
+      - qname: "inter.net."
+        defaultZoneFile: validation/zones/default/inter-net.zone
+  - id: "target-com"
+    ip: "172.20.0.5"
+    zones:
+      - qname: "target.com."
+        defaultZoneFile: validation/zones/default/target-com.zone
 
 resolvers:
 - implementation: "bind"

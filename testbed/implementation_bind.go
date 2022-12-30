@@ -88,7 +88,7 @@ func (b bind) SetConfig(qmin, reload bool) {
 	if err != nil {
 		panic(err)
 	}
-	options := &templates.Args{
+	options := &templates.Resolver{
 		QMin: "off",
 	}
 	if qmin {
