@@ -7,31 +7,28 @@ import (
 )
 
 type ZoneInput struct {
-	QName           string
-	DefaultZoneFile string
+	QName string
 }
 
 type Zone struct {
-	ID              string
-	QName           string
-	DefaultZoneFile string
-	ZoneFileHost    string
-	ZoneFileTarget  string
+	ID             string
+	QName          string
+	ZoneFileHost   string
+	ZoneFileTarget string
 }
 
 func (c *Config) newZone(build string, input *ZoneInput) (*Zone, error) {
 	var err error
-	id := generateZoneID(input.QName)
+	id := GenerateZoneID(input.QName)
 	return &Zone{
-		ID:              id,
-		QName:           input.QName,
-		ZoneFileHost:    filepath.Join(build, "zones", fmt.Sprintf("%s.zone", id)),
-		ZoneFileTarget:  filepath.Join("/zones", fmt.Sprintf("%s.zone", id)),
-		DefaultZoneFile: input.DefaultZoneFile,
+		ID:             id,
+		QName:          input.QName,
+		ZoneFileHost:   filepath.Join(build, "zones", fmt.Sprintf("%s.zone", id)),
+		ZoneFileTarget: filepath.Join("/zones", fmt.Sprintf("%s.zone", id)),
 	}, err
 }
 
-func generateZoneID(qname string) string {
+func GenerateZoneID(qname string) string {
 	if qname == "." {
 		return "root"
 	}

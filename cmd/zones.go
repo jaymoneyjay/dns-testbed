@@ -37,9 +37,7 @@ var cmdZones = &cobra.Command{
 			return err
 		}
 		t := testbed.New(testbedConfig)
-		for _, nameserver := range t.Nameservers {
-			nameserver.SetDefaultZones(true)
-		}
+		t.SetDefaultZones()
 		t.SetZoneFiles(args[0])
 		return nil
 	},

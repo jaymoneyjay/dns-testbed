@@ -4,27 +4,22 @@ nameservers:
     ip: "172.20.0.2"
     zones:
       - qname: "."
-        defaultZoneFile: validation/zones/default/root.zone
   - id: "com"
     ip: "172.20.0.3"
     zones:
       - qname: "com."
-        defaultZoneFile: validation/zones/default/com.zone
   - id: "net"
     ip: "172.20.0.4"
     zones:
       - qname: "net."
-        defaultZoneFile: validation/zones/default/net.zone
   - id: "inter-net"
     ip: "172.20.0.6"
     zones:
       - qname: "inter.net."
-        defaultZoneFile: validation/zones/default/inter-net.zone
   - id: "target-com"
     ip: "172.20.0.5"
     zones:
       - qname: "target.com."
-        defaultZoneFile: validation/zones/default/target-com.zone
 
 resolvers:
 - implementation: "bind"
@@ -41,6 +36,6 @@ resolvers:
   ip: "172.20.0.54"
 
 client:
-  id: client
-  ip: 172.20.0.99
-  nameserver: 172.20.0.51
+  id: "client"
+  ip: "172.20.0.99"
+  nameserver: "172.20.0.51"

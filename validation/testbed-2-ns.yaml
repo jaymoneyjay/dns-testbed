@@ -4,63 +4,40 @@ nameservers:
     ip: "172.20.0.2"
     zones:
     - qname: "."
-      defaultZoneFile: validation/zones/default/root.zone
   - id: "com"
     ip: "172.20.0.3"
     zones:
     - qname: "com."
-      defaultZoneFile: validation/zones/default/com-2-ns.zone
   - id: "net"
     ip: "172.20.0.4"
     zones:
     - qname: "net."
-      defaultZoneFile: validation/zones/default/net.zone
   - id: "ns1"
     ip: "172.20.0.5"
     zones:
     - qname: "zone1.com."
-      defaultZoneFile: validation/zones/default/zone1-com.zone
     - qname: "zone3.com."
-      defaultZoneFile: validation/zones/default/zone3-com.zone
     - qname: "zone5.com."
-      defaultZoneFile: validation/zones/default/zone5-com.zone
     - qname: "zone7.com."
-      defaultZoneFile: validation/zones/default/zone7-com.zone
     - qname: "zone9.com."
-      defaultZoneFile: validation/zones/default/zone9-com.zone
     - qname: "zone11.com."
-      defaultZoneFile: validation/zones/default/zone11-com.zone
     - qname: "zone13.com."
-      defaultZoneFile: validation/zones/default/zone13-com.zone
     - qname: "zone15.com."
-      defaultZoneFile: validation/zones/default/zone15-com.zone
     - qname: "zone17.com."
-      defaultZoneFile: validation/zones/default/zone17-com.zone
     - qname: "zone19.com."
-      defaultZoneFile: validation/zones/default/zone19-com.zone
   - id: "ns2"
     ip: "172.20.0.6"
     zones:
       - qname: "zone2.com."
-        defaultZoneFile: validation/zones/default/zone2-com.zone
       - qname: "zone4.com."
-        defaultZoneFile: validation/zones/default/zone4-com.zone
       - qname: "zone6.com."
-        defaultZoneFile: validation/zones/default/zone6-com.zone
       - qname: "zone8.com."
-        defaultZoneFile: validation/zones/default/zone8-com.zone
       - qname: "zone10.com."
-        defaultZoneFile: validation/zones/default/zone10-com.zone
       - qname: "zone12.com."
-        defaultZoneFile: validation/zones/default/zone12-com.zone
       - qname: "zone14.com."
-        defaultZoneFile: validation/zones/default/zone14-com.zone
       - qname: "zone16.com."
-        defaultZoneFile: validation/zones/default/zone16-com.zone
       - qname: "zone18.com."
-        defaultZoneFile: validation/zones/default/zone18-com.zone
       - qname: "zone20.com."
-        defaultZoneFile: validation/zones/default/zone20-com.zone
 
 
 resolvers:

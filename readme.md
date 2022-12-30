@@ -12,12 +12,11 @@ We provide a simple command line interface to:
 We also provide functionallity to run a series of dns queries and measurements with different testbed settings such as different zone configurations and delays.
 
 ## Setup
-The individual components are simulated by running a separate docker container for each component. The nameservers run bind9 (version [bind-9.18.4](https://bind9.readthedocs.io/en/v9_18_4/notes.html)). We provide different implementations for resolvers. Currently, the following implementations are supported:
+The testbed runs in docker. We use a seperate container for every resolver and one container per nameserver. A nameserver can host multiple zones. The nameservers run bind9 (version [bind-9.18.4](https://bind9.readthedocs.io/en/v9_18_4/notes.html)). We provide different implementations for resolvers. The implementation and version can be specified in the testbed configuration file. Currently, the following implementations are supported:
 
-* [bind-9.18.4](https://bind9.readthedocs.io/en/v9_18_4/notes.html).
-* [unbound-1.16.0](https://www.nlnetlabs.nl/news/2022/Jun/02/unbound-1.16.0-released/)
-* [unbound-1.10.0](https://www.nlnetlabs.nl/news/2020/Feb/20/unbound-1.10.0-released/)
-* [powerDNS-4.7.3](https://docs.powerdns.com/recursor/changelog/4.7.html#change-4.7.3)
+* [bind](https://bind9.readthedocs.io)
+* [unbound](https://docs.powerdns.com/recursor/)
+* [powerDNS](https://docs.powerdns.com/recursor/) (only major versions are supported: 4.2 - 4.7)
 
 The **client** is a container running `dig`  to submit the DNS queries.
 
@@ -31,38 +30,42 @@ The **client** is a container running `dig`  to submit the DNS queries.
    $ go mod tidy
    $ go install
    ```
+4. Might need to add the go path to `PATH`:
+
+
+	```
+	export PATH=$GOPATH/bin:$PATH
+	```
 
 ## Usage
 
 ### Initialization
-A new testbed can be initialized by providing a `.yaml` file containing the configuration of the testbed. This configuration file is structured as follows:
+A new testbed can be initialized by providing a `.yaml` file containing the configuration of the testbed. The configuration file should be structured as follows:
 
 ```yaml
-root:              string, e.g. 172.20.0.2
-zones:
-- qname:           string
-  ip:              string
-  defaultZoneFile: path
+root: "172.20.0.2"
+nameservers:
+  - id: "root"
+    ip: "172.20.0.2"
+    zones:
+      - qname: "."
   [...]
 
 resolvers:
-- implementation:  string
-  version:         string
-  ip:              string
+- implementation: "bind"
+  version: "9.18.4"
+  ip: "172.20.0.51"
   [...]
 
 client:
-  id:              string
-  ip:              string
-  nameserver:	   string
+  id: "client"
+  ip: "172.20.0.99"
+  nameserver: "172.20.0.51"
 ```
 
-We provide a configuration for a basic testbed `validation/testbed-basic.yaml`. The testbed contains the following components
+We provide various examples for configuration files in the `validation` directory.
 
-* **zones**: root, com, net, target.com, inter.net, 
-* four **resolvers** each with a different dns implementations: bind-9.18.4, unbound-1.16.0, unbound-1.10.0, powerDNS-4.7.3
-* a **client**
-
+### Start
 To initialize and start a testbed run 
 
 ```

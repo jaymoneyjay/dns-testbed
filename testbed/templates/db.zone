@@ -1,16 +1,18 @@
 $TTL    0
-@       IN      SOA     ns.zone17.com. admin.zone17.com. (
+@       IN      SOA     ns. username. (
                         2022092001      ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          0 )       ; Negative Cache TTL
 
-; Name servers
-zone17.com.     IN      NS      ns.zone17.com.
+{{.QName}}		IN	NS	ns.{{.ID}}
+ns.{{.ID}}	IN	A	{{.NS}}
 
-; A records for name servers
-ns              IN      A       172.20.0.21
+{{range $SubZone := .SubZones}}
+{{$SubZone.Label}}		IN	NS	ns.{{$SubZone.Label}}
+ns.{{$SubZone.Label}}	    IN	A	{{$SubZone.NS}}
+{{end}}
 
 ; Other A records
 @               IN      A    	1.2.3.4

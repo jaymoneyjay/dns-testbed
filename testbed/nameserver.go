@@ -32,15 +32,6 @@ func (n *Nameserver) SetZone(zoneID, zoneFile string) {
 	n.reload()
 }
 
-func (n *Nameserver) SetDefaultZones(reload bool) {
-	for _, zone := range n.Zones {
-		zone.setDefault()
-	}
-	if reload {
-		n.reload()
-	}
-}
-
 func (n *Nameserver) SetDelay(duration time.Duration) {
 	execResult, err := n.Exec([]string{"tc", "qdisc", "change", "dev", "eth0", "root", "netem", "delay", fmt.Sprintf("%dms", duration.Milliseconds())})
 	if err != nil {

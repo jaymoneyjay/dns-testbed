@@ -12,3 +12,15 @@ type NameServer struct {
 type Resolver struct {
 	QMin string
 }
+
+type ZoneFile struct {
+	QName    string
+	NS       string
+	ID       string
+	SubZones []*SubZone
+}
+
+type SubZone struct {
+	Label string
+	NS    string
+}

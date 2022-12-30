@@ -19,6 +19,8 @@ type Testbed struct {
 	Resolvers   map[string]*Resolver
 	Client      *Client
 	Build       string
+	Templates   string
+	Root        string
 }
 
 var perm = os.FileMode(0777)
@@ -168,7 +170,6 @@ func buildNameServers(testbedConfig *config.Testbed) error {
 		); err != nil {
 			return err
 		}
-		newNameServer(nameserverConfig, testbedConfig.Templates).SetDefaultZones(false)
 		createDNSTapLog(nameserverConfig.Logs)
 	}
 	return nil
@@ -218,6 +219,62 @@ func New(testbedConfig *config.Testbed) *Testbed {
 		Resolvers:   resolvers,
 		Client:      client,
 		Build:       testbedConfig.Build,
+		Templates:   testbedConfig.Templates,
+		Root:        testbedConfig.Root,
+	}
+}
+
+func (t *Testbed) SetDefaultZones() {
+	subZonesMap := make(map[string][]string)
+	for _, nameserver := range t.Nameservers {
+		for _, zone := range nameserver.Zones {
+			labels := strings.Split(zone.QName, ".")
+			if len(labels) == 2 && zone.QName != "." {
+				parentID := "root"
+				subZonesMap[parentID] = append(subZonesMap[parentID], labels[0])
+			}
+			if len(labels) > 2 {
+				parentID := config.GenerateZoneID(strings.Join(labels[1:], "."))
+				subZonesMap[parentID] = append(subZonesMap[parentID], labels[0])
+			}
+		}
+	}
+	for _, nameserver := range t.Nameservers {
+		for _, zone := range nameserver.Zones {
+			subZoneLabels := subZonesMap[zone.ID]
+			var subZonesArgs []*templates.SubZone
+			for _, subZoneLabel := range subZoneLabels {
+				subZoneID := fmt.Sprintf("%s-%s", subZoneLabel, zone.ID)
+				if zone.ID == "root" {
+					subZoneID = subZoneLabel
+				}
+				_, subZoneNS, err := t.FindZone(subZoneID)
+				if err != nil {
+					panic(err)
+				}
+				subZonesArgs = append(subZonesArgs, &templates.SubZone{
+					Label: subZoneLabel,
+					NS:    subZoneNS.ip,
+				})
+			}
+			dst, err := os.Create(zone.ZoneFileHost)
+			if err != nil {
+				panic(err)
+			}
+			tmpl, err := template.ParseFiles(filepath.Join(t.Templates, "db.zone"))
+			if err != nil {
+				panic(err)
+			}
+			if err = tmpl.Execute(dst, templates.ZoneFile{
+				NS:       nameserver.ip,
+				QName:    zone.QName,
+				ID:       zone.ID,
+				SubZones: subZonesArgs,
+			}); err != nil {
+				panic(err)
+			}
+		}
+		nameserver.reload()
 	}
 }
 
@@ -227,6 +284,7 @@ func (t *Testbed) Start() string {
 	if err != nil {
 		panic(err)
 	}
+	t.SetDefaultZones()
 	return string(stdout)
 }
 
@@ -256,8 +314,8 @@ func (t *Testbed) Flush() {
 
 func (t *Testbed) Reset() {
 	t.Flush()
+	t.SetDefaultZones()
 	for _, nameserver := range t.Nameservers {
-		nameserver.SetDefaultZones(true)
 		nameserver.SetDelay(0)
 	}
 	t.FlushQueryLogs()

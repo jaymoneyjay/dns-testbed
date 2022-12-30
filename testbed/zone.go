@@ -7,19 +7,19 @@ import (
 )
 
 type Zone struct {
-	NS              *Nameserver
-	QName           string
-	ZoneFileHost    string
-	ZoneFileTarget  string
-	DefaultZoneFile string
+	NS             *Nameserver
+	QName          string
+	ID             string
+	ZoneFileHost   string
+	ZoneFileTarget string
 }
 
 func newZone(zoneConfig *config.Zone) *Zone {
 	return &Zone{
-		QName:           zoneConfig.QName,
-		ZoneFileHost:    zoneConfig.ZoneFileHost,
-		ZoneFileTarget:  zoneConfig.ZoneFileTarget,
-		DefaultZoneFile: zoneConfig.DefaultZoneFile,
+		QName:          zoneConfig.QName,
+		ID:             zoneConfig.ID,
+		ZoneFileHost:   zoneConfig.ZoneFileHost,
+		ZoneFileTarget: zoneConfig.ZoneFileTarget,
 	}
 }
 
@@ -36,8 +36,4 @@ func (z *Zone) set(zoneFile string) {
 	if err != nil {
 		return
 	}
-}
-
-func (z *Zone) setDefault() {
-	z.set(z.DefaultZoneFile)
 }
