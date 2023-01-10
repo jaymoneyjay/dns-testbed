@@ -13,3 +13,4 @@ warmup:
   - "target.com"
   - "www.target.com"
   - "www1.target.com"
+timeout: 3s

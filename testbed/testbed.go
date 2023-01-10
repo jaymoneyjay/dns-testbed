@@ -366,17 +366,14 @@ func (t *Testbed) Query(resolverID, qname, record string) {
 	t.Client.Query(qname, record, t.Resolvers[resolverID])
 }
 
-func (t *Testbed) Measure(volume, duration bool, target string) (int64, string) {
+func (t *Testbed) Measure(volume, duration bool, target string, timeout time.Duration) (int64, string) {
 	var measurement func(queryLog []byte) (int64, error)
-	var timeout time.Duration
 	var unit string
 	if volume && !duration {
 		measurement = t.computeQueryVolume
-		timeout = 0
 		unit = "queries"
 	} else if !volume && duration {
 		measurement = t.computeQueryDuration
-		timeout = 3 * time.Second
 		unit = "ms"
 	} else {
 		err := errors.New(fmt.Sprintf("volume and duration should be mutually exclusive. volume: %t, duration: %t", volume, duration))

@@ -5,11 +5,13 @@ import (
 	"github.com/spf13/cobra"
 	"testbed/config"
 	"testbed/testbed"
+	"time"
 )
 
 var duration bool
 var volume bool
 var target string
+var timeout time.Duration
 
 var cmdQuery = &cobra.Command{
 	Use:     "query [resolver id, qname, record type]",
@@ -28,7 +30,7 @@ var cmdQuery = &cobra.Command{
 		t.Query(args[0], args[1], args[2])
 		if duration || volume {
 			if target != "" {
-				result, unit := t.Measure(volume, duration, target)
+				result, unit := t.Measure(volume, duration, target, timeout)
 				fmt.Println(result, unit)
 			} else {
 				fmt.Println("target flag must be provided")
@@ -43,4 +45,5 @@ func init() {
 	cmdQuery.Flags().BoolVarP(&volume, "volume", "v", false, "Return number of queries at target")
 	cmdQuery.Flags().StringVarP(&target, "target", "t", "", "Target (required if duration of volume is set)")
 	cmdQuery.MarkFlagsMutuallyExclusive("duration", "volume")
+	cmdQuery.Flags().DurationVarP(&timeout, "timeout", "o", 0, "Timeout (ms) to wait for further queries")
 }

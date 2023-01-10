@@ -6,3 +6,4 @@ query:
   recordType: "A"
   qname: "ref.inter.net"
 qmin: false
+timeout: 50ms

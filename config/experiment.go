@@ -1,6 +1,9 @@
 package config
 
-import "path/filepath"
+import (
+	"path/filepath"
+	"time"
+)
 
 type Experiment struct {
 	Name         string
@@ -15,6 +18,7 @@ type Experiment struct {
 	QMin         bool
 	Dest         string
 	SaveLogs     bool
+	Timeout      time.Duration
 }
 
 type query struct {
@@ -35,22 +39,4 @@ func (c *Config) LoadExperimentConfig(path string) (*Experiment, error) {
 		return nil, err
 	}
 	return experimentConfig, nil
-}
-
-var TestExperiment = &Experiment{
-	Name:         "test-experiment",
-	ResolverIDs:  []string{"resolver-bind-9.18.4", "resolver-unbound-1.10.0"},
-	ZonesDir:     filepath.Join("zones", "CNAME+scrubbing"),
-	Delay:        []int{0},
-	DelayedZones: nil,
-	Target:       "target-com",
-	Measure:      "volume",
-	Query: &query{
-		RecordType: "",
-		QName:      "a1.target.com",
-	},
-	Warmup:   nil,
-	QMin:     false,
-	Dest:     "results",
-	SaveLogs: true,
 }

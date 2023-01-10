@@ -84,7 +84,7 @@ func (e *Experiment) Run(testbed *testbed.Testbed) error {
 				}
 				testbed.FlushQueryLogs()
 				testbed.Query(resolverID, e.config.Query.QName, e.config.Query.RecordType)
-				result, _ := testbed.Measure(isVolume, isDuration, e.config.Target)
+				result, _ := testbed.Measure(isVolume, isDuration, e.config.Target, e.config.Timeout)
 				dataResolver = append(dataResolver, resolverID)
 				dataZone = append(dataZone, zoneConfig.Name())
 				dataDelay = append(dataDelay, delay)
