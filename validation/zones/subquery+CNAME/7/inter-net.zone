@@ -8,7 +8,7 @@ www.inter.net.        IN      CNAME   inter.net.
 ; intermediary
 
 ; fake delegation
-del.inter.net.        IN      NS      a1.target.com.
+del.inter.net.        IN      NS      a1.zone1.com.
 del.inter.net.        IN      NS      a2.target.com.
 del.inter.net.        IN      NS      a3.target.com.
 del.inter.net.        IN      NS      a4.target.com.

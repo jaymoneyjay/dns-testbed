@@ -1,0 +1,31 @@
+$TTL 0
+@                       IN      SOA     server.target-ns2.net. username.target-ns2.net. (2006032201 7200 3600 1209600 36000)
+
+target-ns2.net.		IN	NS	ns.target-ns2-net
+ns.target-ns2-net	IN	A	172.20.0.6
+
+ref1.target-ns2.net.        IN  CNAME   unreachable.net.
+ref2.target-ns2.net.        IN  CNAME   unreachable.net.
+ref3.target-ns2.net.        IN  CNAME   unreachable.net.
+ref4.target-ns2.net.        IN  CNAME   unreachable.net.
+ref5.target-ns2.net.        IN  CNAME   unreachable.net.
+ref6.target-ns2.net.        IN  CNAME   unreachable.net.
+ref7.target-ns2.net.        IN  CNAME   unreachable.net.
+ref8.target-ns2.net.        IN  CNAME   unreachable.net.
+ref9.target-ns2.net.        IN  CNAME   unreachable.net.
+ref10.target-ns2.net.       IN  CNAME   unreachable.net.
+ref11.target-ns2.net.       IN  CNAME   unreachable.net.
+ref12.target-ns2.net.       IN  CNAME   unreachable.net.
+ref13.target-ns2.net.       IN  CNAME   unreachable.net.
+ref14.target-ns2.net.       IN  CNAME   unreachable.net.
+ref15.target-ns2.net.       IN  CNAME   unreachable.net.
+ref16.target-ns2.net.       IN  CNAME   unreachable.net.
+ref17.target-ns2.net.       IN  CNAME   unreachable.net.
+ref18.target-ns2.net.       IN  CNAME   unreachable.net.
+ref19.target-ns2.net.       IN  CNAME   unreachable.net.
+ref20.target-ns2.net.       IN  CNAME   unreachable.net.
+ref21.target-ns2.net.       IN  CNAME   unreachable.net.
+ref22.target-ns2.net.       IN  CNAME   unreachable.net.
+ref23.target-ns2.net.       IN  CNAME   unreachable.net.
+ref24.target-ns2.net.       IN  CNAME   unreachable.net.
+ref25.target-ns2.net.       IN  CNAME   unreachable.net.

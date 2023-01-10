@@ -1,0 +1,8 @@
+name: "fanout-2-ns"
+zonesDir: validation/zones/fanout-2-ns
+target: "ns2"
+measure: "volume"
+query:
+  recordType: "A"
+  qname: "ref.inter.net"
+qmin: false

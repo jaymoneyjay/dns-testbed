@@ -1,0 +1,8 @@
+name: "fanout-2-ns+CNAME"
+zonesDir: validation/zones/fanout-2-ns+CNAME
+target: "ns2"
+measure: "volume"
+query:
+  recordType: "A"
+  qname: "ref.inter.net"
+qmin: false
