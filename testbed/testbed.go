@@ -322,6 +322,7 @@ func (t *Testbed) Reset() {
 }
 
 func (t *Testbed) SetZoneFiles(zoneFiles string) {
+	t.SetDefaultZones()
 	stats, err := os.Stat(zoneFiles)
 	if err != nil {
 		panic(err)
