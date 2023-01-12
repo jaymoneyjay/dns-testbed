@@ -1,0 +1,8 @@
+name: "chain-rewrite-single-ns-DNAME"
+zonesDir: validation/zones/chain-rewrite-single-ns-DNAME
+target: "ns1"
+measure: "volume"
+query:
+  recordType: "A"
+  qname: "sub.chain.zone1.com."
+qmin: false

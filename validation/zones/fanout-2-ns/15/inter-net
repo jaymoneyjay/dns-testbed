@@ -1,0 +1,25 @@
+$TTL 0
+@                       IN      SOA     server.inter.net. username.inter.net. (2006032201 7200 3600 1209600 36000)
+
+inter.net.		IN	NS	ns.inter-net
+ns.inter-net	IN	A	172.20.0.5
+
+ref.inter.net.     IN  NS      ref1.target-ns2.net.
+ref.inter.net.     IN  NS      ref2.target-ns2.net.
+ref.inter.net.     IN  NS      ref3.target-ns2.net.
+ref.inter.net.     IN  NS      ref4.target-ns2.net.
+ref.inter.net.     IN  NS      ref5.target-ns2.net.
+ref.inter.net.     IN  NS      ref6.target-ns2.net.
+ref.inter.net.     IN  NS      ref7.target-ns2.net.
+ref.inter.net.     IN  NS      ref8.target-ns2.net.
+ref.inter.net.     IN  NS      ref9.target-ns2.net.
+ref.inter.net.     IN  NS      ref10.target-ns2.net.
+ref.inter.net.     IN  NS      ref11.target-ns2.net.
+ref.inter.net.     IN  NS      ref12.target-ns2.net.
+ref.inter.net.     IN  NS      ref13.target-ns2.net.
+ref.inter.net.     IN  NS      ref14.target-ns2.net.
+ref.inter.net.     IN  NS      ref15.target-ns2.net.
+
+@                  IN      A       1.2.3.4
+
+

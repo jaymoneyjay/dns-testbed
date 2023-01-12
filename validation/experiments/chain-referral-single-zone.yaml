@@ -1,0 +1,8 @@
+name: "chain-referral-single-zone"
+zonesDir: validation/zones/chain-referral-single-zone
+target: "ns1"
+measure: "volume"
+query:
+  recordType: "A"
+  qname: "a.zone1.com."
+qmin: false
